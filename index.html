@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>SIF · MI Global</title>
+  <link rel="preconnect" href="https://nzrzrbatcmzcmrmyrama.supabase.co">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --azul-primario: #185FA5;
+      --azul-oscuro: #0C447C;
+      --azul-brillante: #378ADD;
+      --azul-suave: #B5D4F4;
+      --azul-fondo: #E6F1FB;
+      --azul-fondo-2: #F5FAFF;
+      --blanco: #FFFFFF;
+      --gris-borde: #E5E7EB;
+      --gris-texto: #6B7280;
+      --gris-oscuro: #1F2937;
+      --verde-brand: #10B981;
+      --amber: #F59E0B;
+      --amber-suave: #FEF3C7;
+      --rojo: #EF4444;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: linear-gradient(135deg, var(--azul-fondo-2) 0%, var(--azul-fondo) 100%);
+      min-height: 100vh;
+      color: var(--gris-oscuro);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══════════════════════ STATES ═══════════════════════ */
+    .state { display: none; min-height: 100vh; }
+    .state.active { display: block; }
+
+    /* ═══════════════════════ LOADING ═══════════════════════ */
+    #stateLoading {
+      display: flex; align-items: center; justify-content: center;
+    }
+    #stateLoading.active { display: flex; }
+    .loader-box { text-align: center; }
+    .loader-spinner {
+      width: 48px; height: 48px;
+      border: 4px solid var(--azul-suave);
+      border-top-color: var(--azul-primario);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loader-text { color: var(--azul-oscuro); font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
+
+    /* ═══════════════════════ LOGIN ═══════════════════════ */
+    #stateLogin {
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    #stateLogin.active { display: flex; }
+
+    .login-card {
+      background: var(--blanco);
+      border: 1px solid var(--azul-suave);
+      border-radius: 16px;
+      padding: 40px 36px;
+      width: 100%; max-width: 420px;
+      box-shadow: 0 20px 60px rgba(24, 95, 165, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--azul-primario), var(--azul-brillante), var(--azul-primario));
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .login-brand {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+    }
+    .login-brand-logo {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--azul-primario), var(--azul-oscuro));
+      color: var(--blanco);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      font-weight: 800; font-size: 18px;
+      box-shadow: 0 4px 12px rgba(24, 95, 165, 0.3);
+    }
+    .login-brand-title { font-size: 18px; font-weight: 700; color: var(--azul-oscuro); letter-spacing: -0.3px; }
+    .login-brand-sub { font-size: 12px; color: var(--gris-texto); margin-top: 2px; }
+
+    .login-heading { font-size: 22px; font-weight: 700; color: var(--gris-oscuro); margin-bottom: 6px; }
+    .login-sub { font-size: 13px; color: var(--gris-texto); margin-bottom: 28px; }
+
+    .field { margin-bottom: 16px; }
+    .field-label {
+      display: block; font-size: 12px; font-weight: 600;
+      color: var(--azul-oscuro); margin-bottom: 6px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .field-input {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid var(--gris-borde);
+      border-radius: 8px;
+      font-family: var(--font-sans); font-size: 14px;
+      background: var(--blanco); color: var(--gris-oscuro);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field-input:focus {
+      outline: none;
+      border-color: var(--azul-primario);
+      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.12);
+    }
+    .field-input:disabled { background: var(--azul-fondo-2); cursor: not-allowed; }
+
+    .btn-primary {
+      width: 100%; padding: 12px 20px;
+      background: linear-gradient(135deg, var(--azul-primario), var(--azul-oscuro));
+      color: var(--blanco);
+      border: none; border-radius: 8px;
+      font-family: var(--font-sans); font-weight: 600; font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+      margin-top: 8px;
+    }
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(24, 95, 165, 0.35);
+    }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .login-error {
+      background: #FEE2E2;
+      border: 1px solid #FCA5A5;
+      color: #B91C1C;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-top: 14px;
+      display: none;
+    }
+    .login-error.show { display: block; }
+
+    .login-footer {
+      margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid var(--gris-borde);
+      font-size: 11px; color: var(--gris-texto);
+      text-align: center; letter-spacing: 0.3px;
+    }
+
+    /* ═══════════════════════ PORTAL ═══════════════════════ */
+    #statePortal { display: none; }
+    #statePortal.active { display: block; }
+
+    .portal-shell { max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; }
+
+    .portal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--blanco);
+      border: 1px solid var(--azul-suave);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 16px rgba(24, 95, 165, 0.06);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--azul-primario), var(--azul-oscuro));
+      color: var(--blanco);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      font-weight: 800; font-size: 16px;
+    }
+    .brand-title { font-size: 16px; font-weight: 700; color: var(--azul-oscuro); letter-spacing: -0.2px; }
+    .brand-sub { font-size: 11px; color: var(--gris-texto); margin-top: 2px; letter-spacing: 0.3px; }
+
+    .user-badge { display: flex; align-items: center; gap: 12px; }
+    .user-info { text-align: right; }
+    .user-info .name { font-size: 13px; font-weight: 600; color: var(--gris-oscuro); }
+    .user-info .role {
+      font-family: var(--font-mono); font-size: 10px;
+      color: var(--azul-primario); background: var(--azul-fondo);
+      padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px;
+    }
+    .user-avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--azul-brillante), var(--azul-primario));
+      color: var(--blanco);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      font-weight: 700; font-size: 14px;
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1.5px solid var(--gris-borde);
+      color: var(--gris-texto);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-left: 8px;
+    }
+    .btn-logout:hover {
+      border-color: var(--rojo); color: var(--rojo);
+    }
+
+    /* Modules grid */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .module-card {
+      background: var(--blanco);
+      border: 1px solid var(--azul-suave);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .module-card.active:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(24, 95, 165, 0.18); }
+
+    .module-visual {
+      height: 200px;
+      background: linear-gradient(135deg, var(--azul-fondo-2) 0%, var(--azul-fondo) 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .module-visual::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(24,95,165,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24,95,165,0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .status-badge {
+      position: absolute; top: 12px; left: 12px;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      z-index: 3;
+    }
+    .status-badge.active { color: var(--verde-brand); }
+    .status-badge.pending { color: var(--amber); }
+    .status-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    .status-dot.green { background: var(--verde-brand); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25); animation: pulseDot 2s ease-in-out infinite; }
+    .status-dot.amber { background: var(--amber); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25); animation: pulseDot 2s ease-in-out infinite; }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Safe 3D animation - active module */
+    .safe-stage { position: relative; z-index: 2; }
+    .safe-container { animation: bob 4s ease-in-out infinite; }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .safe-svg { width: 160px; height: 160px; }
+
+    .coin {
+      position: absolute;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #FEF08A, #FBBF24 60%, #B45309);
+      box-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
+      opacity: 0;
+    }
+    .coin-1 { top: 50%; left: 50%; animation: coinOut1 3.8s ease-out infinite 0s; }
+    .coin-2 { top: 50%; left: 50%; animation: coinOut2 3.8s ease-out infinite 0.5s; }
+    .coin-3 { top: 50%; left: 50%; animation: coinOut3 3.8s ease-out infinite 1s; }
+    .coin-4 { top: 50%; left: 50%; animation: coinOut4 3.8s ease-out infinite 1.5s; }
+    .coin-5 { top: 50%; left: 50%; animation: coinOut5 3.8s ease-out infinite 2s; }
+    .coin-6 { top: 50%; left: 50%; animation: coinOut6 3.8s ease-out infinite 2.5s; }
+
+    @keyframes coinOut1 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-180%, -180%) scale(0.3); opacity: 0; } }
+    @keyframes coinOut2 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(80%, -180%) scale(0.3); opacity: 0; } }
+    @keyframes coinOut3 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-180%, 80%) scale(0.3); opacity: 0; } }
+    @keyframes coinOut4 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(80%, 80%) scale(0.3); opacity: 0; } }
+    @keyframes coinOut5 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-220%, -50%) scale(0.3); opacity: 0; } }
+    @keyframes coinOut6 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(120%, -50%) scale(0.3); opacity: 0; } }
+
+    /* Pending module visual - roadmap style */
+    .roadmap-visual { display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+    .roadmap-icon {
+      width: 80px; height: 80px;
+      background: var(--blanco);
+      border: 2px dashed var(--azul-suave);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      opacity: 0.7;
+    }
+
+    .module-body { padding: 20px; }
+    .module-name { font-size: 17px; font-weight: 700; color: var(--gris-oscuro); margin-bottom: 4px; letter-spacing: -0.2px; }
+    .module-desc { font-size: 12px; color: var(--gris-texto); line-height: 1.5; margin-bottom: 16px; min-height: 36px; }
+
+    .module-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+      font-size: 11px;
+    }
+    .module-version {
+      font-family: var(--font-mono); color: var(--azul-primario);
+      background: var(--azul-fondo); padding: 3px 8px; border-radius: 4px;
+    }
+    .module-eta {
+      color: var(--amber); font-weight: 600;
+      background: var(--amber-suave); padding: 3px 8px; border-radius: 4px;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: var(--azul-fondo);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--amber), #FBBF24);
+      border-radius: 3px;
+      transition: width 1s ease-out;
+    }
+
+    .btn-module {
+      width: 100%; padding: 11px 16px;
+      background: linear-gradient(135deg, var(--azul-primario), var(--azul-oscuro));
+      color: var(--blanco);
+      border: none; border-radius: 8px;
+      font-family: var(--font-sans); font-weight: 600; font-size: 13px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-module:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(24, 95, 165, 0.35); }
+    .btn-module-pending {
+      background: var(--blanco);
+      color: var(--gris-texto);
+      border: 1.5px solid var(--gris-borde);
+      cursor: pointer;
+    }
+    .btn-module-pending:hover {
+      border-color: var(--amber); color: var(--amber);
+      transform: none; box-shadow: none;
+    }
+    .btn-module-pending.notified {
+      background: var(--amber-suave); color: var(--amber);
+      border-color: var(--amber);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--azul-oscuro);
+      color: var(--blanco);
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      display: flex; align-items: center; gap: 10px;
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+      z-index: 100;
+      box-shadow: 0 12px 32px rgba(4, 44, 83, 0.25);
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .portal-shell { padding: 20px 16px; }
+      .portal-header { flex-direction: column; gap: 14px; align-items: flex-start; }
+      .modules-grid { grid-template-columns: 1fr; }
+      .login-card { padding: 32px 24px; }
+      .user-info { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════ STATE : LOADING ═══════════ -->
+  <div id="stateLoading" class="state active">
+    <div class="loader-box">
+      <div class="loader-spinner"></div>
+      <div class="loader-text">Iniciando SIF · MI Global</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STATE : LOGIN ═══════════ -->
+  <div id="stateLogin" class="state">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="login-brand-logo">MI</div>
+        <div>
+          <div class="login-brand-title">SIF · MI Global</div>
+          <div class="login-brand-sub">Sistema de Información Financiera</div>
+        </div>
+      </div>
+
+      <div class="login-heading">Iniciar sesión</div>
+      <div class="login-sub">Ingresa tus credenciales corporativas para acceder a los módulos.</div>
+
+      <div class="field">
+        <label class="field-label" for="loginUser">Usuario</label>
+        <input type="text" id="loginUser" class="field-input" autocomplete="username" placeholder="ej. jcgonzalez" autofocus>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="loginPwd">Contraseña</label>
+        <input type="password" id="loginPwd" class="field-input" autocomplete="current-password" placeholder="••••••••">
+      </div>
+
+      <button id="btnLogin" class="btn-primary">Iniciar sesión</button>
+
+      <div id="loginError" class="login-error"></div>
+
+      <div class="login-footer">
+        MI GLOBAL &middot; TIJUANA &middot; Portal v<span id="portalVersion">2026.07.05.1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STATE : CHANGE PASSWORD ═══════════ -->
+  <div id="stateChangePwd" class="state">
+    <div style="display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px;">
+      <div class="login-card">
+        <div class="login-brand">
+          <div class="login-brand-logo">MI</div>
+          <div>
+            <div class="login-brand-title">Cambio obligatorio</div>
+            <div class="login-brand-sub">Debes actualizar tu contraseña</div>
+          </div>
+        </div>
+
+        <div class="login-heading">Nueva contraseña</div>
+        <div class="login-sub">Por seguridad, cambia la contraseña temporal antes de continuar.</div>
+
+        <div class="field">
+          <label class="field-label" for="pwdNew1">Nueva contraseña</label>
+          <input type="password" id="pwdNew1" class="field-input" placeholder="Mínimo 8 caracteres">
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="pwdNew2">Confirmar contraseña</label>
+          <input type="password" id="pwdNew2" class="field-input" placeholder="Repite la contraseña">
+        </div>
+
+        <button id="btnChangePwd" class="btn-primary">Actualizar y continuar</button>
+
+        <div id="changePwdError" class="login-error"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STATE : PORTAL ═══════════ -->
+  <div id="statePortal" class="state">
+    <div class="portal-shell">
+
+      <header class="portal-header">
+        <div class="brand">
+          <div class="brand-logo">MI</div>
+          <div>
+            <div class="brand-title">SIF · MI GLOBAL</div>
+            <div class="brand-sub">Sistema de información financiera</div>
+          </div>
+        </div>
+        <div class="user-badge">
+          <div class="user-info">
+            <div class="name" id="userName">—</div>
+            <div class="role" id="userRole">—</div>
+          </div>
+          <div class="user-avatar" id="userAvatar">—</div>
+          <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <div class="modules-grid">
+
+        <!-- MODULE 1 : FLUJO Y GASTOS (ACTIVE) -->
+        <div class="module-card active">
+          <div class="module-visual">
+            <div class="status-badge active">
+              <span class="status-dot green"></span>
+              ACTIVO
+            </div>
+            <div class="safe-stage">
+              <div class="safe-container">
+                <svg class="safe-svg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+                  <ellipse cx="70" cy="130" rx="34" ry="4" fill="#000" opacity="0.25"/>
+                  <polygon points="30,42 70,22 110,42 70,62" fill="#185FA5" stroke="#B5D4F4" stroke-width="1"/>
+                  <polygon points="35,44 70,26 105,44 70,58" fill="#3F7BC0" opacity="0.6"/>
+                  <polygon points="110,42 110,102 70,122 70,62" fill="#0C447C" stroke="#B5D4F4" stroke-width="1"/>
+                  <line x1="80" y1="68" x2="80" y2="115" stroke="#185FA5" stroke-width="0.5" opacity="0.5"/>
+                  <line x1="90" y1="63" x2="90" y2="112" stroke="#185FA5" stroke-width="0.5" opacity="0.5"/>
+                  <line x1="100" y1="58" x2="100" y2="108" stroke="#185FA5" stroke-width="0.5" opacity="0.5"/>
+                  <polygon points="30,42 70,62 70,122 30,102" fill="#FFFFFF" stroke="#B5D4F4" stroke-width="1"/>
+                  <circle cx="50" cy="82" r="10" fill="none" stroke="#185FA5" stroke-width="1.5"/>
+                  <circle cx="50" cy="82" r="6" fill="none" stroke="#378ADD" stroke-width="1"/>
+                  <circle cx="50" cy="82" r="1.5" fill="#0C447C"/>
+                  <line x1="50" y1="72" x2="50" y2="74" stroke="#0C447C" stroke-width="1"/>
+                  <line x1="50" y1="90" x2="50" y2="92" stroke="#0C447C" stroke-width="1"/>
+                  <line x1="40" y1="82" x2="42" y2="82" stroke="#0C447C" stroke-width="1"/>
+                  <line x1="58" y1="82" x2="60" y2="82" stroke="#0C447C" stroke-width="1"/>
+                  <rect x="55" y="95" width="8" height="3" rx="1" fill="#185FA5"/>
+                  <circle cx="35" cy="52" r="1.5" fill="#185FA5"/>
+                  <circle cx="35" cy="95" r="1.5" fill="#185FA5"/>
+                </svg>
+              </div>
+              <div class="coin coin-1"></div>
+              <div class="coin coin-2"></div>
+              <div class="coin coin-3"></div>
+              <div class="coin coin-4"></div>
+              <div class="coin coin-5"></div>
+              <div class="coin coin-6"></div>
+            </div>
+          </div>
+          <div class="module-body">
+            <div class="module-name">Flujo y Gastos</div>
+            <div class="module-desc">Control de flujo de efectivo, cuentas por pagar, ingresos y presupuesto semanal.</div>
+            <div class="module-meta">
+              <span class="module-version" id="deadpoolVer">v2026.07.04.11</span>
+              <span style="color: var(--verde-brand); font-weight: 600;">✓ Producción</span>
+            </div>
+            <button class="btn-module" onclick="irADeadpool()">Entrar al módulo →</button>
+          </div>
+        </div>
+
+        <!-- MODULE 2 : CONTABILIDAD (PENDING) -->
+        <div class="module-card">
+          <div class="module-visual">
+            <div class="status-badge pending">
+              <span class="status-dot amber"></span>
+              PRÓXIMAMENTE
+            </div>
+            <div class="roadmap-visual">
+              <div class="roadmap-icon">📊</div>
+            </div>
+          </div>
+          <div class="module-body">
+            <div class="module-name">Contabilidad</div>
+            <div class="module-desc">Registro contable, pólizas, balances y estados financieros.</div>
+            <div class="module-meta">
+              <span class="module-version">Planeación</span>
+              <span class="module-eta">Q4 2026</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" style="width: 15%;"></div></div>
+            <button class="btn-module btn-module-pending" data-mod="contabilidad" onclick="notify(this,'contabilidad')">🔔 Avísame cuando esté listo</button>
+          </div>
+        </div>
+
+        <!-- MODULE 3 : NÓMINAS (PENDING) -->
+        <div class="module-card">
+          <div class="module-visual">
+            <div class="status-badge pending">
+              <span class="status-dot amber"></span>
+              PRÓXIMAMENTE
+            </div>
+            <div class="roadmap-visual">
+              <div class="roadmap-icon">👥</div>
+            </div>
+          </div>
+          <div class="module-body">
+            <div class="module-name">Nóminas</div>
+            <div class="module-desc">Cálculo de nómina, prestaciones, IMSS/INFONAVIT y timbrado CFDI.</div>
+            <div class="module-meta">
+              <span class="module-version">Planeación</span>
+              <span class="module-eta">Q1 2027</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" style="width: 8%;"></div></div>
+            <button class="btn-module btn-module-pending" data-mod="nominas" onclick="notify(this,'nominas')">🔔 Avísame cuando esté listo</button>
+          </div>
+        </div>
+
+        <!-- MODULE 4 : FISCAL (PENDING) -->
+        <div class="module-card">
+          <div class="module-visual">
+            <div class="status-badge pending">
+              <span class="status-dot amber"></span>
+              PRÓXIMAMENTE
+            </div>
+            <div class="roadmap-visual">
+              <div class="roadmap-icon">📋</div>
+            </div>
+          </div>
+          <div class="module-body">
+            <div class="module-name">Fiscal</div>
+            <div class="module-desc">Recuperación de IVA, declaraciones, cumplimiento SAT y expedientes.</div>
+            <div class="module-meta">
+              <span class="module-version">Planeación</span>
+              <span class="module-eta">Q2 2027</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" style="width: 20%;"></div></div>
+            <button class="btn-module btn-module-pending" data-mod="fiscal" onclick="notify(this,'fiscal')">🔔 Avísame cuando esté listo</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">
+    <span id="toastIcon">✓</span>
+    <span id="toastMsg">Listo</span>
+  </div>
+
+  <script>
+    /* ═══════════════════════ CONFIG ═══════════════════════ */
+    const APP_VERSION = '2026.07.05.1';
+    const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
+    const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
+    const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
+
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
+      auth: { persistSession: true, autoRefreshToken: true, storage: window.localStorage }
+    });
+
+    let currentUser = null;
+    let pendingAuthId = null;
+
+    /* ═══════════════════════ STATE ROUTER ═══════════════════════ */
+    function showState(name) {
+      ['Loading', 'Login', 'ChangePwd', 'Portal'].forEach(s => {
+        const el = document.getElementById('state' + s);
+        if (el) el.classList.toggle('active', s === name);
+      });
+    }
+
+    /* ═══════════════════════ INIT ═══════════════════════ */
+    async function init() {
+      try {
+        const { data: { session }, error } = await sb.auth.getSession();
+        if (error) { console.error('getSession error:', error); showState('Login'); return; }
+        if (session && session.user) {
+          await loadUserAndRoute(session.user.id);
+        } else {
+          showState('Login');
+        }
+      } catch (e) {
+        console.error('init error:', e);
+        showState('Login');
+      }
+    }
+
+    async function loadUserAndRoute(authId) {
+      try {
+        const { data: user, error } = await sb.from('usuarios').select('*').eq('auth_id', authId).maybeSingle();
+        if (error) { console.error('user load error:', error); showLoginError('Error cargando usuario: ' + error.message); await sb.auth.signOut(); showState('Login'); return; }
+        if (!user) { showLoginError('Usuario no vinculado en la base de datos. Contacta al administrador.'); await sb.auth.signOut(); showState('Login'); return; }
+        if (!user.activo) { showLoginError('Usuario inactivo. Contacta al administrador.'); await sb.auth.signOut(); showState('Login'); return; }
+        if (user.debe_cambiar) { pendingAuthId = authId; showState('ChangePwd'); return; }
+        currentUser = user;
+        renderPortal();
+        showState('Portal');
+      } catch (e) {
+        console.error('loadUserAndRoute error:', e);
+        showLoginError('Error inesperado: ' + e.message);
+        showState('Login');
+      }
+    }
+
+    /* ═══════════════════════ LOGIN ═══════════════════════ */
+    async function doLogin() {
+      const usr = document.getElementById('loginUser').value.trim().toLowerCase();
+      const pwd = document.getElementById('loginPwd').value;
+      const btn = document.getElementById('btnLogin');
+      const errEl = document.getElementById('loginError');
+      errEl.classList.remove('show');
+
+      if (!usr || !pwd) { showLoginError('Ingresa usuario y contraseña.'); return; }
+
+      btn.disabled = true; btn.textContent = 'Autenticando…';
+      try {
+        const email = usr + '@mitech.local';
+        const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
+        if (error) {
+          const msg = /invalid.*credentials/i.test(error.message)
+            ? 'Usuario o contraseña incorrectos.'
+            : error.message;
+          showLoginError(msg);
+          btn.disabled = false; btn.textContent = 'Iniciar sesión';
+          return;
+        }
+        await loadUserAndRoute(data.user.id);
+      } catch (e) {
+        console.error('doLogin error:', e);
+        showLoginError('Error de red: ' + e.message);
+      } finally {
+        btn.disabled = false; btn.textContent = 'Iniciar sesión';
+      }
+    }
+
+    function showLoginError(msg) {
+      const el = document.getElementById('loginError');
+      el.textContent = msg;
+      el.classList.add('show');
+    }
+
+    /* ═══════════════════════ CHANGE PWD ═══════════════════════ */
+    async function doChangePwd() {
+      const p1 = document.getElementById('pwdNew1').value;
+      const p2 = document.getElementById('pwdNew2').value;
+      const btn = document.getElementById('btnChangePwd');
+      const errEl = document.getElementById('changePwdError');
+      errEl.classList.remove('show');
+
+      if (p1.length < 8) { showChangeErr('La contraseña debe tener al menos 8 caracteres.'); return; }
+      if (p1 !== p2)    { showChangeErr('Las contraseñas no coinciden.'); return; }
+
+      btn.disabled = true; btn.textContent = 'Actualizando…';
+      try {
+        const { error: upErr } = await sb.auth.updateUser({ password: p1 });
+        if (upErr) { showChangeErr('Error: ' + upErr.message); btn.disabled = false; btn.textContent = 'Actualizar y continuar'; return; }
+        const { error: rpcErr } = await sb.rpc('clear_debe_cambiar');
+        if (rpcErr) console.warn('clear_debe_cambiar RPC error:', rpcErr);
+        if (pendingAuthId) await loadUserAndRoute(pendingAuthId);
+      } catch (e) {
+        console.error('doChangePwd error:', e);
+        showChangeErr('Error inesperado: ' + e.message);
+      } finally {
+        btn.disabled = false; btn.textContent = 'Actualizar y continuar';
+      }
+    }
+
+    function showChangeErr(msg) {
+      const el = document.getElementById('changePwdError');
+      el.textContent = msg;
+      el.classList.add('show');
+    }
+
+    /* ═══════════════════════ LOGOUT ═══════════════════════ */
+    async function doLogout() {
+      try {
+        await sb.auth.signOut();
+      } catch (e) { console.warn('signOut error:', e); }
+      currentUser = null; pendingAuthId = null;
+      document.getElementById('loginUser').value = '';
+      document.getElementById('loginPwd').value = '';
+      showState('Login');
+    }
+
+    /* ═══════════════════════ PORTAL RENDER ═══════════════════════ */
+    function renderPortal() {
+      if (!currentUser) return;
+      document.getElementById('userName').textContent = currentUser.nombre || currentUser.username;
+      document.getElementById('userRole').textContent = currentUser.rol || '—';
+      document.getElementById('userAvatar').textContent = getInitials(currentUser.nombre || currentUser.username);
+      restoreNotifyStates();
+    }
+
+    function getInitials(nom) {
+      if (!nom) return '?';
+      const parts = String(nom).trim().split(/\s+/);
+      if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+
+    /* ═══════════════════════ NAVIGATE ═══════════════════════ */
+    function irADeadpool() {
+      window.location.href = DEADPOOL_URL;
+    }
+
+    /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
+    function notify(btn, mod) {
+      const key = 'sif_notify_' + mod;
+      const isNotified = localStorage.getItem(key) === '1';
+      if (isNotified) {
+        localStorage.removeItem(key);
+        btn.classList.remove('notified');
+        btn.textContent = '🔔 Avísame cuando esté listo';
+        showToast('Notificación cancelada');
+      } else {
+        localStorage.setItem(key, '1');
+        btn.classList.add('notified');
+        btn.textContent = '✓ Te avisaremos';
+        showToast('Te avisaremos cuando ' + mod + ' esté listo');
+      }
+    }
+
+    function restoreNotifyStates() {
+      document.querySelectorAll('.btn-module-pending').forEach(btn => {
+        const mod = btn.getAttribute('data-mod');
+        if (mod && localStorage.getItem('sif_notify_' + mod) === '1') {
+          btn.classList.add('notified');
+          btn.textContent = '✓ Te avisaremos';
+        }
+      });
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => t.classList.remove('show'), 2600);
+    }
+
+    /* ═══════════════════════ EVENT WIRING ═══════════════════════ */
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('portalVersion').textContent = APP_VERSION;
+      document.getElementById('btnLogin').addEventListener('click', doLogin);
+      document.getElementById('btnChangePwd').addEventListener('click', doChangePwd);
+
+      document.getElementById('loginPwd').addEventListener('keypress', (e) => { if (e.key === 'Enter') doLogin(); });
+      document.getElementById('loginUser').addEventListener('keypress', (e) => { if (e.key === 'Enter') document.getElementById('loginPwd').focus(); });
+      document.getElementById('pwdNew2').addEventListener('keypress', (e) => { if (e.key === 'Enter') doChangePwd(); });
+
+      init();
+    });
+
+    /* Expose to window for onclick handlers */
+    window.doLogout = doLogout;
+    window.irADeadpool = irADeadpool;
+    window.notify = notify;
+  </script>
+</body>
+</html>
