@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="theme-color" content="#0F172A">
+  <meta name="theme-color" content="#002855">
   <title>SIF · MI Global</title>
   <link rel="preconnect" href="https://nzrzrbatcmzcmrmyrama.supabase.co">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,10 +34,19 @@
       --ink-25:  #FAFAFA;      /* page bg */
       --paper:   #FFFFFF;
 
+      /* — MI Global · Azul institucional — */
+      --brand-950: #001A3D;     /* deep, para pressed states */
+      --brand-900: #002855;     /* pane brand oscuro */
+      --brand-800: #003876;     /* CTA primary, logos, avatar */
+      --brand-700: #0057B8;     /* accents, borders activos */
+      --brand-600: #1E5FB4;     /* hover secundario */
+      --brand-100: #E8F0FA;     /* backgrounds ultra-sutiles */
+      --brand-50:  #F5F9FE;
+
       /* — Accent (single, restrained) — */
-      --accent:      #1E40AF;   /* deep indigo-blue */
-      --accent-hover:#1D3D9E;
-      --accent-soft: #EEF2FF;
+      --accent:      var(--brand-800);
+      --accent-hover:var(--brand-900);
+      --accent-soft: var(--brand-100);
       --accent-line: #C7D2FE;
 
       /* — Semantic — */
@@ -60,7 +69,7 @@
       --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
       --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
       --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
-      --shadow-focus: 0 0 0 3px rgba(30, 64, 175, 0.12);
+      --shadow-focus: 0 0 0 3px rgba(0, 56, 118, 0.15);
 
       /* — Radii — */
       --r-sm: 6px;
@@ -114,7 +123,7 @@
     .loader-spinner {
       width: 32px; height: 32px;
       border: 2px solid var(--ink-100);
-      border-top-color: var(--ink-900);
+      border-top-color: var(--brand-800);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       margin: 0 auto 20px;
@@ -145,7 +154,7 @@
 
     /* — Left pane: editorial / brand — */
     .login-pane-brand {
-      background: var(--ink-900);
+      background: var(--brand-900);
       color: var(--paper);
       padding: 48px 56px;
       display: flex;
@@ -160,7 +169,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0);
       background-size: 24px 24px;
       pointer-events: none;
     }
@@ -170,7 +179,7 @@
       position: absolute;
       top: 0; right: -200px;
       width: 480px; height: 480px;
-      background: radial-gradient(circle, rgba(30, 64, 175, 0.35) 0%, transparent 65%);
+      background: radial-gradient(circle, rgba(0, 87, 184, 0.45) 0%, transparent 65%);
       pointer-events: none;
     }
 
@@ -184,7 +193,7 @@
     .brand-mark-logo {
       width: 36px; height: 36px;
       background: var(--paper);
-      color: var(--ink-900);
+      color: var(--brand-900);
       display: flex; align-items: center; justify-content: center;
       font-weight: 800;
       font-size: 13px;
@@ -298,7 +307,7 @@
     .btn-primary {
       width: 100%;
       height: 44px;
-      background: var(--ink-900);
+      background: var(--brand-800);
       color: var(--paper);
       font-size: 14px;
       font-weight: 500;
@@ -310,7 +319,7 @@
       justify-content: center;
       gap: 8px;
     }
-    .btn-primary:hover:not(:disabled) { background: var(--ink-700); }
+    .btn-primary:hover:not(:disabled) { background: var(--brand-900); }
     .btn-primary:active:not(:disabled) { transform: translateY(1px); }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
     .btn-primary:focus-visible { box-shadow: var(--shadow-focus); }
@@ -397,7 +406,7 @@
     }
     .brand-h-logo {
       width: 32px; height: 32px;
-      background: var(--ink-900);
+      background: var(--brand-800);
       color: var(--paper);
       display: flex; align-items: center; justify-content: center;
       font-weight: 800;
@@ -456,7 +465,7 @@
     }
     .user-avatar {
       width: 30px; height: 30px;
-      background: var(--ink-900);
+      background: var(--brand-800);
       color: var(--paper);
       display: flex; align-items: center; justify-content: center;
       font-size: 11px;
@@ -582,7 +591,7 @@
       position: absolute;
       top: 0; left: 20px; right: 20px;
       height: 2px;
-      background: var(--ink-900);
+      background: var(--brand-800);
       border-radius: 2px;
     }
 
@@ -604,7 +613,7 @@
       transition: all var(--dur) var(--ease);
     }
     .mod-card[data-status="active"] .mod-icon {
-      background: var(--ink-900);
+      background: var(--brand-800);
       color: var(--paper);
     }
     .mod-icon svg {
@@ -690,7 +699,7 @@
     }
     .mod-progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, var(--ink-700), var(--ink-500));
+      background: linear-gradient(90deg, var(--brand-900), var(--brand-700));
       border-radius: 999px;
       transition: width 600ms var(--ease);
     }
@@ -715,11 +724,11 @@
       border: 1px solid transparent;
     }
     .btn-mod-primary {
-      background: var(--ink-900);
+      background: var(--brand-800);
       color: var(--paper);
     }
     .btn-mod-primary:hover {
-      background: var(--ink-700);
+      background: var(--brand-900);
       transform: translateY(-1px);
       box-shadow: var(--shadow-sm);
     }
@@ -747,7 +756,7 @@
       bottom: 32px;
       left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: var(--ink-900);
+      background: var(--brand-900);
       color: var(--paper);
       padding: 12px 20px;
       border-radius: var(--r-md);
@@ -806,7 +815,7 @@
 
         <div class="brand-footer">
           <span>TIJUANA, B.C.</span>
-          <span>v<span id="portalVersion">2026.07.05.2</span></span>
+          <span>v<span id="portalVersion">2026.07.05.4</span></span>
         </div>
       </div>
 
@@ -1111,7 +1120,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.05.2';
+    const APP_VERSION = '2026.07.05.4';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -1122,6 +1131,16 @@
 
     let currentUser = null;
     let pendingAuthId = null;
+
+    /* Escuchar cambios de sesión: si un logout ocurre en otra pestaña o
+       módulo (Deadpool, etc), llega SIGNED_OUT aquí y regresamos al login. */
+    sb.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT' && currentUser) {
+        currentUser = null;
+        pendingAuthId = null;
+        showState('Login');
+      }
+    });
 
     /* ═══════════════════════ STATE ROUTER ═══════════════════════ */
     function showState(name) {
