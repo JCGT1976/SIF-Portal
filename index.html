@@ -2,43 +2,101 @@
 <html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+  <meta name="theme-color" content="#0F172A">
   <title>SIF · MI Global</title>
   <link rel="preconnect" href="https://nzrzrbatcmzcmrmyrama.supabase.co">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
+    /* ═══════════════════════════════════════════════════════════════
+       DESIGN SYSTEM · SIF Portal
+       Filosofía: enterprise financial · calm · confident · editorial
+       ═══════════════════════════════════════════════════════════════ */
+
     :root {
-      --azul-primario: #185FA5;
-      --azul-oscuro: #0C447C;
-      --azul-brillante: #378ADD;
-      --azul-suave: #B5D4F4;
-      --azul-fondo: #E6F1FB;
-      --azul-fondo-2: #F5FAFF;
-      --blanco: #FFFFFF;
-      --gris-borde: #E5E7EB;
-      --gris-texto: #6B7280;
-      --gris-oscuro: #1F2937;
-      --verde-brand: #10B981;
-      --amber: #F59E0B;
-      --amber-suave: #FEF3C7;
-      --rojo: #EF4444;
-      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+      /* — Neutrals (base) — */
+      --ink-900: #0A0F1C;      /* headings, primary text */
+      --ink-800: #111827;
+      --ink-700: #1F2937;
+      --ink-600: #374151;
+      --ink-500: #4B5563;      /* secondary text */
+      --ink-400: #6B7280;      /* tertiary text */
+      --ink-300: #9CA3AF;      /* placeholders */
+      --ink-200: #D1D5DB;
+      --ink-100: #E5E7EB;      /* hairlines */
+      --ink-50:  #F3F4F6;      /* surfaces */
+      --ink-25:  #FAFAFA;      /* page bg */
+      --paper:   #FFFFFF;
+
+      /* — Accent (single, restrained) — */
+      --accent:      #1E40AF;   /* deep indigo-blue */
+      --accent-hover:#1D3D9E;
+      --accent-soft: #EEF2FF;
+      --accent-line: #C7D2FE;
+
+      /* — Semantic — */
+      --success:     #059669;
+      --success-soft:#ECFDF5;
+      --success-line:#A7F3D0;
+      --warning:     #B45309;
+      --warning-soft:#FFFBEB;
+      --warning-line:#FDE68A;
+      --danger:      #B91C1C;
+      --danger-soft: #FEF2F2;
+      --danger-line: #FECACA;
+
+      /* — Typography — */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+
+      /* — Shadows (subtle, editorial) — */
+      --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
+      --shadow-focus: 0 0 0 3px rgba(30, 64, 175, 0.12);
+
+      /* — Radii — */
+      --r-sm: 6px;
+      --r-md: 8px;
+      --r-lg: 10px;
+      --r-xl: 14px;
+
+      /* — Motion — */
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --dur-fast: 120ms;
+      --dur: 180ms;
+      --dur-slow: 280ms;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-text-size-adjust: 100%; }
 
     body {
       font-family: var(--font-sans);
-      background: linear-gradient(135deg, var(--azul-fondo-2) 0%, var(--azul-fondo) 100%);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink-900);
+      background: var(--ink-25);
       min-height: 100vh;
-      color: var(--gris-oscuro);
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: 'cv02','cv03','cv04','cv11';
     }
+
+    ::selection { background: var(--accent); color: var(--paper); }
+
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input { font-family: inherit; }
+    a { color: var(--accent); text-decoration: none; }
 
     /* ═══════════════════════ STATES ═══════════════════════ */
     .state { display: none; min-height: 100vh; }
@@ -46,363 +104,672 @@
 
     /* ═══════════════════════ LOADING ═══════════════════════ */
     #stateLoading {
-      display: flex; align-items: center; justify-content: center;
+      display: none;
+      align-items: center;
+      justify-content: center;
     }
     #stateLoading.active { display: flex; }
+
     .loader-box { text-align: center; }
     .loader-spinner {
-      width: 48px; height: 48px;
-      border: 4px solid var(--azul-suave);
-      border-top-color: var(--azul-primario);
+      width: 32px; height: 32px;
+      border: 2px solid var(--ink-100);
+      border-top-color: var(--ink-900);
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 16px;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 20px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .loader-text { color: var(--azul-oscuro); font-size: 13px; font-weight: 500; letter-spacing: 0.5px; }
+    .loader-text {
+      color: var(--ink-500);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
 
     /* ═══════════════════════ LOGIN ═══════════════════════ */
     #stateLogin {
-      display: none; align-items: center; justify-content: center; padding: 20px;
+      display: none;
+      align-items: stretch;
+      min-height: 100vh;
     }
     #stateLogin.active { display: flex; }
 
-    .login-card {
-      background: var(--blanco);
-      border: 1px solid var(--azul-suave);
-      border-radius: 16px;
-      padding: 40px 36px;
-      width: 100%; max-width: 420px;
-      box-shadow: 0 20px 60px rgba(24, 95, 165, 0.12);
+    .login-shell {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    /* — Left pane: editorial / brand — */
+    .login-pane-brand {
+      background: var(--ink-900);
+      color: var(--paper);
+      padding: 48px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       position: relative;
       overflow: hidden;
     }
 
-    .login-card::before {
+    /* Subtle dot grid on brand pane */
+    .login-pane-brand::before {
       content: "";
-      position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: linear-gradient(90deg, var(--azul-primario), var(--azul-brillante), var(--azul-primario));
-      background-size: 200% 100%;
-      animation: shimmer 3s linear infinite;
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+      background-size: 24px 24px;
+      pointer-events: none;
     }
 
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
+    .login-pane-brand::after {
+      content: "";
+      position: absolute;
+      top: 0; right: -200px;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(30, 64, 175, 0.35) 0%, transparent 65%);
+      pointer-events: none;
     }
 
-    .login-brand {
-      display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
     }
-    .login-brand-logo {
-      width: 48px; height: 48px;
-      background: linear-gradient(135deg, var(--azul-primario), var(--azul-oscuro));
-      color: var(--blanco);
+    .brand-mark-logo {
+      width: 36px; height: 36px;
+      background: var(--paper);
+      color: var(--ink-900);
       display: flex; align-items: center; justify-content: center;
-      border-radius: 10px;
-      font-weight: 800; font-size: 18px;
-      box-shadow: 0 4px 12px rgba(24, 95, 165, 0.3);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: -0.02em;
+      border-radius: var(--r-sm);
     }
-    .login-brand-title { font-size: 18px; font-weight: 700; color: var(--azul-oscuro); letter-spacing: -0.3px; }
-    .login-brand-sub { font-size: 12px; color: var(--gris-texto); margin-top: 2px; }
+    .brand-mark-wordmark {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--paper);
+    }
+    .brand-mark-wordmark .dim { color: rgba(255,255,255,0.5); font-weight: 400; }
 
-    .login-heading { font-size: 22px; font-weight: 700; color: var(--gris-oscuro); margin-bottom: 6px; }
-    .login-sub { font-size: 13px; color: var(--gris-texto); margin-bottom: 28px; }
+    .brand-hero {
+      position: relative; z-index: 1;
+      max-width: 420px;
+    }
+    .brand-hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 24px;
+    }
+    .brand-hero-title {
+      font-size: 40px;
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--paper);
+      margin-bottom: 20px;
+    }
+    .brand-hero-title em {
+      font-style: normal;
+      color: rgba(255,255,255,0.55);
+    }
+    .brand-hero-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+    }
 
-    .field { margin-bottom: 16px; }
+    .brand-footer {
+      position: relative; z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      font-family: var(--font-mono);
+    }
+    .brand-footer .sep { margin: 0 8px; opacity: 0.4; }
+
+    /* — Right pane: form — */
+    .login-pane-form {
+      background: var(--paper);
+      padding: 48px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-form-wrap {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .login-heading {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--ink-900);
+      margin-bottom: 8px;
+    }
+    .login-sub {
+      font-size: 14px;
+      color: var(--ink-500);
+      margin-bottom: 36px;
+      line-height: 1.55;
+    }
+
+    .field { margin-bottom: 18px; }
     .field-label {
-      display: block; font-size: 12px; font-weight: 600;
-      color: var(--azul-oscuro); margin-bottom: 6px;
-      text-transform: uppercase; letter-spacing: 0.5px;
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-700);
+      margin-bottom: 6px;
+      letter-spacing: -0.005em;
     }
     .field-input {
-      width: 100%; padding: 12px 14px;
-      border: 1.5px solid var(--gris-borde);
-      border-radius: 8px;
-      font-family: var(--font-sans); font-size: 14px;
-      background: var(--blanco); color: var(--gris-oscuro);
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .field-input:focus {
+      width: 100%;
+      height: 42px;
+      padding: 0 14px;
+      font-size: 14px;
+      color: var(--ink-900);
+      background: var(--paper);
+      border: 1px solid var(--ink-200);
+      border-radius: var(--r-md);
+      transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
       outline: none;
-      border-color: var(--azul-primario);
-      box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.12);
     }
-    .field-input:disabled { background: var(--azul-fondo-2); cursor: not-allowed; }
+    .field-input::placeholder { color: var(--ink-300); }
+    .field-input:hover { border-color: var(--ink-300); }
+    .field-input:focus {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-focus);
+    }
 
     .btn-primary {
-      width: 100%; padding: 12px 20px;
-      background: linear-gradient(135deg, var(--azul-primario), var(--azul-oscuro));
-      color: var(--blanco);
-      border: none; border-radius: 8px;
-      font-family: var(--font-sans); font-weight: 600; font-size: 14px;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.2s;
-      margin-top: 8px;
+      width: 100%;
+      height: 44px;
+      background: var(--ink-900);
+      color: var(--paper);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      border-radius: var(--r-md);
+      transition: background var(--dur) var(--ease), transform var(--dur-fast) var(--ease);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(24, 95, 165, 0.35);
-    }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-primary:hover:not(:disabled) { background: var(--ink-700); }
+    .btn-primary:active:not(:disabled) { transform: translateY(1px); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary:focus-visible { box-shadow: var(--shadow-focus); }
 
     .login-error {
-      background: #FEE2E2;
-      border: 1px solid #FCA5A5;
-      color: #B91C1C;
+      display: none;
+      background: var(--danger-soft);
+      border: 1px solid var(--danger-line);
+      color: var(--danger);
       padding: 10px 12px;
-      border-radius: 8px;
+      border-radius: var(--r-sm);
       font-size: 13px;
       margin-top: 14px;
-      display: none;
+      line-height: 1.5;
     }
     .login-error.show { display: block; }
 
-    .login-footer {
-      margin-top: 24px; padding-top: 20px;
-      border-top: 1px solid var(--gris-borde);
-      font-size: 11px; color: var(--gris-texto);
-      text-align: center; letter-spacing: 0.3px;
+    .login-footer-mobile {
+      display: none;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--ink-100);
+      font-size: 11px;
+      color: var(--ink-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
     }
 
-    /* ═══════════════════════ PORTAL ═══════════════════════ */
-    #statePortal { display: none; }
-    #statePortal.active { display: block; }
+    @media (max-width: 900px) {
+      .login-shell { grid-template-columns: 1fr; }
+      .login-pane-brand {
+        padding: 32px 28px;
+        min-height: 260px;
+      }
+      .brand-hero-title { font-size: 28px; }
+      .brand-hero { max-width: 100%; }
+      .login-pane-form { padding: 40px 24px; }
+      .login-footer-mobile { display: block; }
+    }
 
-    .portal-shell { max-width: 1280px; margin: 0 auto; padding: 32px 24px 48px; }
+    /* ═══════════════════════ PORTAL / LAUNCHER ═══════════════════════ */
+    #statePortal { background: var(--ink-25); }
 
+    /* subtle dot grid pattern on portal bg */
+    #statePortal::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.035) 1px, transparent 0);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .portal-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+    }
+
+    /* — Header — */
     .portal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--blanco);
-      border: 1px solid var(--azul-suave);
-      border-radius: 14px;
-      padding: 16px 20px;
-      margin-bottom: 28px;
-      box-shadow: 0 4px 16px rgba(24, 95, 165, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      margin-bottom: 56px;
+      border-bottom: 1px solid var(--ink-100);
+      position: sticky;
+      top: 0;
+      background: rgba(250, 250, 250, 0.88);
+      backdrop-filter: saturate(180%) blur(12px);
+      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      z-index: 10;
     }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-logo {
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg, var(--azul-primario), var(--azul-oscuro));
-      color: var(--blanco);
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 10px;
-      font-weight: 800; font-size: 16px;
-    }
-    .brand-title { font-size: 16px; font-weight: 700; color: var(--azul-oscuro); letter-spacing: -0.2px; }
-    .brand-sub { font-size: 11px; color: var(--gris-texto); margin-top: 2px; letter-spacing: 0.3px; }
 
-    .user-badge { display: flex; align-items: center; gap: 12px; }
-    .user-info { text-align: right; }
-    .user-info .name { font-size: 13px; font-weight: 600; color: var(--gris-oscuro); }
+    .brand-h {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-h-logo {
+      width: 32px; height: 32px;
+      background: var(--ink-900);
+      color: var(--paper);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: -0.02em;
+      border-radius: var(--r-sm);
+    }
+    .brand-h-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .brand-h-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+      color: var(--ink-900);
+    }
+    .brand-h-sub {
+      font-size: 11px;
+      color: var(--ink-400);
+      letter-spacing: 0.02em;
+    }
+
+    .user-cluster {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 6px 5px 12px;
+      background: var(--paper);
+      border: 1px solid var(--ink-100);
+      border-radius: 999px;
+    }
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1.15;
+    }
+    .user-info .name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-900);
+      letter-spacing: -0.005em;
+    }
     .user-info .role {
-      font-family: var(--font-mono); font-size: 10px;
-      color: var(--azul-primario); background: var(--azul-fondo);
-      padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 2px;
+      font-size: 10px;
+      color: var(--ink-400);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
     .user-avatar {
-      width: 40px; height: 40px;
-      background: linear-gradient(135deg, var(--azul-brillante), var(--azul-primario));
-      color: var(--blanco);
+      width: 30px; height: 30px;
+      background: var(--ink-900);
+      color: var(--paper);
       display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
       border-radius: 50%;
-      font-weight: 700; font-size: 14px;
+      letter-spacing: 0;
     }
     .btn-logout {
-      background: transparent;
-      border: 1.5px solid var(--gris-borde);
-      color: var(--gris-texto);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-family: var(--font-sans); font-size: 12px; font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-      margin-left: 8px;
+      height: 34px;
+      padding: 0 14px;
+      background: var(--paper);
+      color: var(--ink-700);
+      font-size: 12px;
+      font-weight: 500;
+      border: 1px solid var(--ink-100);
+      border-radius: var(--r-md);
+      transition: all var(--dur) var(--ease);
     }
     .btn-logout:hover {
-      border-color: var(--rojo); color: var(--rojo);
+      background: var(--ink-50);
+      color: var(--ink-900);
+      border-color: var(--ink-200);
     }
 
-    /* Modules grid */
+    /* — Hero / Welcome — */
+    .portal-hero {
+      margin-bottom: 40px;
+    }
+    .portal-hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-400);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .portal-hero-eyebrow::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--ink-100);
+    }
+    .portal-hero-title {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--ink-900);
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .portal-hero-title em {
+      font-style: normal;
+      color: var(--ink-400);
+      font-weight: 500;
+    }
+    .portal-hero-desc {
+      font-size: 15px;
+      color: var(--ink-500);
+      max-width: 560px;
+      line-height: 1.55;
+    }
+
+    /* — Modules Grid — */
+    .modules-section-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .modules-section-label .lbl {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-500);
+    }
+    .modules-section-label .count {
+      font-size: 11px;
+      color: var(--ink-400);
+      font-family: var(--font-mono);
+    }
+
     .modules-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
     }
 
-    .module-card {
-      background: var(--blanco);
-      border: 1px solid var(--azul-suave);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-      position: relative;
-    }
-    .module-card.active:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(24, 95, 165, 0.18); }
-
-    .module-visual {
-      height: 200px;
-      background: linear-gradient(135deg, var(--azul-fondo-2) 0%, var(--azul-fondo) 100%);
-      position: relative;
-      overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .module-visual::before {
-      content: "";
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(24,95,165,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(24,95,165,0.05) 1px, transparent 1px);
-      background-size: 20px 20px;
-    }
-
-    .status-badge {
-      position: absolute; top: 12px; left: 12px;
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      z-index: 3;
-    }
-    .status-badge.active { color: var(--verde-brand); }
-    .status-badge.pending { color: var(--amber); }
-    .status-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-    }
-    .status-dot.green { background: var(--verde-brand); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25); animation: pulseDot 2s ease-in-out infinite; }
-    .status-dot.amber { background: var(--amber); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25); animation: pulseDot 2s ease-in-out infinite; }
-    @keyframes pulseDot {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    /* Safe 3D animation - active module */
-    .safe-stage { position: relative; z-index: 2; }
-    .safe-container { animation: bob 4s ease-in-out infinite; }
-    @keyframes bob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-    .safe-svg { width: 160px; height: 160px; }
-
-    .coin {
-      position: absolute;
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #FEF08A, #FBBF24 60%, #B45309);
-      box-shadow: 0 0 8px rgba(251, 191, 36, 0.6);
-      opacity: 0;
-    }
-    .coin-1 { top: 50%; left: 50%; animation: coinOut1 3.8s ease-out infinite 0s; }
-    .coin-2 { top: 50%; left: 50%; animation: coinOut2 3.8s ease-out infinite 0.5s; }
-    .coin-3 { top: 50%; left: 50%; animation: coinOut3 3.8s ease-out infinite 1s; }
-    .coin-4 { top: 50%; left: 50%; animation: coinOut4 3.8s ease-out infinite 1.5s; }
-    .coin-5 { top: 50%; left: 50%; animation: coinOut5 3.8s ease-out infinite 2s; }
-    .coin-6 { top: 50%; left: 50%; animation: coinOut6 3.8s ease-out infinite 2.5s; }
-
-    @keyframes coinOut1 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-180%, -180%) scale(0.3); opacity: 0; } }
-    @keyframes coinOut2 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(80%, -180%) scale(0.3); opacity: 0; } }
-    @keyframes coinOut3 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-180%, 80%) scale(0.3); opacity: 0; } }
-    @keyframes coinOut4 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(80%, 80%) scale(0.3); opacity: 0; } }
-    @keyframes coinOut5 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-220%, -50%) scale(0.3); opacity: 0; } }
-    @keyframes coinOut6 { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(120%, -50%) scale(0.3); opacity: 0; } }
-
-    /* Pending module visual - roadmap style */
-    .roadmap-visual { display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
-    .roadmap-icon {
-      width: 80px; height: 80px;
-      background: var(--blanco);
-      border: 2px dashed var(--azul-suave);
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px;
-      opacity: 0.7;
-    }
-
-    .module-body { padding: 20px; }
-    .module-name { font-size: 17px; font-weight: 700; color: var(--gris-oscuro); margin-bottom: 4px; letter-spacing: -0.2px; }
-    .module-desc { font-size: 12px; color: var(--gris-texto); line-height: 1.5; margin-bottom: 16px; min-height: 36px; }
-
-    .module-meta {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px;
-      font-size: 11px;
-    }
-    .module-version {
-      font-family: var(--font-mono); color: var(--azul-primario);
-      background: var(--azul-fondo); padding: 3px 8px; border-radius: 4px;
-    }
-    .module-eta {
-      color: var(--amber); font-weight: 600;
-      background: var(--amber-suave); padding: 3px 8px; border-radius: 4px;
-    }
-
-    .progress-track {
-      height: 6px;
-      background: var(--azul-fondo);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 14px;
-    }
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--amber), #FBBF24);
-      border-radius: 3px;
-      transition: width 1s ease-out;
-    }
-
-    .btn-module {
-      width: 100%; padding: 11px 16px;
-      background: linear-gradient(135deg, var(--azul-primario), var(--azul-oscuro));
-      color: var(--blanco);
-      border: none; border-radius: 8px;
-      font-family: var(--font-sans); font-weight: 600; font-size: 13px;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.2s;
-    }
-    .btn-module:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(24, 95, 165, 0.35); }
-    .btn-module-pending {
-      background: var(--blanco);
-      color: var(--gris-texto);
-      border: 1.5px solid var(--gris-borde);
-      cursor: pointer;
-    }
-    .btn-module-pending:hover {
-      border-color: var(--amber); color: var(--amber);
-      transform: none; box-shadow: none;
-    }
-    .btn-module-pending.notified {
-      background: var(--amber-suave); color: var(--amber);
-      border-color: var(--amber);
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed; bottom: 24px; left: 50%;
-      transform: translateX(-50%) translateY(120px);
-      background: var(--azul-oscuro);
-      color: var(--blanco);
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 13px;
-      display: flex; align-items: center; gap: 10px;
-      opacity: 0;
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
-      z-index: 100;
-      box-shadow: 0 12px 32px rgba(4, 44, 83, 0.25);
-    }
-    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-    /* Responsive */
-    @media (max-width: 640px) {
-      .portal-shell { padding: 20px 16px; }
-      .portal-header { flex-direction: column; gap: 14px; align-items: flex-start; }
+    @media (max-width: 780px) {
       .modules-grid { grid-template-columns: 1fr; }
-      .login-card { padding: 32px 24px; }
-      .user-info { text-align: left; }
+      .portal-shell { padding: 0 20px 60px; }
+      .portal-hero-title { font-size: 26px; }
     }
+
+    /* — Module Card — */
+    .mod-card {
+      background: var(--paper);
+      border: 1px solid var(--ink-100);
+      border-radius: var(--r-xl);
+      padding: 28px;
+      transition: border-color var(--dur) var(--ease),
+                  transform var(--dur) var(--ease),
+                  box-shadow var(--dur) var(--ease);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 320px;
+    }
+    .mod-card:hover {
+      border-color: var(--ink-200);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .mod-card[data-status="active"] {
+      background:
+        linear-gradient(180deg, var(--paper) 0%, var(--paper) 100%);
+    }
+    .mod-card[data-status="active"]::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 20px; right: 20px;
+      height: 2px;
+      background: var(--ink-900);
+      border-radius: 2px;
+    }
+
+    .mod-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .mod-icon {
+      width: 44px; height: 44px;
+      background: var(--ink-50);
+      border-radius: var(--r-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-700);
+      transition: all var(--dur) var(--ease);
+    }
+    .mod-card[data-status="active"] .mod-icon {
+      background: var(--ink-900);
+      color: var(--paper);
+    }
+    .mod-icon svg {
+      width: 22px; height: 22px;
+      stroke-width: 1.75;
+    }
+
+    .mod-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--ink-50);
+      color: var(--ink-500);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 999px;
+    }
+    .mod-status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--ink-300);
+    }
+    .mod-card[data-status="active"] .mod-status {
+      background: var(--success-soft);
+      color: var(--success);
+    }
+    .mod-card[data-status="active"] .mod-status-dot {
+      background: var(--success);
+      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15); }
+      50%      { box-shadow: 0 0 0 5px rgba(5, 150, 105, 0.08); }
+    }
+
+    .mod-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink-900);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .mod-desc {
+      font-size: 13.5px;
+      color: var(--ink-500);
+      line-height: 1.55;
+      margin-bottom: 22px;
+    }
+
+    .mod-meta {
+      display: flex;
+      gap: 24px;
+      padding: 14px 0;
+      border-top: 1px solid var(--ink-100);
+      margin-bottom: 18px;
+    }
+    .mod-meta-item { display: flex; flex-direction: column; gap: 2px; }
+    .mod-meta-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-400);
+    }
+    .mod-meta-value {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--ink-800);
+      font-family: var(--font-mono);
+    }
+
+    .mod-progress-track {
+      height: 3px;
+      background: var(--ink-100);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    .mod-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--ink-700), var(--ink-500));
+      border-radius: 999px;
+      transition: width 600ms var(--ease);
+    }
+
+    .mod-actions {
+      margin-top: auto;
+    }
+
+    .btn-mod {
+      width: 100%;
+      height: 42px;
+      padding: 0 16px;
+      font-size: 13.5px;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      border-radius: var(--r-md);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all var(--dur) var(--ease);
+      border: 1px solid transparent;
+    }
+    .btn-mod-primary {
+      background: var(--ink-900);
+      color: var(--paper);
+    }
+    .btn-mod-primary:hover {
+      background: var(--ink-700);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-mod-primary svg { width: 14px; height: 14px; stroke-width: 2; }
+
+    .btn-mod-ghost {
+      background: var(--paper);
+      color: var(--ink-700);
+      border-color: var(--ink-200);
+    }
+    .btn-mod-ghost:hover {
+      background: var(--ink-50);
+      border-color: var(--ink-300);
+      color: var(--ink-900);
+    }
+    .btn-mod-ghost.notified {
+      background: var(--success-soft);
+      color: var(--success);
+      border-color: var(--success-line);
+    }
+
+    /* ═══════════════════════ TOAST ═══════════════════════ */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--ink-900);
+      color: var(--paper);
+      padding: 12px 20px;
+      border-radius: var(--r-md);
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: transform var(--dur-slow) var(--ease), opacity var(--dur-slow) var(--ease);
+      z-index: 100;
+      pointer-events: none;
+      box-shadow: var(--shadow-lg);
+      max-width: calc(100% - 40px);
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .toast svg { width: 16px; height: 16px; color: var(--success-line); }
+
   </style>
 </head>
 <body>
@@ -411,72 +778,118 @@
   <div id="stateLoading" class="state active">
     <div class="loader-box">
       <div class="loader-spinner"></div>
-      <div class="loader-text">Iniciando SIF · MI Global</div>
+      <div class="loader-text">Iniciando</div>
     </div>
   </div>
 
   <!-- ═══════════ STATE : LOGIN ═══════════ -->
   <div id="stateLogin" class="state">
-    <div class="login-card">
-      <div class="login-brand">
-        <div class="login-brand-logo">MI</div>
-        <div>
-          <div class="login-brand-title">SIF · MI Global</div>
-          <div class="login-brand-sub">Sistema de Información Financiera</div>
+    <div class="login-shell">
+
+      <!-- Left: brand / editorial pane -->
+      <div class="login-pane-brand">
+        <div class="brand-mark">
+          <div class="brand-mark-logo">MI</div>
+          <div class="brand-mark-wordmark">MI Global <span class="dim">/ SIF</span></div>
+        </div>
+
+        <div class="brand-hero">
+          <div class="brand-hero-eyebrow">Sistema de Información Financiera</div>
+          <h1 class="brand-hero-title">
+            Una plataforma. <em>Toda la operación financiera.</em>
+          </h1>
+          <p class="brand-hero-desc">
+            Flujo, contabilidad, nóminas y fiscal — en un solo lugar,
+            con una sola sesión, para el equipo financiero de MI Global.
+          </p>
+        </div>
+
+        <div class="brand-footer">
+          <span>TIJUANA, B.C.</span>
+          <span>v<span id="portalVersion">2026.07.05.2</span></span>
         </div>
       </div>
 
-      <div class="login-heading">Iniciar sesión</div>
-      <div class="login-sub">Ingresa tus credenciales corporativas para acceder a los módulos.</div>
+      <!-- Right: form pane -->
+      <div class="login-pane-form">
+        <div class="login-form-wrap">
+          <h2 class="login-heading">Iniciar sesión</h2>
+          <p class="login-sub">Ingresa tus credenciales corporativas para acceder a los módulos.</p>
 
-      <div class="field">
-        <label class="field-label" for="loginUser">Usuario</label>
-        <input type="text" id="loginUser" class="field-input" autocomplete="username" placeholder="ej. jcgonzalez" autofocus>
-      </div>
+          <div class="field">
+            <label class="field-label" for="loginUser">Usuario</label>
+            <input type="text" id="loginUser" class="field-input" autocomplete="username" placeholder="ej. jcgonzalez" autofocus>
+          </div>
 
-      <div class="field">
-        <label class="field-label" for="loginPwd">Contraseña</label>
-        <input type="password" id="loginPwd" class="field-input" autocomplete="current-password" placeholder="••••••••">
-      </div>
+          <div class="field">
+            <label class="field-label" for="loginPwd">Contraseña</label>
+            <input type="password" id="loginPwd" class="field-input" autocomplete="current-password" placeholder="••••••••">
+          </div>
 
-      <button id="btnLogin" class="btn-primary">Iniciar sesión</button>
+          <button id="btnLogin" class="btn-primary">
+            <span>Iniciar sesión</span>
+            <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
 
-      <div id="loginError" class="login-error"></div>
+          <div id="loginError" class="login-error"></div>
 
-      <div class="login-footer">
-        MI GLOBAL &middot; TIJUANA &middot; Portal v<span id="portalVersion">2026.07.05.1</span>
+          <div class="login-footer-mobile">
+            MI GLOBAL · TIJUANA
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- ═══════════ STATE : CHANGE PASSWORD ═══════════ -->
   <div id="stateChangePwd" class="state">
-    <div style="display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px;">
-      <div class="login-card">
-        <div class="login-brand">
-          <div class="login-brand-logo">MI</div>
-          <div>
-            <div class="login-brand-title">Cambio obligatorio</div>
-            <div class="login-brand-sub">Debes actualizar tu contraseña</div>
+    <div class="login-shell">
+
+      <div class="login-pane-brand">
+        <div class="brand-mark">
+          <div class="brand-mark-logo">MI</div>
+          <div class="brand-mark-wordmark">MI Global <span class="dim">/ SIF</span></div>
+        </div>
+
+        <div class="brand-hero">
+          <div class="brand-hero-eyebrow">Seguridad · Primer acceso</div>
+          <h1 class="brand-hero-title">
+            Actualiza tu contraseña <em>antes de continuar.</em>
+          </h1>
+          <p class="brand-hero-desc">
+            Por política de seguridad, la contraseña temporal debe
+            reemplazarse en el primer inicio de sesión.
+          </p>
+        </div>
+
+        <div class="brand-footer">
+          <span>TIJUANA, B.C.</span>
+          <span>SEGURIDAD</span>
+        </div>
+      </div>
+
+      <div class="login-pane-form">
+        <div class="login-form-wrap">
+          <h2 class="login-heading">Nueva contraseña</h2>
+          <p class="login-sub">Mínimo 8 caracteres. Guarda tu nueva contraseña en un lugar seguro.</p>
+
+          <div class="field">
+            <label class="field-label" for="pwdNew1">Nueva contraseña</label>
+            <input type="password" id="pwdNew1" class="field-input" placeholder="Mínimo 8 caracteres">
           </div>
+
+          <div class="field">
+            <label class="field-label" for="pwdNew2">Confirmar contraseña</label>
+            <input type="password" id="pwdNew2" class="field-input" placeholder="Repite la contraseña">
+          </div>
+
+          <button id="btnChangePwd" class="btn-primary">
+            <span>Actualizar y continuar</span>
+            <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div id="changePwdError" class="login-error"></div>
         </div>
-
-        <div class="login-heading">Nueva contraseña</div>
-        <div class="login-sub">Por seguridad, cambia la contraseña temporal antes de continuar.</div>
-
-        <div class="field">
-          <label class="field-label" for="pwdNew1">Nueva contraseña</label>
-          <input type="password" id="pwdNew1" class="field-input" placeholder="Mínimo 8 caracteres">
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="pwdNew2">Confirmar contraseña</label>
-          <input type="password" id="pwdNew2" class="field-input" placeholder="Repite la contraseña">
-        </div>
-
-        <button id="btnChangePwd" class="btn-primary">Actualizar y continuar</button>
-
-        <div id="changePwdError" class="login-error"></div>
       </div>
     </div>
   </div>
@@ -486,155 +899,219 @@
     <div class="portal-shell">
 
       <header class="portal-header">
-        <div class="brand">
-          <div class="brand-logo">MI</div>
-          <div>
-            <div class="brand-title">SIF · MI GLOBAL</div>
-            <div class="brand-sub">Sistema de información financiera</div>
+        <div class="brand-h">
+          <div class="brand-h-logo">MI</div>
+          <div class="brand-h-text">
+            <span class="brand-h-title">SIF · MI Global</span>
+            <span class="brand-h-sub">Sistema de Información Financiera</span>
           </div>
         </div>
-        <div class="user-badge">
-          <div class="user-info">
-            <div class="name" id="userName">—</div>
-            <div class="role" id="userRole">—</div>
+        <div class="user-cluster">
+          <div class="user-pill">
+            <div class="user-info">
+              <div class="name" id="userName">—</div>
+              <div class="role" id="userRole">—</div>
+            </div>
+            <div class="user-avatar" id="userAvatar">—</div>
           </div>
-          <div class="user-avatar" id="userAvatar">—</div>
           <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
         </div>
       </header>
 
+      <section class="portal-hero">
+        <div class="portal-hero-eyebrow">
+          <span>Panel principal</span>
+        </div>
+        <h1 class="portal-hero-title">
+          Bienvenido, <em id="heroFirstName">—</em>
+        </h1>
+        <p class="portal-hero-desc">
+          Selecciona un módulo para continuar. Los módulos en desarrollo
+          aparecerán habilitados conforme se liberen a producción.
+        </p>
+      </section>
+
+      <div class="modules-section-label">
+        <span class="lbl">Módulos</span>
+        <span class="count">04 · 01 activo</span>
+      </div>
+
       <div class="modules-grid">
 
         <!-- MODULE 1 : FLUJO Y GASTOS (ACTIVE) -->
-        <div class="module-card active">
-          <div class="module-visual">
-            <div class="status-badge active">
-              <span class="status-dot green"></span>
-              ACTIVO
+        <article class="mod-card" data-status="active">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <!-- monoline: trending line -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 17l6-6 4 4 8-8"/>
+                <path d="M14 7h7v7"/>
+              </svg>
             </div>
-            <div class="safe-stage">
-              <div class="safe-container">
-                <svg class="safe-svg" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-                  <ellipse cx="70" cy="130" rx="34" ry="4" fill="#000" opacity="0.25"/>
-                  <polygon points="30,42 70,22 110,42 70,62" fill="#185FA5" stroke="#B5D4F4" stroke-width="1"/>
-                  <polygon points="35,44 70,26 105,44 70,58" fill="#3F7BC0" opacity="0.6"/>
-                  <polygon points="110,42 110,102 70,122 70,62" fill="#0C447C" stroke="#B5D4F4" stroke-width="1"/>
-                  <line x1="80" y1="68" x2="80" y2="115" stroke="#185FA5" stroke-width="0.5" opacity="0.5"/>
-                  <line x1="90" y1="63" x2="90" y2="112" stroke="#185FA5" stroke-width="0.5" opacity="0.5"/>
-                  <line x1="100" y1="58" x2="100" y2="108" stroke="#185FA5" stroke-width="0.5" opacity="0.5"/>
-                  <polygon points="30,42 70,62 70,122 30,102" fill="#FFFFFF" stroke="#B5D4F4" stroke-width="1"/>
-                  <circle cx="50" cy="82" r="10" fill="none" stroke="#185FA5" stroke-width="1.5"/>
-                  <circle cx="50" cy="82" r="6" fill="none" stroke="#378ADD" stroke-width="1"/>
-                  <circle cx="50" cy="82" r="1.5" fill="#0C447C"/>
-                  <line x1="50" y1="72" x2="50" y2="74" stroke="#0C447C" stroke-width="1"/>
-                  <line x1="50" y1="90" x2="50" y2="92" stroke="#0C447C" stroke-width="1"/>
-                  <line x1="40" y1="82" x2="42" y2="82" stroke="#0C447C" stroke-width="1"/>
-                  <line x1="58" y1="82" x2="60" y2="82" stroke="#0C447C" stroke-width="1"/>
-                  <rect x="55" y="95" width="8" height="3" rx="1" fill="#185FA5"/>
-                  <circle cx="35" cy="52" r="1.5" fill="#185FA5"/>
-                  <circle cx="35" cy="95" r="1.5" fill="#185FA5"/>
-                </svg>
-              </div>
-              <div class="coin coin-1"></div>
-              <div class="coin coin-2"></div>
-              <div class="coin coin-3"></div>
-              <div class="coin coin-4"></div>
-              <div class="coin coin-5"></div>
-              <div class="coin coin-6"></div>
-            </div>
-          </div>
-          <div class="module-body">
-            <div class="module-name">Flujo y Gastos</div>
-            <div class="module-desc">Control de flujo de efectivo, cuentas por pagar, ingresos y presupuesto semanal.</div>
-            <div class="module-meta">
-              <span class="module-version" id="deadpoolVer">v2026.07.04.11</span>
-              <span style="color: var(--verde-brand); font-weight: 600;">✓ Producción</span>
-            </div>
-            <button class="btn-module" onclick="irADeadpool()">Entrar al módulo →</button>
-          </div>
-        </div>
+            <span class="mod-status">
+              <span class="mod-status-dot"></span>
+              Activo
+            </span>
+          </header>
 
-        <!-- MODULE 2 : CONTABILIDAD (PENDING) -->
-        <div class="module-card">
-          <div class="module-visual">
-            <div class="status-badge pending">
-              <span class="status-dot amber"></span>
-              PRÓXIMAMENTE
-            </div>
-            <div class="roadmap-visual">
-              <div class="roadmap-icon">📊</div>
-            </div>
-          </div>
-          <div class="module-body">
-            <div class="module-name">Contabilidad</div>
-            <div class="module-desc">Registro contable, pólizas, balances y estados financieros.</div>
-            <div class="module-meta">
-              <span class="module-version">Planeación</span>
-              <span class="module-eta">Q4 2026</span>
-            </div>
-            <div class="progress-track"><div class="progress-bar" style="width: 15%;"></div></div>
-            <button class="btn-module btn-module-pending" data-mod="contabilidad" onclick="notify(this,'contabilidad')">🔔 Avísame cuando esté listo</button>
-          </div>
-        </div>
+          <h2 class="mod-title">Flujo y Gastos</h2>
+          <p class="mod-desc">Control de flujo de efectivo, cuentas por pagar, ingresos y presupuesto semanal.</p>
 
-        <!-- MODULE 3 : NÓMINAS (PENDING) -->
-        <div class="module-card">
-          <div class="module-visual">
-            <div class="status-badge pending">
-              <span class="status-dot amber"></span>
-              PRÓXIMAMENTE
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="deadpoolVer">v2026.07.04.11</span>
             </div>
-            <div class="roadmap-visual">
-              <div class="roadmap-icon">👥</div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Ambiente</span>
+              <span class="mod-meta-value">Producción</span>
             </div>
           </div>
-          <div class="module-body">
-            <div class="module-name">Nóminas</div>
-            <div class="module-desc">Cálculo de nómina, prestaciones, IMSS/INFONAVIT y timbrado CFDI.</div>
-            <div class="module-meta">
-              <span class="module-version">Planeación</span>
-              <span class="module-eta">Q1 2027</span>
-            </div>
-            <div class="progress-track"><div class="progress-bar" style="width: 8%;"></div></div>
-            <button class="btn-module btn-module-pending" data-mod="nominas" onclick="notify(this,'nominas')">🔔 Avísame cuando esté listo</button>
-          </div>
-        </div>
 
-        <!-- MODULE 4 : FISCAL (PENDING) -->
-        <div class="module-card">
-          <div class="module-visual">
-            <div class="status-badge pending">
-              <span class="status-dot amber"></span>
-              PRÓXIMAMENTE
+          <div class="mod-actions">
+            <button class="btn-mod btn-mod-primary" onclick="irADeadpool()">
+              <span>Entrar al módulo</span>
+              <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- MODULE 2 : CONTABILIDAD (PLANNED) -->
+        <article class="mod-card" data-status="planned">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <!-- monoline: ledger / book -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4z"/>
+                <path d="M4 17a3 3 0 0 1 3-3h12"/>
+                <path d="M8 8h7"/>
+                <path d="M8 11h5"/>
+              </svg>
             </div>
-            <div class="roadmap-visual">
-              <div class="roadmap-icon">📋</div>
+            <span class="mod-status">
+              <span class="mod-status-dot"></span>
+              Próximamente
+            </span>
+          </header>
+
+          <h2 class="mod-title">Contabilidad</h2>
+          <p class="mod-desc">Registro contable, pólizas, balances y estados financieros.</p>
+
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Fase</span>
+              <span class="mod-meta-value">Planeación</span>
+            </div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">ETA</span>
+              <span class="mod-meta-value">Q4 · 2026</span>
             </div>
           </div>
-          <div class="module-body">
-            <div class="module-name">Fiscal</div>
-            <div class="module-desc">Recuperación de IVA, declaraciones, cumplimiento SAT y expedientes.</div>
-            <div class="module-meta">
-              <span class="module-version">Planeación</span>
-              <span class="module-eta">Q2 2027</span>
-            </div>
-            <div class="progress-track"><div class="progress-bar" style="width: 20%;"></div></div>
-            <button class="btn-module btn-module-pending" data-mod="fiscal" onclick="notify(this,'fiscal')">🔔 Avísame cuando esté listo</button>
+
+          <div class="mod-progress-track"><div class="mod-progress-bar" style="width: 15%;"></div></div>
+
+          <div class="mod-actions">
+            <button class="btn-mod btn-mod-ghost" data-mod="contabilidad" onclick="notify(this,'contabilidad')">
+              <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M10 3a5 5 0 0 0-5 5v3l-1.5 2.5A.5.5 0 0 0 4 14.5h12a.5.5 0 0 0 .5-1L15 11V8a5 5 0 0 0-5-5z M8 17a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Avísame cuando esté listo</span>
+            </button>
           </div>
-        </div>
+        </article>
+
+        <!-- MODULE 3 : NÓMINAS (PLANNED) -->
+        <article class="mod-card" data-status="planned">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <!-- monoline: people group -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="8" r="3.5"/>
+                <path d="M2.5 20a6.5 6.5 0 0 1 13 0"/>
+                <path d="M16 4.5a3.5 3.5 0 0 1 0 7"/>
+                <path d="M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>
+              </svg>
+            </div>
+            <span class="mod-status">
+              <span class="mod-status-dot"></span>
+              Próximamente
+            </span>
+          </header>
+
+          <h2 class="mod-title">Nóminas</h2>
+          <p class="mod-desc">Cálculo de nómina, prestaciones, IMSS/INFONAVIT y timbrado CFDI.</p>
+
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Fase</span>
+              <span class="mod-meta-value">Planeación</span>
+            </div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">ETA</span>
+              <span class="mod-meta-value">Q1 · 2027</span>
+            </div>
+          </div>
+
+          <div class="mod-progress-track"><div class="mod-progress-bar" style="width: 8%;"></div></div>
+
+          <div class="mod-actions">
+            <button class="btn-mod btn-mod-ghost" data-mod="nominas" onclick="notify(this,'nominas')">
+              <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M10 3a5 5 0 0 0-5 5v3l-1.5 2.5A.5.5 0 0 0 4 14.5h12a.5.5 0 0 0 .5-1L15 11V8a5 5 0 0 0-5-5z M8 17a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Avísame cuando esté listo</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- MODULE 4 : FISCAL (PLANNED) -->
+        <article class="mod-card" data-status="planned">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <!-- monoline: shield with check -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l8 3v6c0 4.5-3.2 8.5-8 9-4.8-.5-8-4.5-8-9V6l8-3z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </div>
+            <span class="mod-status">
+              <span class="mod-status-dot"></span>
+              Próximamente
+            </span>
+          </header>
+
+          <h2 class="mod-title">Fiscal</h2>
+          <p class="mod-desc">Recuperación de IVA, declaraciones, cumplimiento SAT y expedientes.</p>
+
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Fase</span>
+              <span class="mod-meta-value">Planeación</span>
+            </div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">ETA</span>
+              <span class="mod-meta-value">Q2 · 2027</span>
+            </div>
+          </div>
+
+          <div class="mod-progress-track"><div class="mod-progress-bar" style="width: 20%;"></div></div>
+
+          <div class="mod-actions">
+            <button class="btn-mod btn-mod-ghost" data-mod="fiscal" onclick="notify(this,'fiscal')">
+              <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M10 3a5 5 0 0 0-5 5v3l-1.5 2.5A.5.5 0 0 0 4 14.5h12a.5.5 0 0 0 .5-1L15 11V8a5 5 0 0 0-5-5z M8 17a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Avísame cuando esté listo</span>
+            </button>
+          </div>
+        </article>
 
       </div>
     </div>
   </div>
 
   <div id="toast" class="toast">
-    <span id="toastIcon">✓</span>
+    <svg viewBox="0 0 20 20" fill="none"><path d="M5 10l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span id="toastMsg">Listo</span>
   </div>
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.05.1';
+    const APP_VERSION = '2026.07.05.2';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -697,7 +1174,10 @@
 
       if (!usr || !pwd) { showLoginError('Ingresa usuario y contraseña.'); return; }
 
-      btn.disabled = true; btn.textContent = 'Autenticando…';
+      btn.disabled = true;
+      const btnLabel = btn.querySelector('span');
+      const btnOriginalText = btnLabel.textContent;
+      btnLabel.textContent = 'Autenticando…';
       try {
         const email = usr + '@mitech.local';
         const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
@@ -706,7 +1186,7 @@
             ? 'Usuario o contraseña incorrectos.'
             : error.message;
           showLoginError(msg);
-          btn.disabled = false; btn.textContent = 'Iniciar sesión';
+          btn.disabled = false; btnLabel.textContent = btnOriginalText;
           return;
         }
         await loadUserAndRoute(data.user.id);
@@ -714,7 +1194,7 @@
         console.error('doLogin error:', e);
         showLoginError('Error de red: ' + e.message);
       } finally {
-        btn.disabled = false; btn.textContent = 'Iniciar sesión';
+        btn.disabled = false; btnLabel.textContent = btnOriginalText;
       }
     }
 
@@ -735,10 +1215,13 @@
       if (p1.length < 8) { showChangeErr('La contraseña debe tener al menos 8 caracteres.'); return; }
       if (p1 !== p2)    { showChangeErr('Las contraseñas no coinciden.'); return; }
 
-      btn.disabled = true; btn.textContent = 'Actualizando…';
+      btn.disabled = true;
+      const btnLabel = btn.querySelector('span');
+      const btnOriginalText = btnLabel.textContent;
+      btnLabel.textContent = 'Actualizando…';
       try {
         const { error: upErr } = await sb.auth.updateUser({ password: p1 });
-        if (upErr) { showChangeErr('Error: ' + upErr.message); btn.disabled = false; btn.textContent = 'Actualizar y continuar'; return; }
+        if (upErr) { showChangeErr('Error: ' + upErr.message); btn.disabled = false; btnLabel.textContent = btnOriginalText; return; }
         const { error: rpcErr } = await sb.rpc('clear_debe_cambiar');
         if (rpcErr) console.warn('clear_debe_cambiar RPC error:', rpcErr);
         if (pendingAuthId) await loadUserAndRoute(pendingAuthId);
@@ -746,7 +1229,7 @@
         console.error('doChangePwd error:', e);
         showChangeErr('Error inesperado: ' + e.message);
       } finally {
-        btn.disabled = false; btn.textContent = 'Actualizar y continuar';
+        btn.disabled = false; btnLabel.textContent = btnOriginalText;
       }
     }
 
@@ -770,9 +1253,12 @@
     /* ═══════════════════════ PORTAL RENDER ═══════════════════════ */
     function renderPortal() {
       if (!currentUser) return;
-      document.getElementById('userName').textContent = currentUser.nombre || currentUser.username;
+      const fullName = currentUser.nombre || currentUser.username || '';
+      const firstName = String(fullName).trim().split(/\s+/)[0] || fullName;
+      document.getElementById('userName').textContent = fullName || '—';
       document.getElementById('userRole').textContent = currentUser.rol || '—';
-      document.getElementById('userAvatar').textContent = getInitials(currentUser.nombre || currentUser.username);
+      document.getElementById('userAvatar').textContent = getInitials(fullName);
+      document.getElementById('heroFirstName').textContent = firstName;
       restoreNotifyStates();
     }
 
@@ -792,25 +1278,27 @@
     function notify(btn, mod) {
       const key = 'sif_notify_' + mod;
       const isNotified = localStorage.getItem(key) === '1';
+      const label = btn.querySelector('span');
       if (isNotified) {
         localStorage.removeItem(key);
         btn.classList.remove('notified');
-        btn.textContent = '🔔 Avísame cuando esté listo';
+        if (label) label.textContent = 'Avísame cuando esté listo';
         showToast('Notificación cancelada');
       } else {
         localStorage.setItem(key, '1');
         btn.classList.add('notified');
-        btn.textContent = '✓ Te avisaremos';
+        if (label) label.textContent = 'Te avisaremos';
         showToast('Te avisaremos cuando ' + mod + ' esté listo');
       }
     }
 
     function restoreNotifyStates() {
-      document.querySelectorAll('.btn-module-pending').forEach(btn => {
+      document.querySelectorAll('[data-mod]').forEach(btn => {
         const mod = btn.getAttribute('data-mod');
         if (mod && localStorage.getItem('sif_notify_' + mod) === '1') {
           btn.classList.add('notified');
-          btn.textContent = '✓ Te avisaremos';
+          const label = btn.querySelector('span');
+          if (label) label.textContent = 'Te avisaremos';
         }
       });
     }
