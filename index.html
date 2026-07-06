@@ -942,7 +942,7 @@
 
       <div class="modules-section-label">
         <span class="lbl">Módulos</span>
-        <span class="count">04 · 01 activo</span>
+        <span class="count">04 · 02 activos</span>
       </div>
 
       <div class="modules-grid">
@@ -1069,8 +1069,8 @@
           </div>
         </article>
 
-        <!-- MODULE 4 : FISCAL (PLANNED) -->
-        <article class="mod-card" data-status="planned">
+        <!-- MODULE 4 : FISCAL (ACTIVE) -->
+        <article class="mod-card" data-status="active">
           <header class="mod-head">
             <div class="mod-icon">
               <!-- monoline: shield with check -->
@@ -1081,30 +1081,28 @@
             </div>
             <span class="mod-status">
               <span class="mod-status-dot"></span>
-              Próximamente
+              Activo
             </span>
           </header>
 
           <h2 class="mod-title">Fiscal</h2>
-          <p class="mod-desc">Recuperación de IVA, declaraciones, cumplimiento SAT y expedientes.</p>
+          <p class="mod-desc">Calendario SAT, cálculo de ISR/IVA, control de CFDI, provisiones y deuda fiscal con multas, recargos y actualización.</p>
 
           <div class="mod-meta">
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Fase</span>
-              <span class="mod-meta-value">Planeación</span>
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="fiscalVer">v2026.07.06.1</span>
             </div>
             <div class="mod-meta-item">
-              <span class="mod-meta-label">ETA</span>
-              <span class="mod-meta-value">Q2 · 2027</span>
+              <span class="mod-meta-label">Ambiente</span>
+              <span class="mod-meta-value">Producción</span>
             </div>
           </div>
 
-          <div class="mod-progress-track"><div class="mod-progress-bar" style="width: 20%;"></div></div>
-
           <div class="mod-actions">
-            <button class="btn-mod btn-mod-ghost" data-mod="fiscal" onclick="notify(this,'fiscal')">
-              <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M10 3a5 5 0 0 0-5 5v3l-1.5 2.5A.5.5 0 0 0 4 14.5h12a.5.5 0 0 0 .5-1L15 11V8a5 5 0 0 0-5-5z M8 17a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Avísame cuando esté listo</span>
+            <button class="btn-mod btn-mod-primary" onclick="irAFiscal()">
+              <span>Entrar al módulo</span>
+              <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
         </article>
@@ -1120,10 +1118,11 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.05.4';
+    const APP_VERSION = '2026.07.06.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
+    const FISCAL_URL    = 'https://jcgt1976.github.io/Fiscal/';
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
       auth: { persistSession: true, autoRefreshToken: true, storage: window.localStorage }
@@ -1133,7 +1132,7 @@
     let pendingAuthId = null;
 
     /* Escuchar cambios de sesión: si un logout ocurre en otra pestaña o
-       módulo (Deadpool, etc), llega SIGNED_OUT aquí y regresamos al login. */
+       módulo (Deadpool, Fiscal, etc), llega SIGNED_OUT aquí y regresamos al login. */
     sb.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_OUT' && currentUser) {
         currentUser = null;
@@ -1292,6 +1291,9 @@
     function irADeadpool() {
       window.location.href = DEADPOOL_URL;
     }
+    function irAFiscal() {
+      window.location.href = FISCAL_URL;
+    }
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
     function notify(btn, mod) {
@@ -1346,6 +1348,7 @@
     /* Expose to window for onclick handlers */
     window.doLogout = doLogout;
     window.irADeadpool = irADeadpool;
+    window.irAFiscal = irAFiscal;
     window.notify = notify;
   </script>
 </body>
