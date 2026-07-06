@@ -932,7 +932,7 @@
           <span>Panel principal</span>
         </div>
         <h1 class="portal-hero-title">
-          Bienvenido, <em id="heroFirstName">—</em>
+          <span id="heroSaludo">Bienvenido</span>, <em id="heroFirstName">—</em>
         </h1>
         <p class="portal-hero-desc">
           Selecciona un módulo para continuar. Los módulos en desarrollo
@@ -1277,7 +1277,20 @@
       document.getElementById('userRole').textContent = currentUser.rol || '—';
       document.getElementById('userAvatar').textContent = getInitials(fullName);
       document.getElementById('heroFirstName').textContent = firstName;
+      document.getElementById('heroSaludo').textContent = guessSaludo(firstName);
       restoreNotifyStates();
+    }
+
+    /* Heurística simple por terminación del nombre (es-MX): termina en 'a' =>
+       "Bienvenida", salvo excepciones comunes de nombres masculinos en 'a'.
+       No es infalible; si se prefiere, se puede reemplazar más adelante por
+       un campo explícito de género en la tabla 'usuarios'. */
+    const NOMBRES_MASCULINOS_EN_A = ['LUCA','NOA','JOSUA','ELISHA'];
+    function guessSaludo(nombre) {
+      const n = String(nombre || '').trim().toUpperCase();
+      if (!n) return 'Bienvenido';
+      if (NOMBRES_MASCULINOS_EN_A.includes(n)) return 'Bienvenido';
+      return n.endsWith('A') ? 'Bienvenida' : 'Bienvenido';
     }
 
     function getInitials(nom) {
