@@ -779,6 +779,112 @@
     }
     .toast svg { width: 16px; height: 16px; color: var(--success-line); }
 
+    /* ═══════════════════════ BOTÓN ADMIN: USUARIOS ═══════════════════════ */
+    .btn-users-admin {
+      height: 34px; padding: 0 14px; background: var(--paper); color: var(--brand-800);
+      font-size: 12.5px; font-weight: 500; border: 1px solid var(--accent-line);
+      border-radius: var(--r-md); display: inline-flex; align-items: center; gap: 6px;
+      transition: all var(--dur) var(--ease);
+    }
+    .btn-users-admin:hover { background: var(--brand-50); border-color: var(--brand-700); }
+
+    /* ═══════════════════════ MOD-CARD: EN CONSTRUCCIÓN ═══════════════════════ */
+    .mod-card[data-status="construction"]::before {
+      content: ""; position: absolute; top: 0; left: 20px; right: 20px;
+      height: 2px; background: var(--warning); border-radius: 2px;
+    }
+    .mod-card[data-status="construction"] .mod-icon { background: var(--warning-soft); color: var(--warning); }
+    .mod-card[data-status="construction"] .mod-status { background: var(--warning-soft); color: var(--warning); }
+    .mod-card[data-status="construction"] .mod-status-dot { background: var(--warning); }
+
+    /* ═══════════════════════ USUARIOS (admin) ═══════════════════════ */
+    #stateUsuarios { background: var(--ink-25); }
+
+    .usu-section-label { display: flex; align-items: baseline; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .usu-section-label .lbl { font-size: 20px; font-weight: 700; color: var(--ink-900); letter-spacing: -0.02em; }
+    .usu-section-label .sub { font-size: 12.5px; color: var(--ink-400); }
+
+    .btn-back {
+      height: 34px; padding: 0 14px; background: var(--paper); color: var(--ink-700);
+      font-size: 12.5px; font-weight: 500; border: 1px solid var(--ink-100); border-radius: var(--r-md);
+      display: inline-flex; align-items: center; gap: 6px; transition: all var(--dur) var(--ease);
+    }
+    .btn-back:hover { background: var(--ink-50); border-color: var(--ink-200); }
+
+    .usu-shell { display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: start; padding-bottom: 60px; }
+    @media (max-width: 780px) { .usu-shell { grid-template-columns: 1fr; } }
+
+    .usu-list-label { font-size: 11px; font-weight: 600; color: var(--ink-400); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+
+    .usu-card {
+      background: var(--paper); border: 1px solid var(--ink-100); border-radius: var(--r-lg);
+      padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: all var(--dur) var(--ease);
+    }
+    .usu-card:hover { border-color: var(--ink-200); }
+    .usu-card.active { border-color: var(--brand-700); box-shadow: var(--shadow-sm); }
+    .usu-card.inactive { opacity: 0.5; }
+    .usu-card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .usu-card-name { font-size: 13px; font-weight: 600; color: var(--ink-900); }
+    .usu-card-user { font-size: 11px; color: var(--ink-400); margin-top: 1px; }
+    .usu-card-inactive-tag { font-size: 10px; color: var(--danger); margin-top: 4px; }
+
+    .usu-add {
+      border: 1px dashed var(--ink-200); border-radius: var(--r-lg); padding: 12px;
+      text-align: center; color: var(--ink-400); font-size: 12.5px; cursor: pointer;
+      transition: all var(--dur) var(--ease);
+    }
+    .usu-add:hover { border-color: var(--brand-700); color: var(--brand-800); background: var(--brand-50); }
+
+    .usu-role-pill { border-radius: 999px; padding: 2px 9px; font-size: 10px; font-weight: 700; border: 1px solid transparent; letter-spacing: 0.02em; }
+
+    .usu-detail { background: var(--paper); border: 1px solid var(--ink-100); border-radius: var(--r-xl); padding: 24px; }
+    .usu-detail-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; gap: 10px; flex-wrap: wrap; }
+    .usu-detail-name { font-size: 18px; font-weight: 700; color: var(--ink-900); letter-spacing: -0.01em; }
+    .usu-detail-user { font-size: 12px; color: var(--ink-400); margin-top: 2px; }
+
+    .usu-btn {
+      height: 30px; padding: 0 12px; font-size: 11.5px; font-weight: 600; border-radius: var(--r-md);
+      border: 1px solid var(--ink-100); background: var(--paper); color: var(--ink-600);
+      cursor: pointer; transition: all var(--dur) var(--ease);
+    }
+    .usu-btn:hover { background: var(--ink-50); }
+    .usu-btn-toggle-on { background: var(--success-soft); border-color: var(--success-line); color: var(--success); }
+    .usu-btn-toggle-off { background: var(--danger-soft); border-color: var(--danger-line); color: var(--danger); }
+
+    .usu-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--ink-100); margin-bottom: 18px; flex-wrap: wrap; }
+    .usu-tab { padding: 8px 16px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--ink-400); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all var(--dur) var(--ease); }
+    .usu-tab.active { color: var(--brand-800); border-bottom-color: var(--brand-800); }
+
+    .usu-field-label { font-size: 11px; color: var(--ink-400); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .usu-role-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .usu-role-opt {
+      border-radius: var(--r-md); padding: 6px 14px; font-size: 12px; font-weight: 700;
+      border: 1px solid var(--ink-100); color: var(--ink-400); cursor: pointer; transition: all var(--dur) var(--ease);
+    }
+    .usu-role-opt:hover { border-color: var(--ink-300); }
+    .usu-role-opt.locked { cursor: not-allowed; opacity: 0.6; }
+
+    .usu-perms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 560px) { .usu-perms-grid { grid-template-columns: 1fr; } }
+    .usu-perm-item {
+      background: var(--ink-25); border: 1px solid var(--ink-100); border-radius: var(--r-md);
+      padding: 9px 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all var(--dur) var(--ease);
+    }
+    .usu-perm-item.on { background: var(--success-soft); border-color: var(--success-line); }
+    .usu-perm-item.locked { cursor: not-allowed; }
+    .usu-perm-label { font-size: 12px; font-weight: 600; color: var(--ink-700); }
+    .usu-perm-desc { font-size: 10px; color: var(--ink-400); }
+    .usu-switch { width: 32px; height: 18px; border-radius: 9px; background: var(--ink-200); position: relative; flex-shrink: 0; transition: background var(--dur) var(--ease); }
+    .usu-switch.on { background: var(--success); }
+    .usu-switch-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--paper); position: absolute; top: 3px; left: 3px; transition: left var(--dur) var(--ease); box-shadow: var(--shadow-xs); }
+    .usu-switch.on .usu-switch-dot { left: 17px; }
+
+    .usu-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    @media (max-width: 560px) { .usu-form-grid { grid-template-columns: 1fr; } }
+
+    .usu-empty { color: var(--ink-400); padding: 40px; text-align: center; font-size: 13px; }
+
   </style>
 </head>
 <body>
@@ -923,6 +1029,10 @@
             </div>
             <div class="user-avatar" id="userAvatar">—</div>
           </div>
+          <button class="btn-users-admin" id="btnUsersAdmin" style="display:none;" onclick="abrirUsuarios()">
+            <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><circle cx="10" cy="6.5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 17c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span>Usuarios</span>
+          </button>
           <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
         </div>
       </header>
@@ -942,7 +1052,7 @@
 
       <div class="modules-section-label">
         <span class="lbl">Módulos</span>
-        <span class="count">04 · 02 activos</span>
+        <span class="count">04 · 01 activo</span>
       </div>
 
       <div class="modules-grid">
@@ -1069,8 +1179,8 @@
           </div>
         </article>
 
-        <!-- MODULE 4 : FISCAL (ACTIVE) -->
-        <article class="mod-card" data-status="active">
+        <!-- MODULE 4 : FISCAL (EN CONSTRUCCIÓN — acceso restringido a admin_master) -->
+        <article class="mod-card" data-status="construction" id="modCardFiscal">
           <header class="mod-head">
             <div class="mod-icon">
               <!-- monoline: shield with check -->
@@ -1079,9 +1189,9 @@
                 <path d="M9 12l2 2 4-4"/>
               </svg>
             </div>
-            <span class="mod-status">
+            <span class="mod-status" id="fiscalStatus">
               <span class="mod-status-dot"></span>
-              Activo
+              En construcción
             </span>
           </header>
 
@@ -1094,20 +1204,52 @@
               <span class="mod-meta-value" id="fiscalVer">v2026.07.06.1</span>
             </div>
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Ambiente</span>
-              <span class="mod-meta-value">Producción</span>
+              <span class="mod-meta-label">Acceso</span>
+              <span class="mod-meta-value">Restringido</span>
             </div>
           </div>
 
-          <div class="mod-actions">
-            <button class="btn-mod btn-mod-primary" onclick="irAFiscal()">
-              <span>Entrar al módulo</span>
-              <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="mod-progress-track"><div class="mod-progress-bar" style="width: 55%;"></div></div>
+
+          <div class="mod-actions" id="fiscalActions">
+            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
+              <span>En construcción — sin acceso</span>
             </button>
           </div>
         </article>
 
       </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ STATE : USUARIOS (admin_master) ═══════════ -->
+  <div id="stateUsuarios" class="state">
+    <div class="portal-shell">
+
+      <header class="portal-header">
+        <div class="brand-h">
+          <div class="brand-h-logo">MI</div>
+          <div class="brand-h-text">
+            <span class="brand-h-title">SIF · MI Global</span>
+            <span class="brand-h-sub">Gestión de usuarios</span>
+          </div>
+        </div>
+        <div class="user-cluster">
+          <button class="btn-back" onclick="volverAlPortal()">
+            <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M13 5L7 10l6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Volver al portal</span>
+          </button>
+          <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <div class="usu-section-label">
+        <span class="lbl">👥 Gestión de usuarios</span>
+        <span class="sub">Cuentas, roles y permisos por módulo — solo Admon Master</span>
+      </div>
+
+      <div id="usuariosPanel"><div class="usu-empty">Cargando usuarios…</div></div>
+
     </div>
   </div>
 
@@ -1118,7 +1260,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.06.1';
+    const APP_VERSION = '2026.07.07.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -1143,7 +1285,7 @@
 
     /* ═══════════════════════ STATE ROUTER ═══════════════════════ */
     function showState(name) {
-      ['Loading', 'Login', 'ChangePwd', 'Portal'].forEach(s => {
+      ['Loading', 'Login', 'ChangePwd', 'Portal', 'Usuarios'].forEach(s => {
         const el = document.getElementById('state' + s);
         if (el) el.classList.toggle('active', s === name);
       });
@@ -1279,6 +1421,20 @@
       document.getElementById('heroFirstName').textContent = firstName;
       document.getElementById('heroSaludo').textContent = guessSaludo(firstName);
       restoreNotifyStates();
+
+      // Botón de administración de usuarios: solo visible para admin_master
+      const btnUsers = document.getElementById('btnUsersAdmin');
+      if (btnUsers) btnUsers.style.display = (currentUser.rol === 'admin_master') ? 'inline-flex' : 'none';
+
+      // Fiscal en construcción: solo admin_master puede entrar mientras se termina
+      const fiscalActions = document.getElementById('fiscalActions');
+      if (fiscalActions) {
+        if (currentUser.rol === 'admin_master') {
+          fiscalActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irAFiscal()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+        } else {
+          fiscalActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción — sin acceso</span></button>`;
+        }
+      }
     }
 
     /* Heurística simple por terminación del nombre (es-MX): termina en 'a' =>
@@ -1305,6 +1461,10 @@
       window.location.href = DEADPOOL_URL;
     }
     function irAFiscal() {
+      if (!currentUser || currentUser.rol !== 'admin_master') {
+        showToast('El módulo Fiscal está en construcción. Acceso restringido.');
+        return;
+      }
       window.location.href = FISCAL_URL;
     }
 
@@ -1345,6 +1505,302 @@
       showToast._t = setTimeout(() => t.classList.remove('show'), 2600);
     }
 
+    /* ═══════════════════════════════════════════════════════════════
+       GESTIÓN DE USUARIOS (admin_master)
+       Se centraliza aquí porque /SIF-Portal/ y /Deadpool/ comparten
+       origen (jcgt1976.github.io) y la misma tabla 'usuarios' en
+       Supabase. Deadpool solo LEE permisosGet/canAccess para gatear su
+       propia UI; la escritura de cuentas y permisos vive únicamente
+       en este módulo.
+       ═══════════════════════════════════════════════════════════════ */
+
+    const PERMS_MODULOS = [
+      { id:'dashboard',  label:'📊 Dashboard',        desc:'KPIs y vista general' },
+      { id:'entradas',   label:'💵 Entradas',          desc:'Registrar ingresos' },
+      { id:'cxp',        label:'📂 CxP',              desc:'Cuentas por pagar / catálogo' },
+      { id:'plan_pagos', label:'📑 Plan de Pagos',     desc:'Ver y seleccionar plan activo' },
+      { id:'reg_pago',   label:'💳 Registrar Pago',    desc:'Marcar conceptos como pagados' },
+      { id:'gastos_det', label:'💸 Detalle Gastos',    desc:'Ver historial de pagos' },
+      { id:'reporte',    label:'📋 Reporte Semanal',   desc:'Generar y ver reporte' },
+      { id:'cierre',     label:'🔒 Cierre de Semana',  desc:'Cerrar semana y acumular arrastre' },
+      { id:'reset',      label:'♻️ Reset Total',       desc:'Reiniciar todo a cero' },
+      { id:'usuarios',   label:'👥 Gestión Usuarios',  desc:'Crear/editar usuarios' },
+      { id:'catalogo',   label:'🗂️ Catálogo CxP',     desc:'Editar catálogo de conceptos' },
+    ];
+
+    const PERMS_DEFAULT = {
+      admin_master: Object.fromEntries(PERMS_MODULOS.map(m => [m.id, true])),
+      admin:  Object.fromEntries(PERMS_MODULOS.map(m => [m.id, !['usuarios','reset'].includes(m.id)])),
+      cohost: Object.fromEntries(PERMS_MODULOS.map(m => [m.id, !['reset','usuarios','catalogo'].includes(m.id)])),
+      view:   Object.fromEntries(PERMS_MODULOS.map(m => [m.id, ['dashboard','reporte','gastos_det'].includes(m.id)])),
+      income: Object.fromEntries(PERMS_MODULOS.map(m => [m.id, ['dashboard','entradas'].includes(m.id)])),
+    };
+
+    /* ⚠️ Debe coincidir con el mismo stamp usado en Deadpool (permisosGet). */
+    const PERMS_FORCE_RESET_STAMP = '2026-07-04-role-hardening-v3';
+
+    function permisosGet(userId, rol) {
+      const all = JSON.parse(localStorage.getItem('mitech_permisos_v1') || '{}');
+      if (rol !== 'admin_master') {
+        const resets = JSON.parse(localStorage.getItem('mitech_permisos_reset_log') || '{}');
+        if (resets[userId] !== PERMS_FORCE_RESET_STAMP) {
+          const defaults = { ...(PERMS_DEFAULT[rol] || PERMS_DEFAULT.view) };
+          all[userId] = defaults;
+          localStorage.setItem('mitech_permisos_v1', JSON.stringify(all));
+          resets[userId] = PERMS_FORCE_RESET_STAMP;
+          localStorage.setItem('mitech_permisos_reset_log', JSON.stringify(resets));
+          return defaults;
+        }
+      }
+      return all[userId] || { ...(PERMS_DEFAULT[rol] || PERMS_DEFAULT.view) };
+    }
+
+    function permisosSet(userId, permisos) {
+      const all = JSON.parse(localStorage.getItem('mitech_permisos_v1') || '{}');
+      all[userId] = permisos;
+      localStorage.setItem('mitech_permisos_v1', JSON.stringify(all));
+    }
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+
+    let usuariosList = [];
+
+    const ROLE_COLORS = {
+      admin_master: { bg:'#FEF9E7', border:'#F0D584', text:'#92700C' },
+      admin:        { bg:'var(--danger-soft)', border:'var(--danger-line)', text:'var(--danger)' },
+      cohost:       { bg:'#F1EEFE', border:'#D6CCFB', text:'#6D4FC2' },
+      view:         { bg:'var(--accent-soft)', border:'var(--accent-line)', text:'var(--brand-800)' },
+      income:       { bg:'var(--success-soft)', border:'var(--success-line)', text:'var(--success)' },
+    };
+    const ROLE_LABELS = { admin_master:'Admon Master', admin:'Admin', cohost:'Cohost', view:'View', income:'Income' };
+
+    function abrirUsuarios() {
+      if (!currentUser || currentUser.rol !== 'admin_master') {
+        showToast('Solo el Admon Master puede gestionar usuarios');
+        return;
+      }
+      showState('Usuarios');
+      fetchUsuariosYRender();
+    }
+    function volverAlPortal() { showState('Portal'); }
+
+    async function fetchUsuariosYRender() {
+      const cont = document.getElementById('usuariosPanel');
+      if (cont) cont.innerHTML = '<div class="usu-empty">Cargando usuarios…</div>';
+      const { data, error } = await sb.from('usuarios').select('id,username,nombre,rol,activo,debe_cambiar');
+      if (error) { if (cont) cont.innerHTML = '<div class="usu-empty">Error al cargar usuarios.</div>'; console.error(error); return; }
+      usuariosList = data || [];
+      renderUsuarios();
+    }
+
+    function renderUsuarios() {
+      const c = document.getElementById('usuariosPanel');
+      if (!c) return;
+      if (!currentUser || currentUser.rol !== 'admin_master') { c.innerHTML = '<div class="usu-empty">🔒 Solo el Admon Master puede gestionar usuarios.</div>'; return; }
+
+      const users = usuariosList;
+      if (!window._usuPanelState) window._usuPanelState = { selId: users[0]?.id || null, tab: 'permisos' };
+      const st = window._usuPanelState;
+      if (!users.find(u => String(u.id) === String(st.selId))) st.selId = users[0]?.id || null;
+      const selUser = users.find(u => String(u.id) === String(st.selId));
+
+      function roleBadge(rol) {
+        const rc = ROLE_COLORS[rol] || ROLE_COLORS.view;
+        return `<span class="usu-role-pill" style="background:${rc.bg};border-color:${rc.border};color:${rc.text};">${ROLE_LABELS[rol] || rol}</span>`;
+      }
+
+      function userCard(u) {
+        const isSel = String(u.id) === String(st.selId);
+        return `<div class="usu-card ${isSel?'active':''} ${u.activo?'':'inactive'}" onclick="usuSelectUser('${u.id}')">
+          <div class="usu-card-top">
+            <div>
+              <div class="usu-card-name">${u.nombre}</div>
+              <div class="usu-card-user">@${u.username}</div>
+            </div>
+            ${roleBadge(u.rol)}
+          </div>
+          ${!u.activo ? '<div class="usu-card-inactive-tag">● Inactivo</div>' : ''}
+        </div>`;
+      }
+
+      function permsGrid(u) {
+        const perms = permisosGet(u.id, u.rol);
+        const isFullAccess = u.rol === 'admin' || u.rol === 'admin_master';
+        return PERMS_MODULOS.map(m => {
+          const on = isFullAccess || !!perms[m.id];
+          return `<div class="usu-perm-item ${on?'on':''} ${isFullAccess?'locked':''}" onclick="${isFullAccess ? '' : `usuTogglePerm('${u.id}','${m.id}')`}">
+            <div class="usu-switch ${on?'on':''}"><div class="usu-switch-dot"></div></div>
+            <div>
+              <div class="usu-perm-label">${m.label}</div>
+              <div class="usu-perm-desc">${m.desc}</div>
+            </div>
+          </div>`;
+        }).join('');
+      }
+
+      function rolSelector(u) {
+        const bloqueado = u.rol === 'admin_master' || (u.rol === 'admin' && currentUser.rol !== 'admin_master');
+        const rolesDisponibles = ['admin','cohost','view','income'];
+        return rolesDisponibles.map(r => {
+          const rc = ROLE_COLORS[r];
+          const sel = u.rol === r;
+          return `<div class="usu-role-opt ${bloqueado?'locked':''}" style="${sel?`background:${rc.bg};border-color:${rc.border};color:${rc.text};`:''}" onclick="${bloqueado?'':`usuChangeRol('${u.id}','${r}')`}">${r}</div>`;
+        }).join('');
+      }
+
+      c.innerHTML = `
+      <div class="usu-shell">
+        <div>
+          <div class="usu-list-label">Usuarios (${users.length})</div>
+          ${users.map(userCard).join('')}
+          <div class="usu-add" onclick="usuShowCrearForm()">＋ Nuevo usuario</div>
+        </div>
+
+        <div>
+        ${selUser ? `
+          <div class="usu-detail">
+            <div class="usu-detail-head">
+              <div>
+                <div class="usu-detail-name">${selUser.nombre}</div>
+                <div class="usu-detail-user">@${selUser.username}</div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                ${selUser.id !== currentUser.id && !(selUser.rol === 'admin_master' && currentUser.rol !== 'admin_master') ? `
+                <button class="usu-btn ${selUser.activo?'usu-btn-toggle-on':'usu-btn-toggle-off'}" onclick="toggleUser('${selUser.id}',${selUser.activo})">${selUser.activo ? '● Activo' : '○ Inactivo'}</button>
+                <button class="usu-btn" onclick="resetPwd('${selUser.id}')">🔑 Reset pwd</button>
+                ` : selUser.id === currentUser.id ? '<span style="font-size:11px;color:var(--ink-400);">(tú)</span>' : '<span style="font-size:11px;color:var(--ink-400);">🔒 Protegido</span>'}
+              </div>
+            </div>
+
+            <div class="usu-tabs">
+              ${['permisos','perfil','nuevo'].map(t => {
+                const labels = { permisos:'🔐 Permisos', perfil:'👤 Perfil', nuevo:'➕ Nuevo usuario' };
+                return `<div class="usu-tab ${st.tab===t?'active':''}" onclick="usuSetTab('${t}')">${labels[t]}</div>`;
+              }).join('')}
+            </div>
+
+            ${st.tab === 'permisos' ? `
+              <div style="margin-bottom:16px;">
+                <div class="usu-field-label">Rol base</div>
+                <div class="usu-role-row">${rolSelector(selUser)}</div>
+                ${selUser.rol === 'admin_master' ? '<div style="font-size:10px;color:#92700C;margin-top:6px;">👑 Admon Master: acceso total permanente. Solo se puede modificar desde la base de datos.</div>' : selUser.rol === 'admin' ? '<div style="font-size:10px;color:var(--ink-400);margin-top:6px;">⚠️ El admin tiene acceso completo. No se puede restringir.</div>' : `<div style="margin-top:8px;font-size:11px;color:var(--brand-800);cursor:pointer;" onclick="usuResetPerms('${selUser.id}')">↺ Restablecer permisos por defecto del rol</div>`}
+              </div>
+              <div class="usu-field-label">Acceso por módulo</div>
+              <div class="usu-perms-grid">${permsGrid(selUser)}</div>
+              <div style="margin-top:16px;">
+                <button class="usu-btn" style="width:100%;background:var(--brand-800);color:var(--paper);border-color:var(--brand-800);" onclick="usuGuardarPerms('${selUser.id}')">💾 Guardar permisos</button>
+              </div>
+            ` : st.tab === 'perfil' ? `
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                ${[['Nombre completo',selUser.nombre],['Usuario (login)',selUser.username],['Rol',ROLE_LABELS[selUser.rol] || selUser.rol]].map(([l,v])=>`
+                <div>
+                  <div class="usu-field-label">${l}</div>
+                  <div style="background:var(--ink-25);border:1px solid var(--ink-100);border-radius:8px;padding:8px 12px;font-size:13px;">${v}</div>
+                </div>`).join('')}
+                <div style="font-size:11px;color:var(--ink-400);font-style:italic;">Edición de perfil disponible próximamente.</div>
+              </div>
+            ` : `
+              <div class="usu-form-grid">
+                <div><div class="usu-field-label">Usuario (login)</div><input id="nuUsuario" class="field-input" type="text" placeholder="juan.perez"></div>
+                <div><div class="usu-field-label">Nombre completo</div><input id="nuNombre" class="field-input" type="text" placeholder="Juan Pérez"></div>
+                <div><div class="usu-field-label">Rol</div>
+                  <select id="nuRol" class="field-input"><option value="view">view</option><option value="income">income</option><option value="cohost">cohost</option><option value="admin">admin</option></select>
+                </div>
+                <div><div class="usu-field-label">Contraseña inicial</div><input id="nuPwd" class="field-input" type="password" placeholder="Mínimo 8 caracteres"></div>
+              </div>
+              <button class="usu-btn" style="background:var(--brand-800);color:var(--paper);border-color:var(--brand-800);" onclick="createUser()">➕ Crear usuario</button>
+            `}
+          </div>
+        ` : '<div class="usu-empty">Selecciona un usuario</div>'}
+        </div>
+      </div>`;
+    }
+
+    function usuSelectUser(id) { window._usuPanelState = window._usuPanelState || {}; window._usuPanelState.selId = id; renderUsuarios(); }
+    function usuSetTab(tab) { window._usuPanelState = window._usuPanelState || {}; window._usuPanelState.tab = tab; renderUsuarios(); }
+    function usuShowCrearForm() { usuSetTab('nuevo'); }
+
+    async function usuChangeRol(userId, newRol) {
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede cambiar roles'); return; }
+      const u = usuariosList.find(x => String(x.id) === String(userId));
+      if (!u) return;
+      if (u.rol === 'admin_master') { showToast('El Admon Master no se puede modificar desde aquí'); return; }
+      if (u.rol === 'admin' && currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede reasignar a un admin'); return; }
+      if (newRol === 'admin_master') { showToast('El rol Admon Master solo se asigna desde la base de datos'); return; }
+      const { error } = await sb.from('usuarios').update({ rol: newRol }).eq('id', userId);
+      if (error) { showToast('Error al cambiar rol'); return; }
+      permisosSet(userId, { ...PERMS_DEFAULT[newRol] });
+      u.rol = newRol;
+      showToast('Rol actualizado ✓');
+      renderUsuarios();
+    }
+
+    function usuTogglePerm(userId, modId) {
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede cambiar permisos'); return; }
+      const u = usuariosList.find(x => String(x.id) === String(userId));
+      if (!u || u.rol === 'admin' || u.rol === 'admin_master') return;
+      const perms = permisosGet(userId, u.rol);
+      perms[modId] = !perms[modId];
+      permisosSet(userId, perms);
+      if (currentUser && String(currentUser.id) === String(userId)) currentUser.permisos = perms;
+      renderUsuarios();
+    }
+
+    function usuResetPerms(userId) {
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede restablecer permisos'); return; }
+      const u = usuariosList.find(x => String(x.id) === String(userId));
+      if (!u) return;
+      permisosSet(userId, { ...PERMS_DEFAULT[u.rol] });
+      if (currentUser && String(currentUser.id) === String(userId)) currentUser.permisos = { ...PERMS_DEFAULT[u.rol] };
+      showToast('Permisos restablecidos al default del rol ✓');
+      renderUsuarios();
+    }
+
+    function usuGuardarPerms(userId) {
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede guardar permisos'); return; }
+      showToast('Permisos guardados ✓');
+      if (currentUser && String(currentUser.id) === String(userId)) currentUser.permisos = permisosGet(userId, currentUser.rol);
+    }
+
+    async function toggleUser(id, activo) {
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede activar/desactivar usuarios'); return; }
+      const { error } = await sb.from('usuarios').update({ activo: !activo }).eq('id', id);
+      if (error) { showToast('Error al actualizar'); return; }
+      showToast(`Usuario ${activo?'desactivado':'activado'} ✓`);
+      await fetchUsuariosYRender();
+    }
+
+    async function resetPwd(id) {
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede resetear contraseñas'); return; }
+      if (!confirm('¿Forzar cambio de contraseña en el próximo acceso?')) return;
+      const { error } = await sb.from('usuarios').update({ debe_cambiar: true }).eq('id', id);
+      if (error) { showToast('Error'); return; }
+      showToast('Se pedirá nueva contraseña en el próximo acceso ✓');
+      await fetchUsuariosYRender();
+    }
+
+    async function createUser() {
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede crear usuarios'); return; }
+      const usuario = document.getElementById('nuUsuario').value.trim();
+      const nombre  = document.getElementById('nuNombre').value.trim();
+      const rol     = document.getElementById('nuRol').value;
+      const pwd     = document.getElementById('nuPwd').value;
+
+      if (!usuario||!nombre||!pwd) { showToast('Completa todos los campos'); return; }
+      if (pwd.length < 8) { showToast('Contraseña mínimo 8 caracteres'); return; }
+
+      const hash = await sha256(pwd);
+      const { error } = await sb.from('usuarios').insert([{
+        username: usuario, nombre, rol, pwd_hash: hash, activo: true, debe_cambiar: false
+      }]);
+      if (error) { showToast(`Error: ${error.message}`); return; }
+      showToast(`Usuario ${usuario} creado ✓`);
+      await fetchUsuariosYRender();
+    }
+
     /* ═══════════════════════ EVENT WIRING ═══════════════════════ */
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('portalVersion').textContent = APP_VERSION;
@@ -1363,6 +1819,18 @@
     window.irADeadpool = irADeadpool;
     window.irAFiscal = irAFiscal;
     window.notify = notify;
+    window.abrirUsuarios = abrirUsuarios;
+    window.volverAlPortal = volverAlPortal;
+    window.usuSelectUser = usuSelectUser;
+    window.usuSetTab = usuSetTab;
+    window.usuShowCrearForm = usuShowCrearForm;
+    window.usuChangeRol = usuChangeRol;
+    window.usuTogglePerm = usuTogglePerm;
+    window.usuResetPerms = usuResetPerms;
+    window.usuGuardarPerms = usuGuardarPerms;
+    window.toggleUser = toggleUser;
+    window.resetPwd = resetPwd;
+    window.createUser = createUser;
   </script>
 </body>
 </html>
