@@ -1277,7 +1277,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.07.2';
+    const APP_VERSION = '2026.07.08.3';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -1501,16 +1501,42 @@
       return (parts[0][0] + parts[1][0]).toUpperCase();
     }
 
-    /* ═══════════════════════ NAVIGATE ═══════════════════════ */
+    /* ═══════════════════════ NAVIGATE ═══════════════════════
+       Cache-busting robusto para iOS Safari: los meta http-equiv del módulo son
+       ignorados por Safari para el HTML raíz. Antes de navegar, buscamos la
+       versión remota real del módulo y añadimos ?v=<version> a la URL. Así el
+       navegador no puede servir cache viejo (query string distinto por deploy).
+    ═══════════════════════════════════════════════════════════ */
+    async function _extraerVersionRemota(baseUrl) {
+      try {
+        const res = await fetch(baseUrl + 'index.html?_=' + Date.now(), {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        if (!res.ok) return null;
+        const html = await res.text();
+        const m = html.match(/const\s+APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
+        return m ? m[1] : null;
+      } catch(e) { return null; }
+    }
+
+    async function _launchModule(baseUrl, nombre) {
+      try { showToast('Abriendo ' + nombre + '…'); } catch(e){}
+      const version = await _extraerVersionRemota(baseUrl);
+      // Con o sin versión detectada, siempre añadimos algo que rompa cache
+      const bust = version ? ('v=' + encodeURIComponent(version)) : ('t=' + Date.now());
+      window.location.href = baseUrl + '?' + bust;
+    }
+
     function irADeadpool() {
-      window.location.href = DEADPOOL_URL;
+      _launchModule(DEADPOOL_URL, 'Deadpool');
     }
     function irAFiscal() {
       if (!currentUser || currentUser.rol !== 'admin_master') {
         showToast('El módulo Fiscal está en construcción. Acceso restringido.');
         return;
       }
-      window.location.href = FISCAL_URL;
+      _launchModule(FISCAL_URL, 'Fiscal');
     }
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
