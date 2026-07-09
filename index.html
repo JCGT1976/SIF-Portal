@@ -900,6 +900,62 @@
     }
     .mod-risk-badge.show { display: inline-flex; }
 
+    /* ══════════ Modal de contraseña reseteada ══════════ */
+    .reset-pwd-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.75);
+      display: none; align-items: center; justify-content: center;
+      z-index: 10000; padding: 20px; animation: fadeIn .18s ease-out;
+    }
+    .reset-pwd-backdrop[style*="flex"] { display: flex !important; }
+    .reset-pwd-card {
+      background: #fff; border-radius: 16px; max-width: 460px; width: 100%;
+      padding: 28px; box-shadow: 0 24px 64px rgba(0,0,0,.4);
+      animation: slideUp .22s ease-out; text-align: center;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0 }
+      to   { transform: translateY(0); opacity: 1 }
+    }
+    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+    .reset-pwd-icon {
+      font-size: 42px; margin-bottom: 8px;
+    }
+    .reset-pwd-title {
+      font-size: 18px; font-weight: 700; color: #002855; margin-bottom: 4px;
+    }
+    .reset-pwd-sub {
+      font-size: 13px; color: #64748b; margin-bottom: 20px;
+    }
+    .reset-pwd-box {
+      background: linear-gradient(135deg, #003876, #0057B8);
+      border-radius: 10px; padding: 16px 14px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .reset-pwd-box code {
+      flex: 1; font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+      font-size: 20px; font-weight: 700; letter-spacing: 1.5px;
+      color: #fff; background: transparent; border: none; padding: 0;
+      user-select: all; text-align: center;
+    }
+    .reset-pwd-copy {
+      background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.3);
+      color: #fff; padding: 8px 12px; border-radius: 8px; cursor: pointer;
+      font-size: 12px; font-weight: 600; white-space: nowrap;
+      transition: all .15s;
+    }
+    .reset-pwd-copy:hover { background: rgba(255,255,255,.32) }
+    .reset-pwd-warn {
+      background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.3);
+      border-radius: 8px; padding: 10px 12px; font-size: 12px;
+      color: #78350f; line-height: 1.5; margin-bottom: 16px; text-align: left;
+    }
+    .reset-pwd-actions { display: flex; justify-content: center }
+    .reset-pwd-btn {
+      background: #002855; color: #fff; border: none;
+      padding: 10px 24px; border-radius: 8px; font-weight: 600;
+      cursor: pointer; font-size: 13px; transition: opacity .15s;
+    }
+    .reset-pwd-btn:hover { opacity: .9 }
   </style>
 </head>
 <body>
@@ -1277,7 +1333,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.08.3';
+    const APP_VERSION = '2026.07.09.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -1741,7 +1797,7 @@
               <div style="display:flex;gap:8px;align-items:center;">
                 ${selUser.id !== currentUser.id && !(selUser.rol === 'admin_master' && currentUser.rol !== 'admin_master') ? `
                 <button class="usu-btn ${selUser.activo?'usu-btn-toggle-on':'usu-btn-toggle-off'}" onclick="toggleUser('${selUser.id}',${selUser.activo})">${selUser.activo ? '● Activo' : '○ Inactivo'}</button>
-                <button class="usu-btn" onclick="resetPwd('${selUser.id}')">🔑 Reset pwd</button>
+                <button class="usu-btn" onclick="resetPwd('${selUser.id}', '${(selUser.nombre||selUser.username||'').replace(/'/g,"\\'")}')">🔑 Reset pwd</button>
                 ` : selUser.id === currentUser.id ? '<span style="font-size:11px;color:var(--ink-400);">(tú)</span>' : '<span style="font-size:11px;color:var(--ink-400);">🔒 Protegido</span>'}
               </div>
             </div>
@@ -1844,13 +1900,69 @@
       await fetchUsuariosYRender();
     }
 
-    async function resetPwd(id) {
+    async function resetPwd(id, nombreUsuario) {
       if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede resetear contraseñas'); return; }
-      if (!confirm('¿Forzar cambio de contraseña en el próximo acceso?')) return;
-      const { error } = await sb.from('usuarios').update({ debe_cambiar: true }).eq('id', id);
-      if (error) { showToast('Error'); return; }
-      showToast('Se pedirá nueva contraseña en el próximo acceso ✓');
+      if (!confirm('¿Generar una contraseña temporal nueva para este usuario?\n\nSe te mostrará una sola vez para que se la comuniques.')) return;
+
+      // Convertir id a número (viene como string desde el onclick)
+      const idNum = parseInt(id, 10);
+      if (isNaN(idNum)) { showToast('ID inválido'); return; }
+
+      const { data, error } = await sb.rpc('admin_reset_password', { target_user_id: idNum });
+      if (error) {
+        console.error('admin_reset_password error:', error);
+        if (String(error.message||'').includes('does not exist')) {
+          showToast('⚠️ Función admin_reset_password no existe. Corre el SQL de migración en Supabase.');
+        } else {
+          showToast('Error: ' + (error.message||'desconocido'));
+        }
+        return;
+      }
+      // data es la contraseña nueva en claro
+      mostrarPwdReseteada(nombreUsuario || 'usuario', data);
       await fetchUsuariosYRender();
+    }
+
+    /* Modal de contraseña reseteada — se muestra UNA VEZ al admin */
+    function mostrarPwdReseteada(nombre, pwd) {
+      let modal = document.getElementById('resetPwdModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'resetPwdModal';
+        modal.className = 'reset-pwd-backdrop';
+        modal.innerHTML = `
+          <div class="reset-pwd-card">
+            <div class="reset-pwd-icon">🔑</div>
+            <div class="reset-pwd-title">Contraseña temporal generada</div>
+            <div class="reset-pwd-sub" id="resetPwdSub"></div>
+            <div class="reset-pwd-box">
+              <code id="resetPwdCode">—</code>
+              <button class="reset-pwd-copy" onclick="copiarPwdReseteada()">📋 Copiar</button>
+            </div>
+            <div class="reset-pwd-warn">
+              ⚠️ Esta contraseña solo se muestra <b>una vez</b>. Cópiala y compártesela al usuario por un canal seguro.
+              Al ingresar, el sistema le pedirá crear una nueva.
+            </div>
+            <div class="reset-pwd-actions">
+              <button class="reset-pwd-btn" onclick="cerrarPwdReseteada()">Ya la copié, cerrar</button>
+            </div>
+          </div>`;
+        document.body.appendChild(modal);
+      }
+      document.getElementById('resetPwdSub').textContent = 'Para: ' + nombre;
+      document.getElementById('resetPwdCode').textContent = pwd;
+      modal.style.display = 'flex';
+    }
+    function copiarPwdReseteada() {
+      const pwd = document.getElementById('resetPwdCode').textContent;
+      navigator.clipboard.writeText(pwd).then(
+        () => showToast('Contraseña copiada al portapapeles ✓'),
+        () => showToast('No se pudo copiar — cópiala manualmente')
+      );
+    }
+    function cerrarPwdReseteada() {
+      const m = document.getElementById('resetPwdModal');
+      if (m) m.style.display = 'none';
     }
 
     async function createUser() {
@@ -1901,6 +2013,8 @@
     window.usuGuardarPerms = usuGuardarPerms;
     window.toggleUser = toggleUser;
     window.resetPwd = resetPwd;
+    window.copiarPwdReseteada = copiarPwdReseteada;
+    window.cerrarPwdReseteada = cerrarPwdReseteada;
     window.createUser = createUser;
   </script>
 </body>
