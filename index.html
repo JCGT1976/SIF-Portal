@@ -570,6 +570,23 @@
       .portal-hero-title { font-size: 26px; }
     }
 
+    @media (max-width: 640px) {
+      .portal-header { gap: 8px; padding: 14px 0; margin-bottom: 32px; }
+      .brand-h { gap: 8px; min-width: 0; }
+      .brand-h-logo { width: 28px; height: 28px; font-size: 11px; flex-shrink: 0; }
+      .brand-h-text { min-width: 0; }
+      .brand-h-title { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .brand-h-sub { display: none; }
+      .user-cluster { gap: 6px; flex-shrink: 0; }
+      .user-pill { padding: 4px; gap: 0; }
+      .user-info { display: none; }
+      .btn-users-admin span { display: none; }
+      .btn-users-admin { padding: 0 9px; }
+      .btn-logout { font-size: 0; padding: 0; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; }
+      .btn-logout::before { content: "⏻"; font-size: 14px; }
+      .portal-hero-desc { font-size: 13.5px; }
+    }
+
     /* — Module Card — */
     .mod-card {
       background: var(--paper);
@@ -1340,7 +1357,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.10.1';
+    const APP_VERSION = '2026.07.10.2';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
