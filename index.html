@@ -366,6 +366,8 @@
       .brand-hero { max-width: 100%; }
       .login-pane-form { padding: 40px 24px; }
       .login-footer-mobile { display: block; }
+      /* Prevenir auto-zoom iOS en inputs del login */
+      .field-input { font-size: 16px; }
     }
 
     /* ═══════════════════════ PORTAL / LAUNCHER ═══════════════════════ */
@@ -907,7 +909,76 @@
     .usu-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     @media (max-width: 560px) { .usu-form-grid { grid-template-columns: 1fr; } }
 
-    .usu-empty { color: var(--ink-400); padding: 40px; text-align: center; font-size: 13px; }
+    /* — SIF Módulos grid (panel usuarios) — */
+    .sif-mods-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 560px) { .sif-mods-grid { grid-template-columns: 1fr; } }
+
+    /* ══════════════════════════════════════════════════════
+       MOBILE FIXES ≤ 480px
+       Regla: tap targets mín 44px, safe-area, densidad óptima
+    ══════════════════════════════════════════════════════ */
+    @media (max-width: 480px) {
+      /* Safe area iOS (notch / home indicator) */
+      .portal-shell {
+        padding: 0 16px max(80px, calc(env(safe-area-inset-bottom) + 24px));
+      }
+      #stateUsuarios .portal-shell {
+        padding: 0 16px max(60px, calc(env(safe-area-inset-bottom) + 16px));
+      }
+      .toast {
+        bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
+        font-size: 12.5px;
+        padding: 11px 16px;
+      }
+
+      /* Hero */
+      .portal-hero { margin-bottom: 28px; }
+      .portal-hero-title { font-size: 22px; letter-spacing: -0.02em; }
+      .portal-hero-desc { font-size: 13px; }
+
+      /* Module cards — más compactas en 1 columna */
+      .mod-card { padding: 20px; min-height: unset; }
+      .mod-head { margin-bottom: 16px; }
+      .mod-title { font-size: 17px; }
+      .mod-desc { font-size: 13px; margin-bottom: 16px; }
+      .mod-meta { padding: 10px 0; margin-bottom: 14px; }
+      .btn-mod { height: 48px; font-size: 15px; border-radius: 12px; }
+
+      /* Login en pantalla pequeña */
+      .login-pane-form { padding: 32px 20px; }
+      .login-heading { font-size: 22px; }
+      .login-sub { font-size: 13px; margin-bottom: 28px; }
+
+      /* Panel usuarios — tap targets y padding */
+      .usu-detail { padding: 16px; }
+      .usu-detail-name { font-size: 16px; }
+      .usu-detail-head { gap: 8px; }
+
+      /* Tabs — mínimo 44px de alto */
+      .usu-tab { padding: 12px 14px; font-size: 12.5px; }
+
+      /* Botones de acción (Activo/Reset pwd) — mínimo 44px */
+      .usu-btn { height: 40px; padding: 0 14px; font-size: 12.5px; border-radius: 8px; }
+
+      /* Opciones de rol — mínimo 44px */
+      .usu-role-opt { padding: 11px 16px; font-size: 13px; }
+
+      /* Items de permisos */
+      .usu-perm-item { padding: 11px 12px; }
+      .usu-perm-label { font-size: 13px; }
+
+      /* Botón guardar permisos ya es width:100% — solo agrandar */
+      .usu-btn[onclick*="GuardarPerms"] { height: 48px; font-size: 14px; }
+
+      /* Inputs — prevenir auto-zoom iOS (font-size < 16px dispara zoom) */
+      input, select, textarea { font-size: 16px !important; }
+
+      /* Sección Usuarios — título */
+      .usu-section-label .lbl { font-size: 17px; }
+
+      /* Header a pantalla muy pequeña */
+      .portal-header { margin-bottom: 24px; }
+    }
 
     /* ══════════ Modal de contraseña reseteada ══════════ */
     .reset-pwd-backdrop {
@@ -1771,7 +1842,7 @@
             + '<div class="usu-perm-desc">' + (on ? 'Con acceso' : 'Sin acceso') + '</div>'
             + '</div></div>';
         }).join('');
-        return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' + items + '</div>'
+        return '<div class="sif-mods-grid">' + items + '</div>'
           + '<div style="font-size:10px;color:var(--ink-400);margin-top:8px;">Se guarda en Supabase al hacer \'Guardar permisos\'.</div>';
       }
 
