@@ -1699,7 +1699,7 @@
     async function fetchUsuariosYRender() {
       const cont = document.getElementById('usuariosPanel');
       if (cont) cont.innerHTML = '<div class="usu-empty">Cargando usuarios…</div>';
-      const { data, error } = await sb.from('usuarios').select('id,username,nombre,rol,activo,debe_cambiar');
+      const { data, error } = await sb.from('usuarios').select('id,username,nombre,rol,activo,debe_cambiar,modulos');
       if (error) { if (cont) cont.innerHTML = '<div class="usu-empty">Error al cargar usuarios.</div>'; console.error(error); return; }
       usuariosList = data || [];
       renderUsuarios();
@@ -1799,6 +1799,31 @@
               </div>
               <div class="usu-field-label">Acceso por módulo</div>
               <div class="usu-perms-grid">${permsGrid(selUser)}</div>
+
+              <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--ink-100)">
+                <div class="usu-field-label" style="margin-bottom:10px">🏢 Módulos SIF — acceso a aplicaciones</div>
+                ${selUser.rol === 'admin_master' ? '<div style="font-size:11px;color:#92700C;padding:8px 10px;background:#FEF9E7;border-radius:8px;border:1px solid #F0D584;">👑 Admon Master: acceso total a todos los módulos SIF.</div>' : `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  ${[
+                    {id:'fiscal',        icon:'🧾', label:'Fiscal'},
+                    {id:'flujo',         icon:'💧', label:'Flujo de Efectivo'},
+                    {id:'contabilidad',  icon:'📚', label:'Contabilidad'},
+                    {id:'nominas',       icon:'👥', label:'Nóminas'},
+                  ].map(m => {
+                    const mods = Array.isArray(selUser.modulos) ? selUser.modulos : [];
+                    const on = mods.includes(m.id);
+                    return `<div class="usu-perm-item ${on?'on':''}" style="cursor:pointer" onclick="usuToggleModulo('${selUser.id}','${m.id}')">
+                      <div class="usu-switch ${on?'on':''}"><div class="usu-switch-dot"></div></div>
+                      <div>
+                        <div class="usu-perm-label">${m.icon} ${m.label}</div>
+                        <div class="usu-perm-desc">${on ? 'Con acceso' : 'Sin acceso'}</div>
+                      </div>
+                    </div>`;
+                  }).join('')}
+                </div>
+                <div style="font-size:10px;color:var(--ink-400);margin-top:8px;">Se guarda en Supabase al hacer "Guardar permisos".</div>`}
+              </div>
+
               <div style="margin-top:16px;">
                 <button class="usu-btn" style="width:100%;background:var(--brand-800);color:var(--paper);border-color:var(--brand-800);" onclick="usuGuardarPerms('${selUser.id}')">💾 Guardar permisos</button>
               </div>
@@ -1858,6 +1883,17 @@
       renderUsuarios();
     }
 
+    function usuToggleModulo(userId, modId) {
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede cambiar módulos SIF'); return; }
+      const u = usuariosList.find(x => String(x.id) === String(userId));
+      if (!u || u.rol === 'admin_master') return;
+      const mods = Array.isArray(u.modulos) ? [...u.modulos] : [];
+      const idx = mods.indexOf(modId);
+      if (idx >= 0) { mods.splice(idx, 1); } else { mods.push(modId); }
+      u.modulos = mods;
+      renderUsuarios();
+    }
+
     function usuResetPerms(userId) {
       if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede restablecer permisos'); return; }
       const u = usuariosList.find(x => String(x.id) === String(userId));
@@ -1868,10 +1904,18 @@
       renderUsuarios();
     }
 
-    function usuGuardarPerms(userId) {
+    async function usuGuardarPerms(userId) {
       if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede guardar permisos'); return; }
-      showToast('Permisos guardados ✓');
+      // Guardar permisos Deadpool en localStorage
       if (currentUser && String(currentUser.id) === String(userId)) currentUser.permisos = permisosGet(userId, currentUser.rol);
+      // Guardar modulos SIF en Supabase
+      const u = usuariosList.find(x => String(x.id) === String(userId));
+      if (u && u.rol !== 'admin_master') {
+        const mods = Array.isArray(u.modulos) ? u.modulos : [];
+        const { error } = await sb.from('usuarios').update({ modulos: mods }).eq('id', userId);
+        if (error) { showToast('Error al guardar módulos SIF: ' + error.message); return; }
+      }
+      showToast('Permisos guardados ✓');
     }
 
     async function toggleUser(id, activo) {
@@ -1991,6 +2035,7 @@
     window.usuShowCrearForm = usuShowCrearForm;
     window.usuChangeRol = usuChangeRol;
     window.usuTogglePerm = usuTogglePerm;
+    window.usuToggleModulo = usuToggleModulo;
     window.usuResetPerms = usuResetPerms;
     window.usuGuardarPerms = usuGuardarPerms;
     window.toggleUser = toggleUser;
