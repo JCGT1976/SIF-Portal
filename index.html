@@ -1259,11 +1259,10 @@
           </div>
         </article>
 
-        <!-- MODULE 4 : FISCAL (EN CONSTRUCCIÓN — acceso restringido a admin_master) -->
-        <article class="mod-card" data-status="construction" id="modCardFiscal">
+        <!-- MODULE 4 : FISCAL -->
+        <article class="mod-card" data-status="active" id="modCardFiscal">
           <header class="mod-head">
             <div class="mod-icon">
-              <!-- monoline: shield with check -->
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 3l8 3v6c0 4.5-3.2 8.5-8 9-4.8-.5-8-4.5-8-9V6l8-3z"/>
                 <path d="M9 12l2 2 4-4"/>
@@ -1271,7 +1270,7 @@
             </div>
             <span class="mod-status" id="fiscalStatus">
               <span class="mod-status-dot"></span>
-              En construcción
+              Activo
             </span>
           </header>
 
@@ -1285,15 +1284,13 @@
             </div>
             <div class="mod-meta-item">
               <span class="mod-meta-label">Acceso</span>
-              <span class="mod-meta-value">Restringido</span>
+              <span class="mod-meta-value">Por módulo</span>
             </div>
           </div>
 
-          <div class="mod-progress-track"><div class="mod-progress-bar" style="width: 55%;"></div></div>
-
           <div class="mod-actions" id="fiscalActions">
             <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>En construcción — sin acceso</span>
+              <span>Sin acceso — contacta al administrador</span>
             </button>
           </div>
         </article>
@@ -1574,7 +1571,7 @@
       const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
       const tieneFiscal = currentUser && (currentUser.rol === 'admin_master' || mods.includes('fiscal'));
       if (!tieneFiscal) {
-        showToast('El módulo Fiscal está en construcción. Acceso restringido.');
+        showToast('Sin acceso al módulo Fiscal. Contacta al administrador.');
         return;
       }
       _launchModule(FISCAL_URL, 'Fiscal');
