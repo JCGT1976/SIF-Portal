@@ -1751,7 +1751,29 @@
         }).join('');
       }
 
-      function rolSelector(u) {
+      function sifModulosGrid(u) {
+        if (u.rol === 'admin_master') {
+          return '<div style="font-size:11px;color:#92700C;padding:8px 10px;background:#FEF9E7;border-radius:8px;border:1px solid #F0D584;">👑 Admon Master: acceso total a todos los módulos SIF.</div>';
+        }
+        const SIF_MODS = [
+          {id:'fiscal',       icon:'🧾', label:'Fiscal'},
+          {id:'flujo',        icon:'💧', label:'Flujo de Efectivo'},
+          {id:'contabilidad', icon:'📚', label:'Contabilidad'},
+          {id:'nominas',      icon:'👥', label:'Nóminas'},
+        ];
+        const mods = Array.isArray(u.modulos) ? u.modulos : [];
+        const items = SIF_MODS.map(function(m) {
+          const on = mods.includes(m.id);
+          return '<div class="usu-perm-item ' + (on ? 'on' : '') + '" style="cursor:pointer" onclick="usuToggleModulo(\'' + u.id + '\',\'' + m.id + '\')">'
+            + '<div class="usu-switch ' + (on ? 'on' : '') + '"><div class="usu-switch-dot"></div></div>'
+            + '<div>'
+            + '<div class="usu-perm-label">' + m.icon + ' ' + m.label + '</div>'
+            + '<div class="usu-perm-desc">' + (on ? 'Con acceso' : 'Sin acceso') + '</div>'
+            + '</div></div>';
+        }).join('');
+        return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' + items + '</div>'
+          + '<div style="font-size:10px;color:var(--ink-400);margin-top:8px;">Se guarda en Supabase al hacer \'Guardar permisos\'.</div>';
+      }
         const bloqueado = u.rol === 'admin_master' || (u.rol === 'admin' && currentUser.rol !== 'admin_master');
         const rolesDisponibles = ['admin','cohost','view','income'];
         return rolesDisponibles.map(r => {
@@ -1803,26 +1825,7 @@
 
               <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--ink-100)">
                 <div class="usu-field-label" style="margin-bottom:10px">🏢 Módulos SIF — acceso a aplicaciones</div>
-                ${selUser.rol === 'admin_master' ? '<div style="font-size:11px;color:#92700C;padding:8px 10px;background:#FEF9E7;border-radius:8px;border:1px solid #F0D584;">👑 Admon Master: acceso total a todos los módulos SIF.</div>' : `
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                  ${[
-                    {id:'fiscal',        icon:'🧾', label:'Fiscal'},
-                    {id:'flujo',         icon:'💧', label:'Flujo de Efectivo'},
-                    {id:'contabilidad',  icon:'📚', label:'Contabilidad'},
-                    {id:'nominas',       icon:'👥', label:'Nóminas'},
-                  ].map(m => {
-                    const mods = Array.isArray(selUser.modulos) ? selUser.modulos : [];
-                    const on = mods.includes(m.id);
-                    return `<div class="usu-perm-item ${on?'on':''}" style="cursor:pointer" onclick="usuToggleModulo('${selUser.id}','${m.id}')">
-                      <div class="usu-switch ${on?'on':''}"><div class="usu-switch-dot"></div></div>
-                      <div>
-                        <div class="usu-perm-label">${m.icon} ${m.label}</div>
-                        <div class="usu-perm-desc">${on ? 'Con acceso' : 'Sin acceso'}</div>
-                      </div>
-                    </div>`;
-                  }).join('')}
-                </div>
-                <div style="font-size:10px;color:var(--ink-400);margin-top:8px;">Se guarda en Supabase al hacer "Guardar permisos".</div>`}
+                ${sifModulosGrid(selUser)}
               </div>
 
               <div style="margin-top:16px;">
