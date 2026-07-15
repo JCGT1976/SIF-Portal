@@ -1739,15 +1739,16 @@
       function permsGrid(u) {
         const perms = permisosGet(u.id, u.rol);
         const isFullAccess = u.rol === 'admin' || u.rol === 'admin_master';
-        return PERMS_MODULOS.map(m => {
+        return PERMS_MODULOS.map(function(m) {
           const on = isFullAccess || !!perms[m.id];
-          return `<div class="usu-perm-item ${on?'on':''} ${isFullAccess?'locked':''}" onclick="${isFullAccess ? '' : `usuTogglePerm('${u.id}','${m.id}')`}">
-            <div class="usu-switch ${on?'on':''}"><div class="usu-switch-dot"></div></div>
-            <div>
-              <div class="usu-perm-label">${m.label}</div>
-              <div class="usu-perm-desc">${m.desc}</div>
-            </div>
-          </div>`;
+          const onclickStr = isFullAccess ? '' : 'usuTogglePerm(\'' + u.id + '\',\'' + m.id + '\')';
+          return '<div class="usu-perm-item ' + (on?'on':'') + ' ' + (isFullAccess?'locked':'') + '" onclick="' + onclickStr + '">'
+            + '<div class="usu-switch ' + (on?'on':'') + '"><div class="usu-switch-dot"></div></div>'
+            + '<div>'
+            + '<div class="usu-perm-label">' + m.label + '</div>'
+            + '<div class="usu-perm-desc">' + m.desc + '</div>'
+            + '</div>'
+            + '</div>';
         }).join('');
       }
 
@@ -1776,11 +1777,14 @@
       }
 
       function rolSelector(u) {
+        const bloqueado = u.rol === 'admin_master' || (u.rol === 'admin' && currentUser.rol !== 'admin_master');
         const rolesDisponibles = ['admin','cohost','view','income'];
-        return rolesDisponibles.map(r => {
+        return rolesDisponibles.map(function(r) {
           const rc = ROLE_COLORS[r];
           const sel = u.rol === r;
-          return `<div class="usu-role-opt ${bloqueado?'locked':''}" style="${sel?`background:${rc.bg};border-color:${rc.border};color:${rc.text};`:''}" onclick="${bloqueado?'':`usuChangeRol('${u.id}','${r}')`}">${r}</div>`;
+          const styleStr = sel ? 'background:' + rc.bg + ';border-color:' + rc.border + ';color:' + rc.text + ';' : '';
+          const onclickStr = bloqueado ? '' : 'usuChangeRol(\'' + u.id + '\',\'' + r + '\')';
+          return '<div class="usu-role-opt ' + (bloqueado ? 'locked' : '') + '" style="' + styleStr + '" onclick="' + onclickStr + '">' + r + '</div>';
         }).join('');
       }
 
@@ -1819,7 +1823,7 @@
               <div style="margin-bottom:16px;">
                 <div class="usu-field-label">Rol base</div>
                 <div class="usu-role-row">${rolSelector(selUser)}</div>
-                ${selUser.rol === 'admin_master' ? '<div style="font-size:10px;color:#92700C;margin-top:6px;">👑 Admon Master: acceso total permanente. Solo se puede modificar desde la base de datos.</div>' : selUser.rol === 'admin' ? '<div style="font-size:10px;color:var(--ink-400);margin-top:6px;">⚠️ El admin tiene acceso completo. No se puede restringir.</div>' : `<div style="margin-top:8px;font-size:11px;color:var(--brand-800);cursor:pointer;" onclick="usuResetPerms('${selUser.id}')">↺ Restablecer permisos por defecto del rol</div>`}
+                ${selUser.rol === 'admin_master' ? '<div style="font-size:10px;color:#92700C;margin-top:6px;">👑 Admon Master: acceso total permanente. Solo se puede modificar desde la base de datos.</div>' : selUser.rol === 'admin' ? '<div style="font-size:10px;color:var(--ink-400);margin-top:6px;">⚠️ El admin tiene acceso completo. No se puede restringir.</div>' : '<div style="margin-top:8px;font-size:11px;color:var(--brand-800);cursor:pointer;" onclick="usuResetPerms(\'' + selUser.id + '\')">↺ Restablecer permisos por defecto del rol</div>'}
               </div>
               <div class="usu-field-label">Acceso por módulo</div>
               <div class="usu-perms-grid">${permsGrid(selUser)}</div>
