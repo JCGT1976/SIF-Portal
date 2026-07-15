@@ -1506,14 +1506,15 @@
       const btnUsers = document.getElementById('btnUsersAdmin');
       if (btnUsers) btnUsers.style.display = (currentUser.rol === 'admin_master') ? 'inline-flex' : 'none';
 
-      // Fiscal en construcción: solo admin_master puede entrar mientras se termina
+      // Fiscal: acceso a admin_master y a usuarios con 'fiscal' en su modulos[]
       const fiscalActions = document.getElementById('fiscalActions');
       if (fiscalActions) {
-        if (currentUser.rol === 'admin_master') {
+        const mods = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
+        const tieneFiscal = currentUser.rol === 'admin_master' || mods.includes('fiscal');
+        if (tieneFiscal) {
           fiscalActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irAFiscal()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
-          cargarRiesgoFiscal = undefined;
         } else {
-          fiscalActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción — sin acceso</span></button>`;
+          fiscalActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
         }
       }
     }
