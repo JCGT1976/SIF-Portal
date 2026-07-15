@@ -1774,7 +1774,8 @@
         return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">' + items + '</div>'
           + '<div style="font-size:10px;color:var(--ink-400);margin-top:8px;">Se guarda en Supabase al hacer \'Guardar permisos\'.</div>';
       }
-        const bloqueado = u.rol === 'admin_master' || (u.rol === 'admin' && currentUser.rol !== 'admin_master');
+
+      function rolSelector(u) {
         const rolesDisponibles = ['admin','cohost','view','income'];
         return rolesDisponibles.map(r => {
           const rc = ROLE_COLORS[r];
