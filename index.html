@@ -1571,7 +1571,9 @@
       _launchModule(DEADPOOL_URL, 'Deadpool');
     }
     function irAFiscal() {
-      if (!currentUser || currentUser.rol !== 'admin_master') {
+      const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
+      const tieneFiscal = currentUser && (currentUser.rol === 'admin_master' || mods.includes('fiscal'));
+      if (!tieneFiscal) {
         showToast('El módulo Fiscal está en construcción. Acceso restringido.');
         return;
       }
