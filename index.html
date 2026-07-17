@@ -1408,11 +1408,12 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.10.2';
+    const APP_VERSION = '2026.07.17.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
     const FISCAL_URL    = 'https://jcgt1976.github.io/Fiscal/';
+    const PORTAL_URL    = 'https://jcgt1976.github.io/SIF-Portal/';
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
       auth: { persistSession: true, autoRefreshToken: true, storage: window.localStorage }
@@ -2089,6 +2090,56 @@
       await fetchUsuariosYRender();
     }
 
+    /* ═══════════════════════ AUTO-UPDATER (self) ═══════════════════════
+       El portal verifica su propia versión remota y recarga si detecta que
+       hay una nueva. Necesario porque iOS Safari ignora los meta Cache-Control
+       para el HTML raíz, y el ícono en el home queda pegado a caché vieja.
+
+       Se dispara:
+         - Al cargar la página (retardado 1.5s para no bloquear el login)
+         - Cuando el documento vuelve a ser visible (usuario regresa a la app)
+         - Cada 10 minutos como respaldo
+    ═══════════════════════════════════════════════════════════════════════ */
+    let _updaterCheckingSelf = false;
+    let _updaterAlreadyReloading = false;
+
+    async function _checkPortalUpdate() {
+      if (_updaterCheckingSelf || _updaterAlreadyReloading) return;
+      _updaterCheckingSelf = true;
+      try {
+        const res = await fetch(PORTAL_URL + 'index.html?_=' + Date.now(), {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        if (!res.ok) return;
+        const html = await res.text();
+        const m = html.match(/const\s+APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
+        if (!m) return;
+        const remote = m[1];
+        if (remote && remote !== APP_VERSION) {
+          _updaterAlreadyReloading = true;
+          try { showToast('Nueva versión ' + remote + ' — recargando…'); } catch(e){}
+          setTimeout(() => {
+            // Añadimos query bust para reventar caché de iOS Safari
+            const sep = location.href.includes('?') ? '&' : '?';
+            location.replace(location.href.split('#')[0] + sep + 'v=' + encodeURIComponent(remote));
+          }, 800);
+        }
+      } catch(e) { /* red caída u offline: silencioso */ }
+      finally { _updaterCheckingSelf = false; }
+    }
+
+    function _initSelfUpdater() {
+      // Chequeo inicial retrasado (1.5s) para no competir con el login
+      setTimeout(_checkPortalUpdate, 1500);
+      // Chequeo cada vez que el doc vuelve a estar visible
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') _checkPortalUpdate();
+      });
+      // Chequeo periódico cada 10 min como respaldo
+      setInterval(_checkPortalUpdate, 10 * 60 * 1000);
+    }
+
     /* ═══════════════════════ EVENT WIRING ═══════════════════════ */
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('portalVersion').textContent = APP_VERSION;
@@ -2100,6 +2151,7 @@
       document.getElementById('pwdNew2').addEventListener('keypress', (e) => { if (e.key === 'Enter') doChangePwd(); });
 
       init();
+      _initSelfUpdater();
     });
 
     /* Expose to window for onclick handlers */
