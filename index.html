@@ -1036,6 +1036,16 @@
       cursor: pointer; font-size: 13px; transition: opacity .15s;
     }
     .reset-pwd-btn:hover { opacity: .9 }
+
+    /* ══════════ Polish iPhone SE / small (≤430px) — 2026.07.17.2 ══════════ */
+    @media (max-width: 430px) {
+      .reset-pwd-backdrop { padding: 14px }
+      .reset-pwd-card { padding: 22px 18px; border-radius: 14px }
+      .reset-pwd-box { padding: 12px 10px }
+      .reset-pwd-box code { font-size: 17px; letter-spacing: 1px }
+      .reset-pwd-copy { padding: 7px 10px; font-size: 11.5px }
+      .reset-pwd-warn { font-size: 11.5px }
+    }
   </style>
 </head>
 <body>
@@ -1408,7 +1418,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.17.1';
+    const APP_VERSION = '2026.07.17.2';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
