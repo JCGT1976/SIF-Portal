@@ -1256,8 +1256,8 @@
           </div>
         </article>
 
-        <!-- MODULE 2 : CONTABILIDAD (PLANNED) -->
-        <article class="mod-card" data-status="planned">
+        <!-- MODULE 2 : CONTABILIDAD -->
+        <article class="mod-card" data-status="active" id="modCardContabilidad">
           <header class="mod-head">
             <div class="mod-icon">
               <!-- monoline: ledger / book -->
@@ -1268,32 +1268,29 @@
                 <path d="M8 11h5"/>
               </svg>
             </div>
-            <span class="mod-status">
+            <span class="mod-status" id="contabilidadStatus">
               <span class="mod-status-dot"></span>
-              Próximamente
+              Activo
             </span>
           </header>
 
           <h2 class="mod-title">Contabilidad</h2>
-          <p class="mod-desc">Registro contable, pólizas, balances y estados financieros.</p>
+          <p class="mod-desc">Catálogo de cuentas, balanzas, estados financieros, ratios y pólizas — con consolidación multiempresa y agrupador SAT.</p>
 
           <div class="mod-meta">
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Fase</span>
-              <span class="mod-meta-value">Planeación</span>
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="contabilidadVer">v2026.07.20.2</span>
             </div>
             <div class="mod-meta-item">
-              <span class="mod-meta-label">ETA</span>
-              <span class="mod-meta-value">Q4 · 2026</span>
+              <span class="mod-meta-label">Acceso</span>
+              <span class="mod-meta-value">Por módulo</span>
             </div>
           </div>
 
-          <div class="mod-progress-track"><div class="mod-progress-bar" style="width: 15%;"></div></div>
-
-          <div class="mod-actions">
-            <button class="btn-mod btn-mod-ghost" data-mod="contabilidad" onclick="notify(this,'contabilidad')">
-              <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M10 3a5 5 0 0 0-5 5v3l-1.5 2.5A.5.5 0 0 0 4 14.5h12a.5.5 0 0 0 .5-1L15 11V8a5 5 0 0 0-5-5z M8 17a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Avísame cuando esté listo</span>
+          <div class="mod-actions" id="contabilidadActions">
+            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
+              <span>Sin acceso — contacta al administrador</span>
             </button>
           </div>
         </article>
@@ -1418,11 +1415,12 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.17.2';
+    const APP_VERSION = '2026.07.20.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
     const FISCAL_URL    = 'https://jcgt1976.github.io/Fiscal/';
+    const CONTABILIDAD_URL = 'https://jcgt1976.github.io/Contabilidad/';
     const PORTAL_URL    = 'https://jcgt1976.github.io/SIF-Portal/';
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
@@ -1596,6 +1594,18 @@
           fiscalActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
         }
       }
+
+      // Contabilidad: acceso a admin_master y a usuarios con 'contabilidad' en su modulos[]
+      const contabilidadActions = document.getElementById('contabilidadActions');
+      if (contabilidadActions) {
+        const mods = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
+        const tieneContabilidad = currentUser.rol === 'admin_master' || mods.includes('contabilidad');
+        if (tieneContabilidad) {
+          contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irAContabilidad()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+        } else {
+          contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
+        }
+      }
     }
 
     /* ── fin gestión de accesos ── */
@@ -1657,6 +1667,16 @@
         return;
       }
       _launchModule(FISCAL_URL, 'Fiscal');
+    }
+
+    function irAContabilidad() {
+      const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
+      const tieneContabilidad = currentUser && (currentUser.rol === 'admin_master' || mods.includes('contabilidad'));
+      if (!tieneContabilidad) {
+        showToast('Sin acceso al módulo Contabilidad. Contacta al administrador.');
+        return;
+      }
+      _launchModule(CONTABILIDAD_URL, 'Contabilidad');
     }
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
