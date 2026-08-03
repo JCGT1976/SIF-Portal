@@ -397,15 +397,42 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 0;
-      margin-bottom: 56px;
-      border-bottom: 1px solid var(--ink-100);
+      padding: 14px 22px;
+      margin-bottom: 40px;
+      border-bottom: none;
+      border-radius: 14px;
       position: sticky;
-      top: 0;
-      background: rgba(250, 250, 250, 0.88);
-      backdrop-filter: saturate(180%) blur(12px);
-      -webkit-backdrop-filter: saturate(180%) blur(12px);
+      top: 12px;
+      background: linear-gradient(135deg, var(--brand-900), var(--brand-800));
+      box-shadow: 0 8px 24px rgba(0,40,85,.18);
       z-index: 10;
+    }
+    .portal-header .brand-h-title { color: #fff; }
+    .portal-header .brand-h-sub { color: rgba(255,255,255,.65); }
+    .portal-header .brand-h-logo { background: rgba(255,255,255,.16); color: #fff; }
+    .portal-header .user-avatar { background: rgba(255,255,255,.22); color: #fff; }
+    .sync-badge { font-size: 10px; color: rgba(255,255,255,.7); display:flex; align-items:center; gap:5px; }
+    .sync-dot { width:6px; height:6px; border-radius:50%; background:#00e5a0; }
+    .sync-dot.error { background:#ff4d6d; }
+    .user-chip { display:flex; align-items:center; gap:8px; background: rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18); border-radius:999px; padding:5px 12px 5px 6px; }
+    .user-meta { display:flex; flex-direction:column; line-height:1.1; }
+    .user-meta .name { font-size:11.5px; font-weight:600; color:#fff; }
+    .user-meta .role { font-size:9.5px; color:rgba(255,255,255,.65); text-transform:uppercase; letter-spacing:.04em; }
+    .btn-ghost { background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18); color:#fff; border-radius:8px; padding:8px 14px; cursor:pointer; font-size:12px; font-weight:600; }
+    .btn-ghost:hover { background: rgba(255,255,255,.2); }
+    .portal-header .btn-logout, .portal-header .btn-users-admin, .portal-header .btn-back {
+      background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.18); color:#fff;
+    }
+    .portal-header .btn-logout:hover, .portal-header .btn-users-admin:hover, .portal-header .btn-back:hover {
+      background: rgba(255,255,255,.2); color:#fff; border-color: rgba(255,255,255,.3);
+    }
+    body.theme-dark {
+      --ink-900:#e8f0f8; --ink-800:#cfd9e6; --ink-700:#b7c3d6; --ink-600:#9fb0c6; --ink-500:#8797ac;
+      --ink-400:#7a95b0; --ink-300:#5c7086; --ink-200:#3a4a5e; --ink-100:#243044; --ink-50:#1d2a3a; --ink-25:#0f1923;
+      --paper:#161f2c; --brand-100:#12232f; --brand-50:#0f1923;
+      --success-soft:#0f2a22; --success-line:#155b45;
+      --warning-soft:#2a2312; --warning-line:#5c4a17;
+      --danger-soft:#2a1218; --danger-line:#5c1c28;
     }
 
     .brand-h {
@@ -1183,17 +1210,20 @@
           </div>
         </div>
         <div class="user-cluster">
-          <div class="user-pill">
-            <div class="user-info">
-              <div class="name" id="userName">—</div>
-              <div class="role" id="userRole">—</div>
-            </div>
+          <span class="sync-badge" id="syncBadge"><span class="sync-dot" id="syncDot"></span><span id="syncTxt">Conectado a Supabase</span></span>
+          <div class="user-chip">
             <div class="user-avatar" id="userAvatar">—</div>
+            <div class="user-meta">
+              <span class="name" id="userName">—</span>
+              <span class="role" id="userRole">—</span>
+            </div>
           </div>
           <button class="btn-users-admin" id="btnUsersAdmin" style="display:none;" onclick="abrirUsuarios()">
             <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><circle cx="10" cy="6.5" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 17c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             <span>Usuarios</span>
           </button>
+          <button class="btn-ghost" onclick="toggleTheme()" title="Cambiar tema">🌓</button>
+          <button class="btn-ghost btn-lang-toggle" id="btnLang" onclick="toggleLang()" style="font-weight:700;font-size:11px;letter-spacing:.06em">EN</button>
           <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
         </div>
       </header>
@@ -1387,6 +1417,9 @@
           </div>
         </div>
         <div class="user-cluster">
+          <span class="sync-badge" id="syncBadge2"><span class="sync-dot" id="syncDot2"></span><span id="syncTxt2">Conectado a Supabase</span></span>
+          <button class="btn-ghost" onclick="toggleTheme()" title="Cambiar tema">🌓</button>
+          <button class="btn-ghost btn-lang-toggle" id="btnLang2" onclick="toggleLang()" style="font-weight:700;font-size:11px;letter-spacing:.06em">EN</button>
           <button class="btn-back" onclick="volverAlPortal()">
             <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M13 5L7 10l6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span>Volver al portal</span>
@@ -1427,6 +1460,290 @@
 
     let currentUser = null;
     let pendingAuthId = null;
+
+    /* ═══════════════════════ TEMA (claro/oscuro) ═══════════════════════ */
+    function initTheme(){
+      var saved = localStorage.getItem('sif_theme');
+      if (saved === 'dark') document.body.classList.add('theme-dark');
+    }
+    function toggleTheme(){
+      document.body.classList.toggle('theme-dark');
+      localStorage.setItem('sif_theme', document.body.classList.contains('theme-dark') ? 'dark' : 'light');
+    }
+
+    /* ═══════════════════════ I18N — traductor genérico ES ⇄ EN ═══════════════════════
+       No usamos data-i18n manual: se recorre el DOM (texto + placeholder/title/aria-label)
+       y se sustituye cualquier cadena EXACTA (tras normalizar espacios) que exista en el
+       diccionario ES2EN. Un MutationObserver reaplica la traducción automáticamente cuando
+       el contenido se regenera (tarjetas de módulos, panel de usuarios, toasts, etc).
+    ═══════════════════════════════════════════════════════════════════════════════════ */
+    var ES2EN = {
+      'Sistema de Información Financiera': 'Financial Information System',
+      'Gestión de usuarios': 'User management',
+      'Conectado a Supabase': 'Connected to Supabase',
+      'Sin conexión': 'Disconnected',
+      'Usuarios': 'Users',
+      'Cerrar sesión': 'Log out',
+      'Volver al portal': 'Back to portal',
+      'Cambiar tema': 'Switch theme',
+      'Iniciando': 'Starting',
+      'Una plataforma.': 'One platform.',
+      'Toda la operación financiera.': 'The entire financial operation.',
+      'Flujo, contabilidad, nóminas y fiscal — en un solo lugar, con una sola sesión, para el equipo financiero de MI Global.': 'Cash flow, accounting, payroll and tax — all in one place, with a single session, for the MI Global finance team.',
+      'Iniciar sesión': 'Sign in',
+      'Ingresa tus credenciales corporativas para acceder a los módulos.': 'Enter your corporate credentials to access the modules.',
+      'Usuario': 'Username',
+      'Contraseña': 'Password',
+      'MI GLOBAL · TIJUANA': 'MI GLOBAL · TIJUANA',
+      'TIJUANA, B.C.': 'TIJUANA, B.C.',
+      'Seguridad · Primer acceso': 'Security · First access',
+      'Actualiza tu contraseña': 'Update your password',
+      'antes de continuar.': 'before continuing.',
+      'Por política de seguridad, la contraseña temporal debe reemplazarse en el primer inicio de sesión.': 'For security policy reasons, the temporary password must be replaced on first login.',
+      'SEGURIDAD': 'SECURITY',
+      'Nueva contraseña': 'New password',
+      'Mínimo 8 caracteres. Guarda tu nueva contraseña en un lugar seguro.': 'Minimum 8 characters. Keep your new password somewhere safe.',
+      'Confirmar contraseña': 'Confirm password',
+      'Actualizar y continuar': 'Update and continue',
+      'Panel principal': 'Main panel',
+      'Bienvenido': 'Welcome',
+      'Bienvenida': 'Welcome',
+      'Selecciona un módulo para continuar. Los módulos en desarrollo aparecerán habilitados conforme se liberen a producción.': 'Select a module to continue. Modules under development will appear enabled as they are released to production.',
+      'Módulos': 'Modules',
+      '04 · 01 activo': '04 · 01 active',
+      'Activo': 'Active',
+      'Próximamente': 'Coming soon',
+      'Flujo y Gastos': 'Cash Flow & Expenses',
+      'Control de flujo de efectivo, cuentas por pagar, ingresos y presupuesto semanal.': 'Cash flow control, accounts payable, income and weekly budget.',
+      'Versión': 'Version',
+      'Ambiente': 'Environment',
+      'Producción': 'Production',
+      'Entrar al módulo': 'Enter module',
+      'Contabilidad': 'Accounting',
+      'Catálogo de cuentas, balanzas, estados financieros, ratios y pólizas — con consolidación multiempresa y agrupador SAT.': 'Chart of accounts, trial balances, financial statements, ratios and journal entries — with multi-company consolidation and SAT grouping.',
+      'Acceso': 'Access',
+      'Por módulo': 'Per module',
+      'Sin acceso — contacta al administrador': 'No access — contact the administrator',
+      'Nóminas': 'Payroll',
+      'Cálculo de nómina, prestaciones, IMSS/INFONAVIT y timbrado CFDI.': 'Payroll calculation, benefits, IMSS/INFONAVIT and CFDI stamping.',
+      'Fase': 'Phase',
+      'Planeación': 'Planning',
+      'ETA': 'ETA',
+      'Avísame cuando esté listo': 'Notify me when ready',
+      'Te avisaremos': 'We will notify you',
+      'Fiscal': 'Tax',
+      'Calendario SAT, cálculo de ISR/IVA, control de CFDI, provisiones y deuda fiscal con multas, recargos y actualización.': 'SAT calendar, ISR/VAT calculation, CFDI control, tax provisions and tax debt with fines, surcharges and inflation adjustment.',
+      'Ingresa usuario y contraseña.': 'Enter username and password.',
+      'Autenticando…': 'Authenticating…',
+      'Usuario o contraseña incorrectos.': 'Incorrect username or password.',
+      'La contraseña debe tener al menos 8 caracteres.': 'Password must be at least 8 characters.',
+      'Las contraseñas no coinciden.': 'Passwords do not match.',
+      'Actualizando…': 'Updating…',
+      'Notificación cancelada': 'Notification cancelled',
+      'Solo el Admon Master puede gestionar usuarios': 'Only the Master Admin can manage users',
+      'Error al cargar usuarios.': 'Error loading users.',
+      'Cargando usuarios…': 'Loading users…',
+      '🔒 Solo el Admon Master puede gestionar usuarios.': '🔒 Only the Master Admin can manage users.',
+      'Selecciona un usuario': 'Select a user',
+      '＋ Nuevo usuario': '＋ New user',
+      '● Inactivo': '● Inactive',
+      '● Activo': '● Active',
+      '○ Inactivo': '○ Inactive',
+      '🔑 Reset pwd': '🔑 Reset pwd',
+      '🔒 Protegido': '🔒 Protected',
+      '(tú)': '(you)',
+      '🔐 Permisos': '🔐 Permissions',
+      '👤 Perfil': '👤 Profile',
+      '➕ Nuevo usuario': '➕ New user',
+      'Rol base': 'Base role',
+      'Acceso por módulo': 'Access per module',
+      '🏢 Módulos SIF — acceso a aplicaciones': '🏢 SIF Modules — application access',
+      '💾 Guardar permisos': '💾 Save permissions',
+      'Nombre completo': 'Full name',
+      'Usuario (login)': 'Username (login)',
+      'Rol': 'Role',
+      'Edición de perfil disponible próximamente.': 'Profile editing available soon.',
+      'Contraseña inicial': 'Initial password',
+      'Mínimo 8 caracteres': 'Minimum 8 characters',
+      '➕ Crear usuario': '➕ Create user',
+      'Con acceso': 'Has access',
+      'Sin acceso': 'No access',
+      "Se guarda en Supabase al hacer 'Guardar permisos'.": "Saved to Supabase when you click 'Save permissions'.",
+      '👑 Admon Master: acceso total a todos los módulos SIF.': '👑 Master Admin: full access to all SIF modules.',
+      '👑 Admon Master: acceso total permanente. Solo se puede modificar desde la base de datos.': '👑 Master Admin: permanent full access. Can only be modified from the database.',
+      '⚠️ El admin tiene acceso completo. No se puede restringir.': '⚠️ The admin has full access. It cannot be restricted.',
+      "↺ Restablecer permisos por defecto del rol": "↺ Reset to the role's default permissions",
+      'Repite la contraseña': 'Repeat the password',
+      'Admon Master': 'Master Admin',
+      'Admin': 'Admin',
+      'Cohost': 'Cohost',
+      'View': 'View',
+      'Income': 'Income',
+      '📊 Dashboard': '📊 Dashboard',
+      'KPIs y vista general': 'KPIs and overview',
+      '💵 Entradas': '💵 Income',
+      'Registrar ingresos': 'Record income',
+      '📂 CxP': '📂 AP',
+      'Cuentas por pagar / catálogo': 'Accounts payable / catalog',
+      '📑 Plan de Pagos': '📑 Payment Plan',
+      'Ver y seleccionar plan activo': 'View and select active plan',
+      '💳 Registrar Pago': '💳 Record Payment',
+      'Marcar conceptos como pagados': 'Mark items as paid',
+      '💸 Detalle Gastos': '💸 Expense Detail',
+      'Ver historial de pagos': 'View payment history',
+      '📋 Reporte Semanal': '📋 Weekly Report',
+      'Generar y ver reporte': 'Generate and view report',
+      '🔒 Cierre de Semana': '🔒 Week Closing',
+      'Cerrar semana y acumular arrastre': 'Close the week and carry forward the balance',
+      '♻️ Reset Total': '♻️ Full Reset',
+      'Reiniciar todo a cero': 'Reset everything to zero',
+      '👥 Gestión Usuarios': '👥 User Management',
+      'Crear/editar usuarios': 'Create/edit users',
+      '🗂️ Catálogo CxP': '🗂️ AP Catalog',
+      'Editar catálogo de conceptos': 'Edit item catalog',
+      '🧾 Fiscal': '🧾 Tax',
+      '💧 Flujo de Efectivo': '💧 Cash Flow',
+      '📚 Contabilidad': '📚 Accounting',
+      '👥 Nóminas': '👥 Payroll',
+      'Contraseña temporal generada': 'Temporary password generated',
+      '📋 Copiar': '📋 Copy',
+      'Ya la copié, cerrar': 'Copied it, close',
+      'Contraseña copiada al portapapeles ✓': 'Password copied to clipboard ✓',
+      'No se pudo copiar — cópiala manualmente': 'Could not copy — copy it manually',
+      'ID inválido': 'Invalid ID',
+      'Error al actualizar': 'Error updating',
+      'Completa todos los campos': 'Fill in all fields',
+      'Contraseña mínimo 8 caracteres': 'Password minimum 8 characters',
+      'Solo el Admon Master puede cambiar roles': 'Only the Master Admin can change roles',
+      'El Admon Master no se puede modificar desde aquí': 'The Master Admin cannot be modified from here',
+      'Solo el Admon Master puede reasignar a un admin': 'Only the Master Admin can reassign an admin',
+      'El rol Admon Master solo se asigna desde la base de datos': 'The Master Admin role can only be assigned from the database',
+      'Error al cambiar rol': 'Error changing role',
+      'Rol actualizado ✓': 'Role updated ✓',
+      'Solo el Admon Master puede cambiar permisos': 'Only the Master Admin can change permissions',
+      'Solo el Admon Master puede cambiar módulos SIF': 'Only the Master Admin can change SIF modules',
+      'Solo el Admon Master puede restablecer permisos': 'Only the Master Admin can reset permissions',
+      'Permisos restablecidos al default del rol ✓': 'Permissions reset to role default ✓',
+      'Solo el Admon Master puede guardar permisos': 'Only the Master Admin can save permissions',
+      'Permisos guardados ✓': 'Permissions saved ✓',
+      'Solo el Admon Master puede activar/desactivar usuarios': 'Only the Master Admin can activate/deactivate users',
+      'Solo el Admon Master puede resetear contraseñas': 'Only the Master Admin can reset passwords',
+      'ej. jcgonzalez': 'e.g. jcgonzalez',
+      'juan.perez': 'juan.perez',
+      'Juan Pérez': 'Juan Pérez'
+    };
+
+    var ES2EN_REGEX = [
+      [/^Abriendo (.+)…$/, function(m){ return 'Opening ' + m[1] + '…'; }],
+      [/^Te avisaremos cuando (.+) esté listo$/, function(m){ return "We'll notify you when " + m[1] + ' is ready'; }],
+      [/^Usuario (.+) creado ✓$/, function(m){ return 'User ' + m[1] + ' created ✓'; }],
+      [/^Usuario (desactivado|activado) ✓$/, function(m){ return 'User ' + (m[1]==='desactivado'?'deactivated':'activated') + ' ✓'; }],
+      [/^Usuarios \\((\\d+)\\)$/, function(m){ return 'Users (' + m[1] + ')'; }],
+      [/^Error al guardar módulos SIF: (.+)$/, function(m){ return 'Error saving SIF modules: ' + m[1]; }],
+      [/^Error cargando usuario: (.+)$/, function(m){ return 'Error loading user: ' + m[1]; }],
+      [/^Error inesperado: (.+)$/, function(m){ return 'Unexpected error: ' + m[1]; }],
+      [/^Error de red: (.+)$/, function(m){ return 'Network error: ' + m[1]; }],
+      [/^Error: (.+)$/, function(m){ return 'Error: ' + m[1]; }],
+      [/^Para: (.+)$/, function(m){ return 'For: ' + m[1]; }],
+      [/^Usuario no vinculado en la base de datos\\. Contacta al administrador\\.$/, function(){ return 'User not linked in the database. Contact the administrator.'; }],
+      [/^Usuario inactivo\\. Contacta al administrador\\.$/, function(){ return 'Inactive user. Contact the administrator.'; }],
+      [/^Usuario inválido o sin permisos\\.?$/, function(){ return 'Invalid user or insufficient permissions.'; }],
+      [/^Sin acceso al módulo Fiscal\\. Contacta al administrador\\.$/, function(){ return 'No access to the Tax module. Contact the administrator.'; }],
+      [/^Sin acceso al módulo Contabilidad\\. Contacta al administrador\\.$/, function(){ return 'No access to the Accounting module. Contact the administrator.'; }],
+      [/^⚠️ Función admin_reset_password no existe\\. Corre el SQL de migración en Supabase\\.$/, function(){ return '⚠️ Function admin_reset_password does not exist. Run the migration SQL in Supabase.'; }]
+    ];
+
+    var currentLang = localStorage.getItem('sif_lang') || 'es';
+    var _i18nOriginals = (typeof WeakMap !== 'undefined') ? new WeakMap() : null;
+
+    function normalizeWs(s){ return String(s).replace(/\\s+/g, ' ').trim(); }
+
+    function translateText(str){
+      if (Object.prototype.hasOwnProperty.call(ES2EN, str)) return ES2EN[str];
+      for (var i = 0; i < ES2EN_REGEX.length; i++) {
+        var m = str.match(ES2EN_REGEX[i][0]);
+        if (m) return ES2EN_REGEX[i][1](m);
+      }
+      return null;
+    }
+
+    function applyLangToNode(root){
+      if (!root || !_i18nOriginals) return;
+      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: function(node){
+          var p = node.parentElement;
+          if (!p) return NodeFilter.FILTER_REJECT;
+          var tag = p.tagName;
+          if (tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
+          if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+      var nodes = [];
+      var n;
+      while ((n = walker.nextNode())) nodes.push(n);
+      nodes.forEach(function(node){
+        var raw = node.nodeValue;
+        var norm = normalizeWs(raw);
+        if (!norm) return;
+        if (currentLang === 'en') {
+          var t = translateText(norm);
+          if (t !== null) {
+            if (!_i18nOriginals.has(node)) _i18nOriginals.set(node, raw);
+            var lead = raw.match(/^\\s*/)[0];
+            var trail = raw.match(/\\s*$/)[0];
+            node.nodeValue = lead + t + trail;
+          }
+        } else {
+          if (_i18nOriginals.has(node)) node.nodeValue = _i18nOriginals.get(node);
+        }
+      });
+
+      var attrEls = root.querySelectorAll ? root.querySelectorAll('[placeholder],[title],[aria-label]') : [];
+      attrEls.forEach && attrEls.forEach(function(el){
+        ['placeholder','title','aria-label'].forEach(function(attr){
+          var val = el.getAttribute(attr);
+          if (!val) return;
+          var dkey = 'i18n' + attr.charAt(0).toUpperCase() + attr.slice(1);
+          if (currentLang === 'en') {
+            var t = translateText(normalizeWs(val));
+            if (t !== null) {
+              if (!el.dataset[dkey]) el.dataset[dkey] = val;
+              el.setAttribute(attr, t);
+            }
+          } else {
+            if (el.dataset[dkey]) { el.setAttribute(attr, el.dataset[dkey]); delete el.dataset[dkey]; }
+          }
+        });
+      });
+    }
+
+    function applyLangAll(){
+      applyLangToNode(document.body);
+      var toggles = document.querySelectorAll('.btn-lang-toggle');
+      for (var i = 0; i < toggles.length; i++) toggles[i].textContent = (currentLang === 'es') ? 'EN' : 'ES';
+      document.documentElement.setAttribute('lang', currentLang);
+    }
+
+    function toggleLang(){
+      currentLang = (currentLang === 'es') ? 'en' : 'es';
+      localStorage.setItem('sif_lang', currentLang);
+      applyLangAll();
+    }
+
+    var _i18nObsTimer = null;
+    var _i18nObserver = (typeof MutationObserver !== 'undefined') ? new MutationObserver(function(){
+      if (currentLang !== 'en') return;
+      clearTimeout(_i18nObsTimer);
+      _i18nObsTimer = setTimeout(function(){ applyLangToNode(document.body); }, 30);
+    }) : null;
+
+    initTheme();
+    applyLangAll();
+    if (_i18nObserver) {
+      try { _i18nObserver.observe(document.body, { childList: true, subtree: true, characterData: true }); } catch(e){}
+    }
+
 
     /* Escuchar cambios de sesión: si un logout ocurre en otra pestaña o
        módulo (Deadpool, Fiscal, etc), llega SIGNED_OUT aquí y regresamos al login. */
