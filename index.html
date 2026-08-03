@@ -1668,68 +1668,63 @@
     }
 
     function applyLangToNode(root){
-      if (!root || !_i18nOriginals) return;
-      var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-        acceptNode: function(node){
-          var p = node.parentElement;
-          if (!p) return NodeFilter.FILTER_REJECT;
-          var tag = p.tagName;
-          if (tag === 'SCRIPT' || tag === 'STYLE') return NodeFilter.FILTER_REJECT;
-          if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-          return NodeFilter.FILTER_ACCEPT;
-        }
-      });
-      var nodes = [];
-      var n;
-      while ((n = walker.nextNode())) nodes.push(n);
-      nodes.forEach(function(node){
-        var raw = node.nodeValue;
-        var norm = normalizeWs(raw);
-        if (!norm) return;
-        if (currentLang === 'en') {
-          var t = translateText(norm);
-          if (t !== null) {
-            if (!_i18nOriginals.has(node)) _i18nOriginals.set(node, raw);
-            var lead = raw.match(/^\\s*/)[0];
-            var trail = raw.match(/\\s*$/)[0];
-            node.nodeValue = lead + t + trail;
-          }
+  if (!root) return;
+  var lang = (localStorage.getItem("sif_lang")||"es");
+  var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function(node){
+      var p = node.parentElement;
+      if (!p) return NodeFilter.FILTER_REJECT;
+      var tag = p.tagName;
+      if (tag==="SCRIPT"||tag==="STYLE"||tag==="NOSCRIPT") return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  var nodes = [];
+  var n;
+  while (n = walker.nextNode()) nodes.push(n);
+  nodes.forEach(function(node){
+    if (node.__i18nOriginal === undefined) node.__i18nOriginal = node.nodeValue;
+    var original = node.__i18nOriginal;
+    var trimmed = original.trim();
+    if (!trimmed) return;
+    if (lang === "en") {
+      var translated = (typeof ES2EN !== "undefined") ? ES2EN[trimmed] : undefined;
+      if (translated !== undefined) { node.nodeValue = original.split(trimmed).join(translated); }
+      else { node.nodeValue = original; }
+    } else {
+      node.nodeValue = original;
+    }
+  });
+  if (root.querySelectorAll) {
+    root.querySelectorAll("[placeholder],[title],[aria-label]").forEach(function(el){
+      ["placeholder","title","aria-label"].forEach(function(attr){
+        if (!el.hasAttribute(attr)) return;
+        var key = "__i18nAttr_" + attr;
+        if (el[key] === undefined) el[key] = el.getAttribute(attr);
+        var orig = el[key];
+        var trimmed2 = orig.trim();
+        if (lang === "en" && typeof ES2EN !== "undefined" && ES2EN[trimmed2] !== undefined) {
+          el.setAttribute(attr, orig.split(trimmed2).join(ES2EN[trimmed2]));
         } else {
-          if (_i18nOriginals.has(node)) node.nodeValue = _i18nOriginals.get(node);
+          el.setAttribute(attr, orig);
         }
       });
+    });
+  }
+}
 
-      var attrEls = root.querySelectorAll ? root.querySelectorAll('[placeholder],[title],[aria-label]') : [];
-      attrEls.forEach && attrEls.forEach(function(el){
-        ['placeholder','title','aria-label'].forEach(function(attr){
-          var val = el.getAttribute(attr);
-          if (!val) return;
-          var dkey = 'i18n' + attr.charAt(0).toUpperCase() + attr.slice(1);
-          if (currentLang === 'en') {
-            var t = translateText(normalizeWs(val));
-            if (t !== null) {
-              if (!el.dataset[dkey]) el.dataset[dkey] = val;
-              el.setAttribute(attr, t);
-            }
-          } else {
-            if (el.dataset[dkey]) { el.setAttribute(attr, el.dataset[dkey]); delete el.dataset[dkey]; }
-          }
-        });
-      });
-    }
+function applyLangAll(){
+  applyLangToNode(document.body);
+}
 
-    function applyLangAll(){
-      applyLangToNode(document.body);
-      var toggles = document.querySelectorAll('.btn-lang-toggle');
-      for (var i = 0; i < toggles.length; i++) toggles[i].textContent = (currentLang === 'es') ? 'EN' : 'ES';
-      document.documentElement.setAttribute('lang', currentLang);
-    }
-
-    function toggleLang(){
-      currentLang = (currentLang === 'es') ? 'en' : 'es';
-      localStorage.setItem('sif_lang', currentLang);
-      applyLangAll();
-    }
+function toggleLang(){
+  var cur = localStorage.getItem("sif_lang")||"es";
+  var next = cur==="es" ? "en" : "es";
+  localStorage.setItem("sif_lang", next);
+  applyLangAll();
+  var btn = document.getElementById("btnLang");
+  if (btn) btn.textContent = next==="es" ? "EN" : "ES";
+}
 
     var _i18nObsTimer = null;
     var _i18nObserver = (typeof MutationObserver !== 'undefined') ? new MutationObserver(function(){
