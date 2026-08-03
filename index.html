@@ -1295,8 +1295,8 @@
           </div>
         </article>
 
-        <!-- MODULE 3 : NÓMINAS (PLANNED) -->
-        <article class="mod-card" data-status="planned">
+        <!-- MODULE 3 : NÓMINAS -->
+        <article class="mod-card" data-status="active" id="modCardNominas">
           <header class="mod-head">
             <div class="mod-icon">
               <!-- monoline: people group -->
@@ -1307,32 +1307,29 @@
                 <path d="M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>
               </svg>
             </div>
-            <span class="mod-status">
+            <span class="mod-status" id="nominasStatus">
               <span class="mod-status-dot"></span>
-              Próximamente
+              Activo
             </span>
           </header>
 
           <h2 class="mod-title">Nóminas</h2>
-          <p class="mod-desc">Cálculo de nómina, prestaciones, IMSS/INFONAVIT y timbrado CFDI.</p>
+          <p class="mod-desc">Control de pago de nómina en efectivo: requisición, autorización, retiro y entrega.</p>
 
           <div class="mod-meta">
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Fase</span>
-              <span class="mod-meta-value">Planeación</span>
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="nominasVer">v2026.08.03</span>
             </div>
             <div class="mod-meta-item">
-              <span class="mod-meta-label">ETA</span>
-              <span class="mod-meta-value">Q1 · 2027</span>
+              <span class="mod-meta-label">Acceso</span>
+              <span class="mod-meta-value">Por módulo</span>
             </div>
           </div>
 
-          <div class="mod-progress-track"><div class="mod-progress-bar" style="width: 8%;"></div></div>
-
-          <div class="mod-actions">
-            <button class="btn-mod btn-mod-ghost" data-mod="nominas" onclick="notify(this,'nominas')">
-              <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M10 3a5 5 0 0 0-5 5v3l-1.5 2.5A.5.5 0 0 0 4 14.5h12a.5.5 0 0 0 .5-1L15 11V8a5 5 0 0 0-5-5z M8 17a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span>Avísame cuando esté listo</span>
+          <div class="mod-actions" id="nominasActions">
+            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
+              <span>Sin acceso — contacta al administrador</span>
             </button>
           </div>
         </article>
@@ -1421,6 +1418,7 @@
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
     const FISCAL_URL    = 'https://jcgt1976.github.io/Fiscal/';
     const CONTABILIDAD_URL = 'https://jcgt1976.github.io/Contabilidad/';
+    const NOMINAS_URL   = 'https://jcgt1976.github.io/N-minas/';
     const PORTAL_URL    = 'https://jcgt1976.github.io/SIF-Portal/';
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
@@ -1606,6 +1604,18 @@
           contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
         }
       }
+
+      // Nóminas: acceso a admin_master y a usuarios con 'nominas' en su modulos[]
+      const nominasActions = document.getElementById('nominasActions');
+      if (nominasActions) {
+        const mods = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
+        const tieneNominas = currentUser.rol === 'admin_master' || mods.includes('nominas');
+        if (tieneNominas) {
+          nominasActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irANominas()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+        } else {
+          nominasActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
+        }
+      }
     }
 
     /* ── fin gestión de accesos ── */
@@ -1677,6 +1687,16 @@
         return;
       }
       _launchModule(CONTABILIDAD_URL, 'Contabilidad');
+    }
+
+    function irANominas() {
+      const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
+      const tieneNominas = currentUser && (currentUser.rol === 'admin_master' || mods.includes('nominas'));
+      if (!tieneNominas) {
+        showToast('Sin acceso al módulo Nóminas. Contacta al administrador.');
+        return;
+      }
+      _launchModule(NOMINAS_URL, 'Nóminas');
     }
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
