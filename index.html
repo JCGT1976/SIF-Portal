@@ -2079,29 +2079,18 @@ function toggleLang(){
       income: Object.fromEntries(PERMS_MODULOS.map(m => [m.id, ['dashboard','entradas'].includes(m.id)])),
     };
 
-    /* ⚠️ Debe coincidir con el mismo stamp usado en Deadpool (permisosGet). */
-    const PERMS_FORCE_RESET_STAMP = '2026-07-04-role-hardening-v3';
-
+    /* permisosGet: fuente de verdad = Supabase usuarios.permisos (JSONB) + PERMS_DEFAULT[rol].
+       permisosSet: actualiza solo memoria local; persiste a Supabase en usuGuardarPerms. */
     function permisosGet(userId, rol) {
-      const all = JSON.parse(localStorage.getItem('mitech_permisos_v1') || '{}');
-      if (rol !== 'admin_master') {
-        const resets = JSON.parse(localStorage.getItem('mitech_permisos_reset_log') || '{}');
-        if (resets[userId] !== PERMS_FORCE_RESET_STAMP) {
-          const defaults = { ...(PERMS_DEFAULT[rol] || PERMS_DEFAULT.view) };
-          all[userId] = defaults;
-          localStorage.setItem('mitech_permisos_v1', JSON.stringify(all));
-          resets[userId] = PERMS_FORCE_RESET_STAMP;
-          localStorage.setItem('mitech_permisos_reset_log', JSON.stringify(resets));
-          return defaults;
-        }
-      }
-      return all[userId] || { ...(PERMS_DEFAULT[rol] || PERMS_DEFAULT.view) };
+      const u = usuariosList.find(x => String(x.id) === String(userId));
+      const sbPerms = (u && u.permisos && typeof u.permisos === 'object' && !Array.isArray(u.permisos)) ? u.permisos : {};
+      return Object.assign({}, PERMS_DEFAULT[rol] || PERMS_DEFAULT.view, sbPerms);
     }
 
     function permisosSet(userId, permisos) {
-      const all = JSON.parse(localStorage.getItem('mitech_permisos_v1') || '{}');
-      all[userId] = permisos;
-      localStorage.setItem('mitech_permisos_v1', JSON.stringify(all));
+      const u = usuariosList.find(x => String(x.id) === String(userId));
+      if (u) u.permisos = permisos;
+      // Se persiste a Supabase al hacer clic en "Guardar" (usuGuardarPerms)
     }
 
     async function sha256(str) {
@@ -2348,14 +2337,15 @@ function toggleLang(){
 
     async function usuGuardarPerms(userId) {
       if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede guardar permisos'); return; }
-      // Guardar permisos Deadpool en localStorage
-      if (currentUser && String(currentUser.id) === String(userId)) currentUser.permisos = permisosGet(userId, currentUser.rol);
-      // Guardar modulos SIF en Supabase
+      // Guardar permisos Deadpool + modulos SIF en Supabase
       const u = usuariosList.find(x => String(x.id) === String(userId));
       if (u && u.rol !== 'admin_master') {
         const mods = Array.isArray(u.modulos) ? u.modulos : [];
-        const { error } = await sb.from('usuarios').update({ modulos: mods }).eq('id', userId);
-        if (error) { showToast('Error al guardar módulos SIF: ' + error.message); return; }
+        const perms = permisosGet(userId, u.rol);
+        const { error } = await sb.from('usuarios').update({ modulos: mods, permisos: perms }).eq('id', userId);
+        if (error) { showToast('Error al guardar: ' + error.message); return; }
+        // Actualizar currentUser si es el mismo que está editando
+        if (currentUser && String(currentUser.id) === String(userId)) currentUser.permisos = perms;
       }
       showToast('Permisos guardados ✓');
     }
