@@ -1443,7 +1443,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.08.20.1';
+    const APP_VERSION = '2026.08.20.2';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -1887,17 +1887,79 @@ function toggleLang(){
     /* ═══════════════════ RELOJ DE INACTIVIDAD (20 MIN) ═══════════════════
        Se activa para TODOS los usuarios en cuanto hay sesión iniciada (Portal
        o ChangePwd). Cualquier interacción del usuario reinicia el contador.
-       Al cumplirse 20 minutos sin actividad, se cierra la sesión automática-
-       mente (doLogout) y se regresa a la pantalla de Login.
+       A los 18 min se muestra un modal de aviso con cuenta regresiva de 2 min
+       ("¿Sigues ahí?"). Si no hay respuesta, a los 20 min se cierra la sesión
+       automáticamente (doLogout) y se regresa a la pantalla de Login.
     ══════════════════════════════════════════════════════════════════════ */
-    const INACTIVITY_LIMIT_MS = 20 * 60 * 1000; // 20 minutos
-    let _inactivityTimer = null;
+    const INACTIVITY_WARNING_MS = 18 * 60 * 1000; // 18 minutos → mostrar aviso
+    const INACTIVITY_LIMIT_MS   = 20 * 60 * 1000; // 20 minutos → cerrar sesión
+    let _inactivityWarnTimer = null;
+    let _inactivityLogoutTimer = null;
+    let _inactivityCountdownInterval = null;
     let _inactivityBound = false;
     const INACTIVITY_EVENTS = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'wheel', 'click'];
 
+    function ensureInactivityModal() {
+      if (document.getElementById('inactivityModal')) return;
+      const div = document.createElement('div');
+      div.id = 'inactivityModal';
+      div.style.cssText = 'display:none;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);';
+      div.innerHTML = `
+        <div style="background:var(--bg-card,#fff);color:var(--text-main,#1a1a1a);border-radius:12px;padding:28px 26px;max-width:360px;width:90%;box-shadow:0 12px 40px rgba(0,0,0,0.25);text-align:center;font-family:inherit;">
+          <div style="font-size:17px;font-weight:600;margin-bottom:8px;" id="inactivityModalTitle">¿Sigues ahí?</div>
+          <div style="font-size:14px;opacity:0.8;margin-bottom:6px;" id="inactivityModalMsg">Tu sesión se cerrará por inactividad en</div>
+          <div style="font-size:28px;font-weight:700;margin:10px 0 20px;color:var(--danger,#c0392b);" id="inactivityModalCountdown">02:00</div>
+          <button id="inactivityModalBtn" style="background:var(--primary,#002855);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;width:100%;">Seguir conectado</button>
+        </div>`;
+      document.body.appendChild(div);
+      document.getElementById('inactivityModalBtn').addEventListener('click', () => {
+        hideInactivityModal();
+        resetInactivityTimer();
+      });
+    }
+
+    function showInactivityModal() {
+      ensureInactivityModal();
+      const isEn = currentLang === 'en';
+      document.getElementById('inactivityModalTitle').textContent = isEn ? 'Still there?' : '¿Sigues ahí?';
+      document.getElementById('inactivityModalMsg').textContent = isEn ? 'Your session will close due to inactivity in' : 'Tu sesión se cerrará por inactividad en';
+      document.getElementById('inactivityModalBtn').textContent = isEn ? 'Stay logged in' : 'Seguir conectado';
+      const modal = document.getElementById('inactivityModal');
+      modal.style.display = 'flex';
+
+      let remainingMs = INACTIVITY_LIMIT_MS - INACTIVITY_WARNING_MS;
+      const countdownEl = document.getElementById('inactivityModalCountdown');
+      function paint() {
+        const totalSec = Math.max(0, Math.ceil(remainingMs / 1000));
+        const m = String(Math.floor(totalSec / 60)).padStart(2, '0');
+        const s = String(totalSec % 60).padStart(2, '0');
+        countdownEl.textContent = m + ':' + s;
+      }
+      paint();
+      if (_inactivityCountdownInterval) clearInterval(_inactivityCountdownInterval);
+      _inactivityCountdownInterval = setInterval(() => {
+        remainingMs -= 1000;
+        paint();
+        if (remainingMs <= 0) clearInterval(_inactivityCountdownInterval);
+      }, 1000);
+    }
+
+    function hideInactivityModal() {
+      const modal = document.getElementById('inactivityModal');
+      if (modal) modal.style.display = 'none';
+      if (_inactivityCountdownInterval) { clearInterval(_inactivityCountdownInterval); _inactivityCountdownInterval = null; }
+    }
+
     function resetInactivityTimer() {
-      if (_inactivityTimer) clearTimeout(_inactivityTimer);
-      _inactivityTimer = setTimeout(() => {
+      hideInactivityModal();
+      if (_inactivityWarnTimer) clearTimeout(_inactivityWarnTimer);
+      if (_inactivityLogoutTimer) clearTimeout(_inactivityLogoutTimer);
+
+      _inactivityWarnTimer = setTimeout(() => {
+        showInactivityModal();
+      }, INACTIVITY_WARNING_MS);
+
+      _inactivityLogoutTimer = setTimeout(() => {
         console.warn('Sesión cerrada automáticamente por inactividad (20 min).');
         doLogout('inactivity');
       }, INACTIVITY_LIMIT_MS);
@@ -1905,9 +1967,18 @@ function toggleLang(){
 
     function startInactivityWatcher() {
       if (!_inactivityBound) {
-        INACTIVITY_EVENTS.forEach(evt => document.addEventListener(evt, resetInactivityTimer, { passive: true }));
+        INACTIVITY_EVENTS.forEach(evt => document.addEventListener(evt, () => {
+          // Si el modal de aviso está visible, un clic dentro de él ya llama resetInactivityTimer vía su propio botón;
+          // el resto de eventos globales solo reinician el timer si el modal NO está abierto, para forzar decisión consciente.
+          const modal = document.getElementById('inactivityModal');
+          if (modal && modal.style.display === 'flex') return;
+          resetInactivityTimer();
+        }, { passive: true }));
         document.addEventListener('visibilitychange', () => {
-          if (document.visibilityState === 'visible') resetInactivityTimer();
+          if (document.visibilityState === 'visible') {
+            const modal = document.getElementById('inactivityModal');
+            if (!(modal && modal.style.display === 'flex')) resetInactivityTimer();
+          }
         });
         _inactivityBound = true;
       }
@@ -1915,7 +1986,9 @@ function toggleLang(){
     }
 
     function stopInactivityWatcher() {
-      if (_inactivityTimer) { clearTimeout(_inactivityTimer); _inactivityTimer = null; }
+      if (_inactivityWarnTimer) { clearTimeout(_inactivityWarnTimer); _inactivityWarnTimer = null; }
+      if (_inactivityLogoutTimer) { clearTimeout(_inactivityLogoutTimer); _inactivityLogoutTimer = null; }
+      hideInactivityModal();
     }
 
     /* ═══════════════════════ PORTAL RENDER ═══════════════════════ */
