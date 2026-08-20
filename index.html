@@ -1443,7 +1443,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.07.20.1';
+    const APP_VERSION = '2026.08.20.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -1780,10 +1780,11 @@ function toggleLang(){
         if (error) { console.error('user load error:', error); showLoginError('Error cargando usuario: ' + error.message); await sb.auth.signOut(); showState('Login'); return; }
         if (!user) { showLoginError('Usuario no vinculado en la base de datos. Contacta al administrador.'); await sb.auth.signOut(); showState('Login'); return; }
         if (!user.activo) { showLoginError('Usuario inactivo. Contacta al administrador.'); await sb.auth.signOut(); showState('Login'); return; }
-        if (user.debe_cambiar) { pendingAuthId = authId; showState('ChangePwd'); return; }
+        if (user.debe_cambiar) { pendingAuthId = authId; showState('ChangePwd'); startInactivityWatcher(); return; }
         currentUser = user;
         renderPortal();
         showState('Portal');
+        startInactivityWatcher();
       } catch (e) {
         console.error('loadUserAndRoute error:', e);
         showLoginError('Error inesperado: ' + e.message);
@@ -1867,7 +1868,8 @@ function toggleLang(){
     }
 
     /* ═══════════════════════ LOGOUT ═══════════════════════ */
-    async function doLogout() {
+    async function doLogout(reason) {
+      stopInactivityWatcher();
       try {
         await sb.auth.signOut();
       } catch (e) { console.warn('signOut error:', e); }
@@ -1875,6 +1877,45 @@ function toggleLang(){
       document.getElementById('loginUser').value = '';
       document.getElementById('loginPwd').value = '';
       showState('Login');
+      if (reason === 'inactivity') {
+        showLoginError(currentLang === 'en'
+          ? 'Session closed due to inactivity (20 min).'
+          : 'Sesión cerrada por inactividad (20 min).');
+      }
+    }
+
+    /* ═══════════════════ RELOJ DE INACTIVIDAD (20 MIN) ═══════════════════
+       Se activa para TODOS los usuarios en cuanto hay sesión iniciada (Portal
+       o ChangePwd). Cualquier interacción del usuario reinicia el contador.
+       Al cumplirse 20 minutos sin actividad, se cierra la sesión automática-
+       mente (doLogout) y se regresa a la pantalla de Login.
+    ══════════════════════════════════════════════════════════════════════ */
+    const INACTIVITY_LIMIT_MS = 20 * 60 * 1000; // 20 minutos
+    let _inactivityTimer = null;
+    let _inactivityBound = false;
+    const INACTIVITY_EVENTS = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'wheel', 'click'];
+
+    function resetInactivityTimer() {
+      if (_inactivityTimer) clearTimeout(_inactivityTimer);
+      _inactivityTimer = setTimeout(() => {
+        console.warn('Sesión cerrada automáticamente por inactividad (20 min).');
+        doLogout('inactivity');
+      }, INACTIVITY_LIMIT_MS);
+    }
+
+    function startInactivityWatcher() {
+      if (!_inactivityBound) {
+        INACTIVITY_EVENTS.forEach(evt => document.addEventListener(evt, resetInactivityTimer, { passive: true }));
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'visible') resetInactivityTimer();
+        });
+        _inactivityBound = true;
+      }
+      resetInactivityTimer();
+    }
+
+    function stopInactivityWatcher() {
+      if (_inactivityTimer) { clearTimeout(_inactivityTimer); _inactivityTimer = null; }
     }
 
     /* ═══════════════════════ PORTAL RENDER ═══════════════════════ */
