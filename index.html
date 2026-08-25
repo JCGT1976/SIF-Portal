@@ -1478,7 +1478,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.08.20.4';
+    const APP_VERSION = '2026.08.25.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -2029,7 +2029,7 @@ function toggleLang(){
 
     /* ═══════════════════════ PORTAL RENDER ═══════════════════════ */
     function renderPortal() {
-      if (!currentUser) return;
+      if (!currentUser || typeof currentUser !== 'object') return;
       const fullName = currentUser.nombre || currentUser.username || '';
       const firstName = String(fullName).trim().split(/\s+/)[0] || fullName;
       document.getElementById('userName').textContent = fullName || '—';
@@ -2078,7 +2078,6 @@ function toggleLang(){
           nominasActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
         }
       }
-    }
 
       // Breakdown: acceso a admin_master y a usuarios con 'breakdown' en su modulos[]
       const breakdownActions = document.getElementById('breakdownActions');
@@ -2091,6 +2090,7 @@ function toggleLang(){
           breakdownActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
         }
       }
+    }
 
     /* ── fin gestión de accesos ── */
 
