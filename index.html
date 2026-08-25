@@ -746,12 +746,13 @@
 
     .btn-mod {
       width: auto;
-      height: 32px;
-      padding: 0 14px;
+      min-width: 110px;
+      height: 34px;
+      padding: 0 18px;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: -0.005em;
-      border-radius: var(--r-sm);
+      border-radius: 999px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -759,30 +760,43 @@
       transition: all var(--dur) var(--ease);
       border: 1px solid transparent;
       white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-mod::before {
+      content: "";
+      position: absolute;
+      top: 2px; left: 6px; right: 6px;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 100%);
+      border-radius: 999px;
+      pointer-events: none;
     }
     .btn-mod-primary {
-      background: var(--brand-800);
+      background: linear-gradient(180deg, var(--brand-700) 0%, var(--brand-900) 100%);
       color: var(--paper);
+      box-shadow: 0 2px 4px rgba(0,40,85,.35), inset 0 1px 0 rgba(255,255,255,.25);
     }
     .btn-mod-primary:hover {
-      background: var(--brand-900);
+      background: linear-gradient(180deg, var(--brand-800) 0%, var(--brand-900) 100%);
       transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 8px rgba(0,40,85,.4), inset 0 1px 0 rgba(255,255,255,.3);
     }
     .btn-mod-primary svg { width: 12px; height: 12px; stroke-width: 2; }
 
     .btn-mod-ghost {
-      background: var(--paper);
-      color: var(--ink-700);
+      background: linear-gradient(180deg, #ffffff 0%, #eef2f6 100%);
+      color: var(--ink-500);
       border-color: var(--ink-200);
+      box-shadow: 0 1px 2px rgba(15,30,50,.08), inset 0 1px 0 rgba(255,255,255,.7);
     }
     .btn-mod-ghost:hover {
-      background: var(--ink-50);
+      background: linear-gradient(180deg, #ffffff 0%, #e4e9ef 100%);
       border-color: var(--ink-300);
-      color: var(--ink-900);
+      color: var(--ink-700);
     }
     .btn-mod-ghost.notified {
-      background: var(--success-soft);
+      background: linear-gradient(180deg, #ffffff 0%, var(--success-soft) 100%);
       color: var(--success);
       border-color: var(--success-line);
     }
@@ -955,7 +969,7 @@
       .portal-hero-desc { font-size: 13px; }
 
       /* Module cards — más compactas en 1 columna */
-      .btn-mod { height: 44px; font-size: 15px; border-radius: 12px; }
+      .btn-mod { height: 40px; font-size: 13px; border-radius: 999px; min-width: 96px; }
 
       /* Login en pantalla pequeña */
       .login-pane-form { padding: 32px 20px; }
@@ -1466,7 +1480,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.08.25.5';
+    const APP_VERSION = '2026.08.25.6';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
