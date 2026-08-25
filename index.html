@@ -587,14 +587,18 @@
     }
 
     .modules-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (min-width: 1100px) {
+      .modules-grid { grid-template-columns: repeat(5, 1fr); }
     }
 
     @media (max-width: 780px) {
       .portal-shell { padding: 0 20px 60px; }
       .portal-hero-title { font-size: 26px; }
+      .modules-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 640px) {
@@ -611,53 +615,71 @@
       .btn-users-admin { padding: 0 9px; }
       .btn-logout { padding: 0; width: 34px; height: 34px; }
       .portal-hero-desc { font-size: 13.5px; }
+      .modules-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
     }
 
-    /* — Module Row (compact executive list) — */
+    /* — Module Card: glossy clickable pill-cube — */
     .mod-card {
-      background: var(--paper);
-      border: 1px solid var(--ink-100);
-      border-radius: var(--r-lg);
-      padding: 10px 16px;
-      transition: border-color var(--dur) var(--ease),
-                  transform var(--dur) var(--ease),
-                  box-shadow var(--dur) var(--ease);
+      border: 1px solid transparent;
+      border-radius: 22px;
+      padding: 18px 14px;
+      transition: all var(--dur) var(--ease);
       position: relative;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
-      gap: 14px;
+      text-align: center;
+      gap: 8px;
       min-height: unset;
+      cursor: pointer;
+      overflow: hidden;
+      background: linear-gradient(180deg, #ffffff 0%, #eef2f6 100%);
+      box-shadow: 0 1px 3px rgba(15,30,50,.10), inset 0 1px 0 rgba(255,255,255,.8);
+      color: var(--ink-500);
     }
-    .mod-card:hover {
-      border-color: var(--ink-200);
-      box-shadow: var(--shadow-sm);
-    }
-    .mod-card[data-status="active"] {
-      background:
-        linear-gradient(180deg, var(--paper) 0%, var(--paper) 100%);
-    }
-    .mod-card[data-status="active"]::before {
+    .mod-card::before {
       content: "";
       position: absolute;
-      top: 0; bottom: 0; left: 0;
-      width: 3px;
-      background: var(--brand-800);
-      border-radius: 3px 0 0 3px;
+      top: 3px; left: 10%; right: 10%;
+      height: 34%;
+      background: linear-gradient(180deg, rgba(255,255,255,.6) 0%, rgba(255,255,255,0) 100%);
+      border-radius: 999px;
+      pointer-events: none;
+    }
+    .mod-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(15,30,50,.14), inset 0 1px 0 rgba(255,255,255,.8);
+    }
+    .mod-card[data-status="active"] {
+      background: linear-gradient(180deg, var(--brand-700) 0%, var(--brand-900) 100%);
+      color: var(--paper);
+      box-shadow: 0 3px 8px rgba(0,40,85,.35), inset 0 1px 0 rgba(255,255,255,.25);
+    }
+    .mod-card[data-status="active"]:hover {
+      background: linear-gradient(180deg, var(--brand-800) 0%, var(--brand-900) 100%);
+      box-shadow: 0 8px 18px rgba(0,40,85,.4), inset 0 1px 0 rgba(255,255,255,.3);
+    }
+    .mod-card.disabled {
+      cursor: not-allowed;
+      opacity: .6;
+    }
+    .mod-card.disabled:hover {
+      transform: none;
+      box-shadow: 0 1px 3px rgba(15,30,50,.10), inset 0 1px 0 rgba(255,255,255,.8);
     }
 
     .mod-head {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
       margin-bottom: 0;
-      flex-shrink: 0;
     }
 
     .mod-icon {
-      width: 30px; height: 30px;
+      width: 42px; height: 42px;
       background: var(--ink-50);
-      border-radius: var(--r-sm);
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -666,11 +688,11 @@
       flex-shrink: 0;
     }
     .mod-card[data-status="active"] .mod-icon {
-      background: var(--brand-800);
+      background: rgba(255,255,255,.18);
       color: var(--paper);
     }
     .mod-icon svg {
-      width: 16px; height: 16px;
+      width: 20px; height: 20px;
       stroke-width: 1.75;
     }
 
@@ -678,7 +700,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      padding: 3px 8px;
+      padding: 3px 9px;
       background: var(--ink-50);
       color: var(--ink-500);
       font-size: 9px;
@@ -695,117 +717,39 @@
       background: var(--ink-300);
     }
     .mod-card[data-status="active"] .mod-status {
-      background: var(--success-soft);
-      color: var(--success);
+      background: rgba(255,255,255,.2);
+      color: var(--paper);
     }
     .mod-card[data-status="active"] .mod-status-dot {
-      background: var(--success);
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+      background: #4ade80;
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25);
       animation: pulse 2.4s ease-in-out infinite;
     }
     @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15); }
-      50%      { box-shadow: 0 0 0 5px rgba(5, 150, 105, 0.08); }
+      0%, 100% { box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25); }
+      50%      { box-shadow: 0 0 0 5px rgba(74, 222, 128, 0.12); }
     }
 
     .mod-title {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
       letter-spacing: -0.01em;
-      color: var(--ink-900);
       margin-bottom: 0;
       line-height: 1.2;
-      white-space: nowrap;
-      flex-shrink: 0;
     }
     .mod-desc {
-      font-size: 12px;
-      color: var(--ink-500);
-      line-height: 1.4;
-      margin-bottom: 0;
-      flex: 1 1 auto;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .mod-meta {
       display: none;
     }
 
+    .mod-meta { display: none; }
     .mod-progress-track { display: none; }
     .mod-progress-bar { display: none; }
+    .mod-actions { display: none; }
 
-    .mod-actions {
-      margin-top: 0;
-      margin-left: auto;
-      flex-shrink: 0;
-      width: auto;
-    }
-
-    .btn-mod {
-      width: auto;
-      min-width: 150px;
-      height: 34px;
-      padding: 0 18px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: -0.005em;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all var(--dur) var(--ease);
-      border: 1px solid transparent;
-      white-space: nowrap;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-mod::before {
-      content: "";
-      position: absolute;
-      top: 2px; left: 6px; right: 6px;
-      height: 40%;
-      background: linear-gradient(180deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,0) 100%);
-      border-radius: 999px;
-      pointer-events: none;
-    }
-    .btn-mod-primary {
-      background: linear-gradient(180deg, var(--brand-700) 0%, var(--brand-900) 100%);
-      color: var(--paper);
-      box-shadow: 0 2px 4px rgba(0,40,85,.35), inset 0 1px 0 rgba(255,255,255,.25);
-    }
-    .btn-mod-primary:hover {
-      background: linear-gradient(180deg, var(--brand-800) 0%, var(--brand-900) 100%);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0,40,85,.4), inset 0 1px 0 rgba(255,255,255,.3);
-    }
-    .btn-mod-primary svg { width: 12px; height: 12px; stroke-width: 2; }
-
-    .btn-mod-ghost {
-      background: linear-gradient(180deg, #ffffff 0%, #eef2f6 100%);
-      color: var(--ink-500);
-      border-color: var(--ink-200);
-      box-shadow: 0 1px 2px rgba(15,30,50,.08), inset 0 1px 0 rgba(255,255,255,.7);
-    }
-    .btn-mod-ghost:hover {
-      background: linear-gradient(180deg, #ffffff 0%, #e4e9ef 100%);
-      border-color: var(--ink-300);
-      color: var(--ink-700);
-    }
-    .btn-mod-ghost.notified {
-      background: linear-gradient(180deg, #ffffff 0%, var(--success-soft) 100%);
-      color: var(--success);
-      border-color: var(--success-line);
-    }
-
-    @media (max-width: 640px) {
-      .mod-card { flex-wrap: wrap; padding: 10px 14px; }
-      .mod-desc { display: none; }
-      .mod-actions { margin-left: auto; }
-    }
+    /* ═══════════════════════ MOD-CARD: EN CONSTRUCCIÓN ═══════════════════════ */
+    .mod-card[data-status="construction"] .mod-icon { background: var(--warning-soft); color: var(--warning); }
+    .mod-card[data-status="construction"] .mod-status { background: var(--warning-soft); color: var(--warning); }
+    .mod-card[data-status="construction"] .mod-status-dot { background: var(--warning); }
 
 
     /* ═══════════════════════ TOAST ═══════════════════════ */
@@ -846,14 +790,11 @@
     }
     .btn-users-admin:hover { background: var(--brand-50); border-color: var(--brand-700); }
 
-    /* ═══════════════════════ MOD-CARD: EN CONSTRUCCIÓN ═══════════════════════ */
-    .mod-card[data-status="construction"]::before {
-      content: ""; position: absolute; top: 0; left: 20px; right: 20px;
-      height: 2px; background: var(--warning); border-radius: 2px;
+    /* ═══════════════════════ MOD-CARD: EN CONSTRUCCIÓN (borde superior) ═══════════════════════ */
+    .mod-card[data-status="construction"]::after {
+      content: ""; position: absolute; top: 0; left: 20%; right: 20%;
+      height: 3px; background: var(--warning); border-radius: 0 0 3px 3px;
     }
-    .mod-card[data-status="construction"] .mod-icon { background: var(--warning-soft); color: var(--warning); }
-    .mod-card[data-status="construction"] .mod-status { background: var(--warning-soft); color: var(--warning); }
-    .mod-card[data-status="construction"] .mod-status-dot { background: var(--warning); }
 
     /* ═══════════════════════ USUARIOS (admin) ═══════════════════════ */
     #stateUsuarios { background: var(--ink-25); }
@@ -969,7 +910,9 @@
       .portal-hero-desc { font-size: 13px; }
 
       /* Module cards — más compactas en 1 columna */
-      .btn-mod { height: 40px; font-size: 13px; border-radius: 999px; min-width: 96px; }
+      .modules-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .mod-card { padding: 14px 8px; border-radius: 18px; }
+      .mod-icon { width: 36px; height: 36px; }
 
       /* Login en pantalla pequeña */
       .login-pane-form { padding: 32px 20px; }
@@ -1249,7 +1192,7 @@
       <div class="modules-grid">
 
         <!-- MODULE 1 : FLUJO Y GASTOS (ACTIVE) -->
-        <article class="mod-card" data-status="active">
+        <article class="mod-card" data-status="active" onclick="irADeadpool()" style="cursor:pointer">
           <header class="mod-head">
             <div class="mod-icon">
               <!-- monoline: trending line -->
@@ -1480,7 +1423,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.08.25.7';
+    const APP_VERSION = '2026.08.25.8';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -2046,44 +1989,52 @@ function toggleLang(){
       if (btnUsers) btnUsers.style.display = (currentUser.rol === 'admin_master') ? 'inline-flex' : 'none';
 
       // Fiscal: acceso a admin_master y a usuarios con 'fiscal' en su modulos[]
-      const fiscalActions = document.getElementById('fiscalActions');
-      if (fiscalActions) {
+      const fiscalCard = document.getElementById('modCardFiscal');
+      if (fiscalCard) {
         const mods = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
         const tieneFiscal = currentUser.rol === 'admin_master' || mods.includes('fiscal');
         if (tieneFiscal) {
-          fiscalActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irAFiscal()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+          fiscalCard.onclick = irAFiscal;
+          fiscalCard.classList.remove('disabled');
         } else {
-          fiscalActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
+          fiscalCard.onclick = () => showToast('Sin acceso al módulo Fiscal. Contacta al administrador.');
+          fiscalCard.classList.add('disabled');
         }
       }
 
       // Contabilidad: en construcción — solo admin_master puede entrar (desarrollo)
-      const contabilidadActions = document.getElementById('contabilidadActions');
-      if (contabilidadActions) {
+      const contabilidadCard = document.getElementById('modCardContabilidad');
+      if (contabilidadCard) {
         if (currentUser.rol === 'admin_master') {
-          contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irAContabilidad()"><span>Entrar al módulo (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+          contabilidadCard.onclick = irAContabilidad;
+          contabilidadCard.classList.remove('disabled');
         } else {
-          contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
+          contabilidadCard.onclick = () => showToast('Módulo Contabilidad en construcción.');
+          contabilidadCard.classList.add('disabled');
         }
       }
 
       // Nóminas: en construcción — solo admin_master puede entrar (desarrollo)
-      const nominasActions = document.getElementById('nominasActions');
-      if (nominasActions) {
+      const nominasCard = document.getElementById('modCardNominas');
+      if (nominasCard) {
         if (currentUser.rol === 'admin_master') {
-          nominasActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irANominas()"><span>Entrar al módulo (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+          nominasCard.onclick = irANominas;
+          nominasCard.classList.remove('disabled');
         } else {
-          nominasActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
+          nominasCard.onclick = () => showToast('Módulo Nóminas en construcción.');
+          nominasCard.classList.add('disabled');
         }
       }
 
       // Breakdown: en construcción — solo admin_master puede entrar (desarrollo)
-      const breakdownActions = document.getElementById('breakdownActions');
-      if (breakdownActions) {
+      const breakdownCard = document.getElementById('modCardBreakdown');
+      if (breakdownCard) {
         if (currentUser.rol === 'admin_master') {
-          breakdownActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irABreakdown()"><span>Entrar al módulo (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+          breakdownCard.onclick = irABreakdown;
+          breakdownCard.classList.remove('disabled');
         } else {
-          breakdownActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
+          breakdownCard.onclick = () => showToast('Módulo Breakdown en construcción.');
+          breakdownCard.classList.add('disabled');
         }
       }
     }
