@@ -1478,7 +1478,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.08.25.2';
+    const APP_VERSION = '2026.08.25.3';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -2055,40 +2055,22 @@ function toggleLang(){
         }
       }
 
-      // Contabilidad: acceso a admin_master y a usuarios con 'contabilidad' en su modulos[]
+      // Contabilidad: en construcción — bloqueado para todos independientemente de permisos
       const contabilidadActions = document.getElementById('contabilidadActions');
       if (contabilidadActions) {
-        const mods = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
-        const tieneContabilidad = currentUser.rol === 'admin_master' || mods.includes('contabilidad');
-        if (tieneContabilidad) {
-          contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irAContabilidad()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
-        } else {
-          contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
-        }
+        contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
       }
 
-      // Nóminas: acceso a admin_master y a usuarios con 'nominas' en su modulos[]
+      // Nóminas: en construcción — bloqueado para todos independientemente de permisos
       const nominasActions = document.getElementById('nominasActions');
       if (nominasActions) {
-        const mods = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
-        const tieneNominas = currentUser.rol === 'admin_master' || mods.includes('nominas');
-        if (tieneNominas) {
-          nominasActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irANominas()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
-        } else {
-          nominasActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
-        }
+        nominasActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
       }
 
-      // Breakdown: acceso a admin_master y a usuarios con 'breakdown' en su modulos[]
+      // Breakdown: en construcción — bloqueado para todos independientemente de permisos
       const breakdownActions = document.getElementById('breakdownActions');
       if (breakdownActions) {
-        const mods = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
-        const tieneBreakdown = currentUser.rol === 'admin_master' || mods.includes('breakdown');
-        if (tieneBreakdown) {
-          breakdownActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irABreakdown()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
-        } else {
-          breakdownActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
-        }
+        breakdownActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
       }
     }
 
@@ -2154,33 +2136,18 @@ function toggleLang(){
     }
 
     function irAContabilidad() {
-      const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
-      const tieneContabilidad = currentUser && (currentUser.rol === 'admin_master' || mods.includes('contabilidad'));
-      if (!tieneContabilidad) {
-        showToast('Sin acceso al módulo Contabilidad. Contacta al administrador.');
-        return;
-      }
-      _launchModule(CONTABILIDAD_URL, 'Contabilidad');
+      showToast('Módulo Contabilidad en construcción.');
+      return;
     }
 
     function irANominas() {
-      const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
-      const tieneNominas = currentUser && (currentUser.rol === 'admin_master' || mods.includes('nominas'));
-      if (!tieneNominas) {
-        showToast('Sin acceso al módulo Nóminas. Contacta al administrador.');
-        return;
-      }
-      _launchModule(NOMINAS_URL, 'Nóminas');
+      showToast('Módulo Nóminas en construcción.');
+      return;
     }
 
     function irABreakdown() {
-      const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
-      const tieneBreakdown = currentUser && (currentUser.rol === 'admin_master' || mods.includes('breakdown'));
-      if (!tieneBreakdown) {
-        showToast('Sin acceso al módulo Breakdown. Contacta al administrador.');
-        return;
-      }
-      _launchModule(BREAKDOWN_URL, 'Breakdown');
+      showToast('Módulo Breakdown en construcción.');
+      return;
     }
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
