@@ -1398,6 +1398,41 @@
           </div>
         </article>
 
+        <!-- MODULE 5 : BREAKDOWN -->
+        <article class="mod-card" data-status="active" id="modCardBreakdown">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/>
+              </svg>
+            </div>
+            <span class="mod-status" id="breakdownStatus">
+              <span class="mod-status-dot"></span>
+              Activo
+            </span>
+          </header>
+
+          <h2 class="mod-title">Breakdown</h2>
+          <p class="mod-desc">Análisis de costos por giro: maquila (órdenes BOM), comercio (SKU y ventas) y transporte (viajes y costos).</p>
+
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="breakdownVer">v2026.08.25.1</span>
+            </div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Acceso</span>
+              <span class="mod-meta-value">Por módulo</span>
+            </div>
+          </div>
+
+          <div class="mod-actions" id="breakdownActions">
+            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
+              <span>Sin acceso — contacta al administrador</span>
+            </button>
+          </div>
+        </article>
+
       </div>
     </div>
   </div>
@@ -1450,6 +1485,7 @@
     const FISCAL_URL    = 'https://jcgt1976.github.io/Fiscal/';
     const CONTABILIDAD_URL = 'https://jcgt1976.github.io/Contabilidad/';
     const NOMINAS_URL   = 'https://jcgt1976.github.io/N-minas/';
+    const BREAKDOWN_URL = 'https://jcgt1976.github.io/Breakdown/';
     const PORTAL_URL    = 'https://jcgt1976.github.io/SIF-Portal/';
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
@@ -2044,6 +2080,18 @@ function toggleLang(){
       }
     }
 
+      // Breakdown: acceso a admin_master y a usuarios con 'breakdown' en su modulos[]
+      const breakdownActions = document.getElementById('breakdownActions');
+      if (breakdownActions) {
+        const mods = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
+        const tieneBreakdown = currentUser.rol === 'admin_master' || mods.includes('breakdown');
+        if (tieneBreakdown) {
+          breakdownActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irABreakdown()"><span>Entrar al módulo</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+        } else {
+          breakdownActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>Sin acceso — contacta al administrador</span></button>`;
+        }
+      }
+
     /* ── fin gestión de accesos ── */
 
     /* Heurística simple por terminación del nombre (es-MX): termina en 'a' =>
@@ -2123,6 +2171,16 @@ function toggleLang(){
         return;
       }
       _launchModule(NOMINAS_URL, 'Nóminas');
+    }
+
+    function irABreakdown() {
+      const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
+      const tieneBreakdown = currentUser && (currentUser.rol === 'admin_master' || mods.includes('breakdown'));
+      if (!tieneBreakdown) {
+        showToast('Sin acceso al módulo Breakdown. Contacta al administrador.');
+        return;
+      }
+      _launchModule(BREAKDOWN_URL, 'Breakdown');
     }
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
@@ -2623,6 +2681,7 @@ function toggleLang(){
     /* Expose to window for onclick handlers */
     window.doLogout = doLogout;
     window.irADeadpool = irADeadpool;
+    window.irABreakdown = irABreakdown;
     window.irAFiscal = irAFiscal;
     window.notify = notify;
     window.abrirUsuarios = abrirUsuarios;
