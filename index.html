@@ -587,13 +587,12 @@
     }
 
     .modules-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     @media (max-width: 780px) {
-      .modules-grid { grid-template-columns: 1fr; }
       .portal-shell { padding: 0 20px 60px; }
       .portal-hero-title { font-size: 26px; }
     }
@@ -614,24 +613,25 @@
       .portal-hero-desc { font-size: 13.5px; }
     }
 
-    /* — Module Card — */
+    /* — Module Row (compact executive list) — */
     .mod-card {
       background: var(--paper);
       border: 1px solid var(--ink-100);
-      border-radius: var(--r-xl);
-      padding: 28px;
+      border-radius: var(--r-lg);
+      padding: 10px 16px;
       transition: border-color var(--dur) var(--ease),
                   transform var(--dur) var(--ease),
                   box-shadow var(--dur) var(--ease);
       position: relative;
       display: flex;
-      flex-direction: column;
-      min-height: 320px;
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      min-height: unset;
     }
     .mod-card:hover {
       border-color: var(--ink-200);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      box-shadow: var(--shadow-sm);
     }
     .mod-card[data-status="active"] {
       background:
@@ -640,53 +640,57 @@
     .mod-card[data-status="active"]::before {
       content: "";
       position: absolute;
-      top: 0; left: 20px; right: 20px;
-      height: 2px;
+      top: 0; bottom: 0; left: 0;
+      width: 3px;
       background: var(--brand-800);
-      border-radius: 2px;
+      border-radius: 3px 0 0 3px;
     }
 
     .mod-head {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 24px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0;
+      flex-shrink: 0;
     }
 
     .mod-icon {
-      width: 44px; height: 44px;
+      width: 30px; height: 30px;
       background: var(--ink-50);
-      border-radius: var(--r-md);
+      border-radius: var(--r-sm);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--ink-700);
       transition: all var(--dur) var(--ease);
+      flex-shrink: 0;
     }
     .mod-card[data-status="active"] .mod-icon {
       background: var(--brand-800);
       color: var(--paper);
     }
     .mod-icon svg {
-      width: 22px; height: 22px;
+      width: 16px; height: 16px;
       stroke-width: 1.75;
     }
 
     .mod-status {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
+      gap: 5px;
+      padding: 3px 8px;
       background: var(--ink-50);
       color: var(--ink-500);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       border-radius: 999px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .mod-status-dot {
-      width: 6px; height: 6px;
+      width: 5px; height: 5px;
       border-radius: 50%;
       background: var(--ink-300);
     }
@@ -705,74 +709,56 @@
     }
 
     .mod-title {
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       color: var(--ink-900);
-      margin-bottom: 8px;
+      margin-bottom: 0;
       line-height: 1.2;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .mod-desc {
-      font-size: 13.5px;
+      font-size: 12px;
       color: var(--ink-500);
-      line-height: 1.55;
-      margin-bottom: 22px;
+      line-height: 1.4;
+      margin-bottom: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .mod-meta {
       display: none;
-      gap: 24px;
-      padding: 14px 0;
-      border-top: 1px solid var(--ink-100);
-      margin-bottom: 18px;
-    }
-    .mod-meta-item { display: flex; flex-direction: column; gap: 2px; }
-    .mod-meta-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-400);
-    }
-    .mod-meta-value {
-      font-size: 12.5px;
-      font-weight: 500;
-      color: var(--ink-800);
-      font-family: var(--font-mono);
     }
 
-    .mod-progress-track {
-      height: 3px;
-      background: var(--ink-100);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-bottom: 18px;
-    }
-    .mod-progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--brand-900), var(--brand-700));
-      border-radius: 999px;
-      transition: width 600ms var(--ease);
-    }
+    .mod-progress-track { display: none; }
+    .mod-progress-bar { display: none; }
 
     .mod-actions {
-      margin-top: auto;
+      margin-top: 0;
+      margin-left: auto;
+      flex-shrink: 0;
+      width: auto;
     }
 
     .btn-mod {
-      width: 100%;
-      height: 42px;
-      padding: 0 16px;
-      font-size: 13.5px;
+      width: auto;
+      height: 32px;
+      padding: 0 14px;
+      font-size: 12px;
       font-weight: 500;
       letter-spacing: -0.005em;
-      border-radius: var(--r-md);
+      border-radius: var(--r-sm);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       transition: all var(--dur) var(--ease);
       border: 1px solid transparent;
+      white-space: nowrap;
     }
     .btn-mod-primary {
       background: var(--brand-800);
@@ -783,7 +769,7 @@
       transform: translateY(-1px);
       box-shadow: var(--shadow-sm);
     }
-    .btn-mod-primary svg { width: 14px; height: 14px; stroke-width: 2; }
+    .btn-mod-primary svg { width: 12px; height: 12px; stroke-width: 2; }
 
     .btn-mod-ghost {
       background: var(--paper);
@@ -800,6 +786,13 @@
       color: var(--success);
       border-color: var(--success-line);
     }
+
+    @media (max-width: 640px) {
+      .mod-card { flex-wrap: wrap; padding: 10px 14px; }
+      .mod-desc { display: none; }
+      .mod-actions { margin-left: auto; }
+    }
+
 
     /* ═══════════════════════ TOAST ═══════════════════════ */
     .toast {
@@ -962,12 +955,7 @@
       .portal-hero-desc { font-size: 13px; }
 
       /* Module cards — más compactas en 1 columna */
-      .mod-card { padding: 20px; min-height: unset; }
-      .mod-head { margin-bottom: 16px; }
-      .mod-title { font-size: 17px; }
-      .mod-desc { font-size: 13px; margin-bottom: 16px; }
-      .mod-meta { padding: 10px 0; margin-bottom: 14px; }
-      .btn-mod { height: 48px; font-size: 15px; border-radius: 12px; }
+      .btn-mod { height: 44px; font-size: 15px; border-radius: 12px; }
 
       /* Login en pantalla pequeña */
       .login-pane-form { padding: 32px 20px; }
@@ -1241,7 +1229,7 @@
 
       <div class="modules-section-label">
         <span class="lbl">Módulos</span>
-        <span class="count">04 · 01 activo</span>
+        <span class="count">05 · 02 activos</span>
       </div>
 
       <div class="modules-grid">
@@ -1256,13 +1244,13 @@
                 <path d="M14 7h7v7"/>
               </svg>
             </div>
+            <h2 class="mod-title">Flujo y Gastos</h2>
             <span class="mod-status">
               <span class="mod-status-dot"></span>
               Activo
             </span>
           </header>
 
-          <h2 class="mod-title">Flujo y Gastos</h2>
           <p class="mod-desc">Control de flujo de efectivo, cuentas por pagar, ingresos y presupuesto semanal.</p>
 
           <div class="mod-meta">
@@ -1278,91 +1266,13 @@
 
           <div class="mod-actions">
             <button class="btn-mod btn-mod-primary" onclick="irADeadpool()">
-              <span>Entrar al módulo</span>
+              <span>Entrar</span>
               <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
         </article>
 
-        <!-- MODULE 2 : CONTABILIDAD -->
-        <article class="mod-card" data-status="construction" id="modCardContabilidad">
-          <header class="mod-head">
-            <div class="mod-icon">
-              <!-- monoline: ledger / book -->
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4z"/>
-                <path d="M4 17a3 3 0 0 1 3-3h12"/>
-                <path d="M8 8h7"/>
-                <path d="M8 11h5"/>
-              </svg>
-            </div>
-            <span class="mod-status" id="contabilidadStatus">
-              <span class="mod-status-dot"></span>
-              En construcción
-            </span>
-          </header>
-
-          <h2 class="mod-title">Contabilidad</h2>
-          <p class="mod-desc">Catálogo de cuentas, balanzas, estados financieros, ratios y pólizas — con consolidación multiempresa y agrupador SAT.</p>
-
-          <div class="mod-meta">
-            <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
-              <span class="mod-meta-value" id="contabilidadVer">v2026.07.20.2</span>
-            </div>
-            <div class="mod-meta-item">
-              <span class="mod-meta-label">Acceso</span>
-              <span class="mod-meta-value">Por módulo</span>
-            </div>
-          </div>
-
-          <div class="mod-actions" id="contabilidadActions">
-            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>Sin acceso — contacta al administrador</span>
-            </button>
-          </div>
-        </article>
-
-        <!-- MODULE 3 : NÓMINAS -->
-        <article class="mod-card" data-status="construction" id="modCardNominas">
-          <header class="mod-head">
-            <div class="mod-icon">
-              <!-- monoline: people group -->
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="8" r="3.5"/>
-                <path d="M2.5 20a6.5 6.5 0 0 1 13 0"/>
-                <path d="M16 4.5a3.5 3.5 0 0 1 0 7"/>
-                <path d="M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>
-              </svg>
-            </div>
-            <span class="mod-status" id="nominasStatus">
-              <span class="mod-status-dot"></span>
-              En construcción
-            </span>
-          </header>
-
-          <h2 class="mod-title">Nóminas</h2>
-          <p class="mod-desc">Control de pago de nómina en efectivo: requisición, autorización, retiro y entrega.</p>
-
-          <div class="mod-meta">
-            <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
-              <span class="mod-meta-value" id="nominasVer">v2026.08.03</span>
-            </div>
-            <div class="mod-meta-item">
-              <span class="mod-meta-label">Acceso</span>
-              <span class="mod-meta-value">Por módulo</span>
-            </div>
-          </div>
-
-          <div class="mod-actions" id="nominasActions">
-            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>Sin acceso — contacta al administrador</span>
-            </button>
-          </div>
-        </article>
-
-        <!-- MODULE 4 : FISCAL -->
+        <!-- MODULE 2 : FISCAL (ACTIVE) -->
         <article class="mod-card" data-status="active" id="modCardFiscal">
           <header class="mod-head">
             <div class="mod-icon">
@@ -1371,13 +1281,13 @@
                 <path d="M9 12l2 2 4-4"/>
               </svg>
             </div>
+            <h2 class="mod-title">Fiscal</h2>
             <span class="mod-status" id="fiscalStatus">
               <span class="mod-status-dot"></span>
               Activo
             </span>
           </header>
 
-          <h2 class="mod-title">Fiscal</h2>
           <p class="mod-desc">Calendario SAT, cálculo de ISR/IVA, control de CFDI, provisiones y deuda fiscal con multas, recargos y actualización.</p>
 
           <div class="mod-meta">
@@ -1393,12 +1303,90 @@
 
           <div class="mod-actions" id="fiscalActions">
             <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>Sin acceso — contacta al administrador</span>
+              <span>Sin acceso</span>
             </button>
           </div>
         </article>
 
-        <!-- MODULE 5 : BREAKDOWN -->
+        <!-- MODULE 3 : CONTABILIDAD (CONSTRUCCIÓN) -->
+        <article class="mod-card" data-status="construction" id="modCardContabilidad">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <!-- monoline: ledger / book -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4z"/>
+                <path d="M4 17a3 3 0 0 1 3-3h12"/>
+                <path d="M8 8h7"/>
+                <path d="M8 11h5"/>
+              </svg>
+            </div>
+            <h2 class="mod-title">Contabilidad</h2>
+            <span class="mod-status" id="contabilidadStatus">
+              <span class="mod-status-dot"></span>
+              En construcción
+            </span>
+          </header>
+
+          <p class="mod-desc">Catálogo de cuentas, balanzas, estados financieros, ratios y pólizas — con consolidación multiempresa y agrupador SAT.</p>
+
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="contabilidadVer">v2026.07.20.2</span>
+            </div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Acceso</span>
+              <span class="mod-meta-value">Por módulo</span>
+            </div>
+          </div>
+
+          <div class="mod-actions" id="contabilidadActions">
+            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
+              <span>En construcción</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- MODULE 4 : NÓMINAS (CONSTRUCCIÓN) -->
+        <article class="mod-card" data-status="construction" id="modCardNominas">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <!-- monoline: people group -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="8" r="3.5"/>
+                <path d="M2.5 20a6.5 6.5 0 0 1 13 0"/>
+                <path d="M16 4.5a3.5 3.5 0 0 1 0 7"/>
+                <path d="M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>
+              </svg>
+            </div>
+            <h2 class="mod-title">Nóminas</h2>
+            <span class="mod-status" id="nominasStatus">
+              <span class="mod-status-dot"></span>
+              En construcción
+            </span>
+          </header>
+
+          <p class="mod-desc">Control de pago de nómina en efectivo: requisición, autorización, retiro y entrega.</p>
+
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="nominasVer">v2026.08.03</span>
+            </div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Acceso</span>
+              <span class="mod-meta-value">Por módulo</span>
+            </div>
+          </div>
+
+          <div class="mod-actions" id="nominasActions">
+            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
+              <span>En construcción</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- MODULE 5 : BREAKDOWN (CONSTRUCCIÓN) -->
         <article class="mod-card" data-status="construction" id="modCardBreakdown">
           <header class="mod-head">
             <div class="mod-icon">
@@ -1406,13 +1394,13 @@
                 <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/>
               </svg>
             </div>
+            <h2 class="mod-title">Breakdown</h2>
             <span class="mod-status" id="breakdownStatus">
               <span class="mod-status-dot"></span>
               En construcción
             </span>
           </header>
 
-          <h2 class="mod-title">Breakdown</h2>
           <p class="mod-desc">Análisis de costos por giro: maquila (órdenes BOM), comercio (SKU y ventas) y transporte (viajes y costos).</p>
 
           <div class="mod-meta">
@@ -1428,7 +1416,7 @@
 
           <div class="mod-actions" id="breakdownActions">
             <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>Sin acceso — contacta al administrador</span>
+              <span>En construcción</span>
             </button>
           </div>
         </article>
@@ -1478,7 +1466,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.08.25.4';
+    const APP_VERSION = '2026.08.25.5';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
