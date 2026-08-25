@@ -746,7 +746,7 @@
 
     .btn-mod {
       width: auto;
-      min-width: 110px;
+      min-width: 150px;
       height: 34px;
       padding: 0 18px;
       font-size: 12px;
@@ -1280,7 +1280,7 @@
 
           <div class="mod-actions">
             <button class="btn-mod btn-mod-primary" onclick="irADeadpool()">
-              <span>Entrar</span>
+              <span>Entrar al módulo</span>
               <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
@@ -1480,7 +1480,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.08.25.6';
+    const APP_VERSION = '2026.08.25.7';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -2061,7 +2061,7 @@ function toggleLang(){
       const contabilidadActions = document.getElementById('contabilidadActions');
       if (contabilidadActions) {
         if (currentUser.rol === 'admin_master') {
-          contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irAContabilidad()"><span>Entrar (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+          contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irAContabilidad()"><span>Entrar al módulo (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
         } else {
           contabilidadActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
         }
@@ -2071,7 +2071,7 @@ function toggleLang(){
       const nominasActions = document.getElementById('nominasActions');
       if (nominasActions) {
         if (currentUser.rol === 'admin_master') {
-          nominasActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irANominas()"><span>Entrar (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+          nominasActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irANominas()"><span>Entrar al módulo (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
         } else {
           nominasActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
         }
@@ -2081,7 +2081,7 @@ function toggleLang(){
       const breakdownActions = document.getElementById('breakdownActions');
       if (breakdownActions) {
         if (currentUser.rol === 'admin_master') {
-          breakdownActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irABreakdown()"><span>Entrar (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
+          breakdownActions.innerHTML = `<button class="btn-mod btn-mod-primary" onclick="irABreakdown()"><span>Entrar al módulo (dev)</span><svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></button>`;
         } else {
           breakdownActions.innerHTML = `<button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;"><span>En construcción</span></button>`;
         }
