@@ -1192,46 +1192,7 @@
       <div class="modules-grid">
 
         <!-- MODULE 1 : FLUJO Y GASTOS (ACTIVE) -->
-        <article class="mod-card" data-status="active" onclick="irADeadpool()" style="cursor:pointer">
-          <header class="mod-head">
-            <div class="mod-icon">
-              <!-- monoline: trending line -->
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 17l6-6 4 4 8-8"/>
-                <path d="M14 7h7v7"/>
-              </svg>
-            </div>
-            <h2 class="mod-title">Flujo y Gastos</h2>
-            <span class="mod-status">
-              <span class="mod-status-dot"></span>
-              Activo
-            </span>
-          </header>
-
-          <p class="mod-desc">Control de flujo de efectivo, cuentas por pagar, ingresos y presupuesto semanal.</p>
-
-          <div class="mod-meta">
-            <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
-              <span class="mod-meta-value" id="deadpoolVer">v2026.07.22.21</span>
-            </div>
-            <div class="mod-meta-item">
-              <span class="mod-meta-label">Ambiente</span>
-              <span class="mod-meta-value">Producción</span>
-            </div>
-          </div>
-
-          <div class="mod-actions">
-            <button class="btn-mod btn-mod-primary" onclick="irADeadpool()">
-              <span>Entrar al módulo</span>
-              <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-<button class="btn-mod btn-mod-primary" onclick="irATesoreria()">
-              <span>Tesorería</span>
-              <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>Centralización tipo banco, barridos y flujo</div>
-        </article>
+        
 
         <!-- MODULE 2 : FISCAL (ACTIVE) -->
         <article class="mod-card" data-status="active" id="modCardFiscal">
@@ -2127,13 +2088,6 @@ function toggleLang(){
       }
       _launchModule(BREAKDOWN_URL, 'Breakdown');
     }
-function irATesoreria(){
-    if(!currentUser||currentUser.rol!=='admin_master'){
-      showToast('Acceso restringido: solo Administrador Master','warning');return;
-    }
-    _launchModule('https://jcgt1976.github.io/Tesoreria/','Tesorería');
-  }
-
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
     function notify(btn, mod) {
@@ -2635,7 +2589,6 @@ function irATesoreria(){
     window.irADeadpool = irADeadpool;
     window.irABreakdown = irABreakdown;
     window.irAFiscal = irAFiscal;
-    window.irATesoreria = irATesoreria;
     window.notify = notify;
     window.abrirUsuarios = abrirUsuarios;
     window.volverAlPortal = volverAlPortal;
