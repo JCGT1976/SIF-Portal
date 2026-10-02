@@ -2128,11 +2128,11 @@ function toggleLang(){
       _launchModule(BREAKDOWN_URL, 'Breakdown');
     }
 function irATesoreria(){
-  var mods=Array.isArray(currentUser&&currentUser.modulos)?currentUser.modulos:[];
-  var tiene=currentUser&&(currentUser.rol==='admin_master'||mods.includes('tesoreria'));
-  if(!tiene){showToast('Sin acceso a Tesorería','warning');return;}
-  _launchModule('https://jcgt1976.github.io/Tesoreria/','Tesorería');
-}
+    if(!currentUser||currentUser.rol!=='admin_master'){
+      showToast('Acceso restringido: solo Administrador Master','warning');return;
+    }
+    _launchModule('https://jcgt1976.github.io/Tesoreria/','Tesorería');
+  }
 
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
