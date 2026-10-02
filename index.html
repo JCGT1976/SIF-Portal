@@ -1227,6 +1227,10 @@
               <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
+<button class="btn-mod btn-mod-primary" onclick="irATesoreria()">
+              <span>Tesorería</span>
+              <svg viewBox="0 0 20 20" fill="none"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>Centralización tipo banco, barridos y flujo</div>
         </article>
 
         <!-- MODULE 2 : FISCAL (ACTIVE) -->
@@ -2123,6 +2127,13 @@ function toggleLang(){
       }
       _launchModule(BREAKDOWN_URL, 'Breakdown');
     }
+function irATesoreria(){
+  var mods=Array.isArray(currentUser&&currentUser.modulos)?currentUser.modulos:[];
+  var tiene=currentUser&&(currentUser.rol==='admin_master'||mods.includes('tesoreria'));
+  if(!tiene){showToast('Sin acceso a Tesorería','warning');return;}
+  _launchModule('https://jcgt1976.github.io/Tesoreria/','Tesorería');
+}
+
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
     function notify(btn, mod) {
@@ -2624,6 +2635,7 @@ function toggleLang(){
     window.irADeadpool = irADeadpool;
     window.irABreakdown = irABreakdown;
     window.irAFiscal = irAFiscal;
+    window.irATesoreria = irATesoreria;
     window.notify = notify;
     window.abrirUsuarios = abrirUsuarios;
     window.volverAlPortal = volverAlPortal;
