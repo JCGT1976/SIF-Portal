@@ -1186,7 +1186,7 @@
 
       <div class="modules-section-label">
         <span class="lbl">Módulos</span>
-        <span class="count">05 · 02 activos</span>
+        <span class="count">06 · 02 activos</span>
       </div>
 
       <div class="modules-grid">
@@ -1345,6 +1345,43 @@
             </button>
           </div>
         </article>
+        <!-- MODULE 6 : TESORERÍA (CONSTRUCCIÓN) -->
+        <article class="mod-card" data-status="construction" id="modCardTesoreria">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2"/>
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+                <line x1="12" y1="12" x2="12" y2="16"/>
+                <line x1="10" y1="14" x2="14" y2="14"/>
+              </svg>
+            </div>
+            <h2 class="mod-title">Tesorería</h2>
+            <span class="mod-status" id="tesoreriaStatus">
+              <span class="mod-status-dot"></span>
+              En construcción
+            </span>
+          </header>
+
+          <p class="mod-desc">Control de efectivo por sucursal y matriz controladora: posición de caja, flujo por unidad y reportes consolidados.</p>
+
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="tesoreriaVer">v2026.10.05.1</span>
+            </div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Acceso</span>
+              <span class="mod-meta-value">Administrador</span>
+            </div>
+          </div>
+
+          <div class="mod-actions" id="tesoreriaActions">
+            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
+              <span>En construcción</span>
+            </button>
+          </div>
+        </article>
 
       </div>
     </div>
@@ -1391,7 +1428,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.08.25.8';
+    const APP_VERSION = '2026.10.05.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -1399,6 +1436,7 @@
     const CONTABILIDAD_URL = 'https://jcgt1976.github.io/Contabilidad/';
     const NOMINAS_URL   = 'https://jcgt1976.github.io/N-minas/';
     const BREAKDOWN_URL = 'https://jcgt1976.github.io/Breakdown/';
+    const TESORERIA_URL  = 'https://jcgt1976.github.io/Tesoreria/';
     const PORTAL_URL    = 'https://jcgt1976.github.io/SIF-Portal/';
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON, {
@@ -2005,6 +2043,18 @@ function toggleLang(){
           breakdownCard.classList.add('disabled');
         }
       }
+
+      // Tesorería: en construcción — solo admin_master puede entrar (desarrollo)
+      const tesoreriaCard = document.getElementById('modCardTesoreria');
+      if (tesoreriaCard) {
+        if (currentUser.rol === 'admin_master') {
+          tesoreriaCard.onclick = irATesoreria;
+          tesoreriaCard.classList.remove('disabled');
+        } else {
+          tesoreriaCard.onclick = () => showToast('Módulo Tesorería en construcción.');
+          tesoreriaCard.classList.add('disabled');
+        }
+      }
     }
 
     /* ── fin gestión de accesos ── */
@@ -2090,6 +2140,14 @@ function toggleLang(){
         return;
       }
       _launchModule(BREAKDOWN_URL, 'Breakdown');
+    }
+
+    function irATesoreria() {
+      if (!currentUser || currentUser.rol !== 'admin_master') {
+        showToast('Módulo Tesorería en construcción.');
+        return;
+      }
+      _launchModule(TESORERIA_URL, 'Tesoría');
     }
 
     /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
@@ -2591,6 +2649,7 @@ function toggleLang(){
     window.doLogout = doLogout;
     window.irADeadpool = irADeadpool;
     window.irABreakdown = irABreakdown;
+    window.irATesoreria  = irATesoreria;
     window.irAFiscal = irAFiscal;
     window.notify = notify;
     window.abrirUsuarios = abrirUsuarios;
