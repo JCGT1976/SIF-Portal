@@ -14,20 +14,20 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="SIF">
-  <title>SIF · MI Technologies</title>
+  <title>SIF Â· MI Technologies</title>
   <link rel="preconnect" href="https://nzrzrbatcmzcmrmyrama.supabase.co">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    /* ═══════════════════════════════════════════════════════════════
-       DESIGN SYSTEM · SIF Portal
-       Filosofía: enterprise financial · calm · confident · editorial
-       ═══════════════════════════════════════════════════════════════ */
+    /* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+       DESIGN SYSTEM Â· SIF Portal
+       FilosofÃ­a: enterprise financial Â· calm Â· confident Â· editorial
+       âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 
     :root {
-      /* — Neutrals (base) — */
+      /* â Neutrals (base) â */
       --ink-900: #0A0F1C;      /* headings, primary text */
       --ink-800: #111827;
       --ink-700: #1F2937;
@@ -41,7 +41,7 @@
       --ink-25:  #FAFAFA;      /* page bg */
       --paper:   #FFFFFF;
 
-      /* — MI Global · Azul institucional — */
+      /* â MI Global Â· Azul institucional â */
       --brand-950: #001A3D;     /* deep, para pressed states */
       --brand-900: #002855;     /* pane brand oscuro */
       --brand-800: #003876;     /* CTA primary, logos, avatar */
@@ -50,13 +50,13 @@
       --brand-100: #E8F0FA;     /* backgrounds ultra-sutiles */
       --brand-50:  #F5F9FE;
 
-      /* — Accent (single, restrained) — */
+      /* â Accent (single, restrained) â */
       --accent:      var(--brand-800);
       --accent-hover:var(--brand-900);
       --accent-soft: var(--brand-100);
       --accent-line: #C7D2FE;
 
-      /* — Semantic — */
+      /* â Semantic â */
       --success:     #059669;
       --success-soft:#ECFDF5;
       --success-line:#A7F3D0;
@@ -67,24 +67,24 @@
       --danger-soft: #FEF2F2;
       --danger-line: #FECACA;
 
-      /* — Typography — */
+      /* â Typography â */
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
 
-      /* — Shadows (subtle, editorial) — */
+      /* â Shadows (subtle, editorial) â */
       --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
       --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
       --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
       --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
       --shadow-focus: 0 0 0 3px rgba(0, 56, 118, 0.15);
 
-      /* — Radii — */
+      /* â Radii â */
       --r-sm: 6px;
       --r-md: 8px;
       --r-lg: 10px;
       --r-xl: 14px;
 
-      /* — Motion — */
+      /* â Motion â */
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
       --dur-fast: 120ms;
       --dur: 180ms;
@@ -114,11 +114,11 @@
     input { font-family: inherit; }
     a { color: var(--accent); text-decoration: none; }
 
-    /* ═══════════════════════ STATES ═══════════════════════ */
+    /* âââââââââââââââââââââââ STATES âââââââââââââââââââââââ */
     .state { display: none; min-height: 100vh; }
     .state.active { display: block; }
 
-    /* ═══════════════════════ LOADING ═══════════════════════ */
+    /* âââââââââââââââââââââââ LOADING âââââââââââââââââââââââ */
     #stateLoading {
       display: none;
       align-items: center;
@@ -144,7 +144,7 @@
       text-transform: uppercase;
     }
 
-    /* ═══════════════════════ LOGIN ═══════════════════════ */
+    /* âââââââââââââââââââââââ LOGIN âââââââââââââââââââââââ */
     #stateLogin {
       display: none;
       align-items: stretch;
@@ -159,7 +159,7 @@
       min-height: 100vh;
     }
 
-    /* — Left pane: editorial / brand — */
+    /* â Left pane: editorial / brand â */
     .login-pane-brand {
       background: var(--brand-900);
       color: var(--paper);
@@ -256,7 +256,7 @@
     }
     .brand-footer .sep { margin: 0 8px; opacity: 0.4; }
 
-    /* — Right pane: form — */
+    /* â Right pane: form â */
     .login-pane-form {
       background: var(--paper);
       padding: 48px 56px;
@@ -370,7 +370,7 @@
       .field-input { font-size: 16px; }
     }
 
-    /* ═══════════════════════ PORTAL / LAUNCHER ═══════════════════════ */
+    /* âââââââââââââââââââââââ PORTAL / LAUNCHER âââââââââââââââââââââââ */
     #statePortal { background: var(--ink-25); }
 
     /* subtle dot grid pattern on portal bg */
@@ -392,7 +392,7 @@
       padding: 0 32px 80px;
     }
 
-    /* — Header — */
+    /* â Header â */
     .portal-header {
       display: flex;
       justify-content: space-between;
@@ -525,7 +525,7 @@
       border-color: var(--ink-200);
     }
 
-    /* — Hero / Welcome — */
+    /* â Hero / Welcome â */
     .portal-hero {
       margin-bottom: 40px;
     }
@@ -566,7 +566,7 @@
       line-height: 1.55;
     }
 
-    /* — Modules Grid — */
+    /* â Modules Grid â */
     .modules-section-label {
       display: flex;
       align-items: center;
@@ -618,7 +618,7 @@
       .modules-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
     }
 
-    /* — Module Card: glossy clickable pill-cube — */
+    /* â Module Card: glossy clickable pill-cube â */
     .mod-card {
       border: 1px solid transparent;
       border-radius: 22px;
@@ -746,13 +746,13 @@
     .mod-progress-bar { display: none; }
     .mod-actions { display: none; }
 
-    /* ═══════════════════════ MOD-CARD: EN CONSTRUCCIÓN ═══════════════════════ */
+    /* âââââââââââââââââââââââ MOD-CARD: EN CONSTRUCCIÃN âââââââââââââââââââââââ */
     .mod-card[data-status="construction"] .mod-icon { background: var(--warning-soft); color: var(--warning); }
     .mod-card[data-status="construction"] .mod-status { background: var(--warning-soft); color: var(--warning); }
     .mod-card[data-status="construction"] .mod-status-dot { background: var(--warning); }
 
 
-    /* ═══════════════════════ TOAST ═══════════════════════ */
+    /* âââââââââââââââââââââââ TOAST âââââââââââââââââââââââ */
     .toast {
       position: fixed;
       bottom: 32px;
@@ -781,7 +781,7 @@
     }
     .toast svg { width: 16px; height: 16px; color: var(--success-line); }
 
-    /* ═══════════════════════ BOTÓN ADMIN: USUARIOS ═══════════════════════ */
+    /* âââââââââââââââââââââââ BOTÃN ADMIN: USUARIOS âââââââââââââââââââââââ */
     .btn-users-admin {
       height: 34px; padding: 0 14px; background: var(--paper); color: var(--brand-800);
       font-size: 12.5px; font-weight: 500; border: 1px solid var(--accent-line);
@@ -790,13 +790,13 @@
     }
     .btn-users-admin:hover { background: var(--brand-50); border-color: var(--brand-700); }
 
-    /* ═══════════════════════ MOD-CARD: EN CONSTRUCCIÓN (borde superior) ═══════════════════════ */
+    /* âââââââââââââââââââââââ MOD-CARD: EN CONSTRUCCIÃN (borde superior) âââââââââââââââââââââââ */
     .mod-card[data-status="construction"]::after {
       content: ""; position: absolute; top: 0; left: 20%; right: 20%;
       height: 3px; background: var(--warning); border-radius: 0 0 3px 3px;
     }
 
-    /* ═══════════════════════ USUARIOS (admin) ═══════════════════════ */
+    /* âââââââââââââââââââââââ USUARIOS (admin) âââââââââââââââââââââââ */
     #stateUsuarios { background: var(--ink-25); }
 
     .usu-section-label { display: flex; align-items: baseline; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
@@ -882,14 +882,14 @@
     .usu-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     @media (max-width: 560px) { .usu-form-grid { grid-template-columns: 1fr; } }
 
-    /* — SIF Módulos grid (panel usuarios) — */
+    /* â SIF MÃ³dulos grid (panel usuarios) â */
     .sif-mods-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     @media (max-width: 560px) { .sif-mods-grid { grid-template-columns: 1fr; } }
 
-    /* ══════════════════════════════════════════════════════
-       MOBILE FIXES ≤ 480px
-       Regla: tap targets mín 44px, safe-area, densidad óptima
-    ══════════════════════════════════════════════════════ */
+    /* ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+       MOBILE FIXES â¤ 480px
+       Regla: tap targets mÃ­n 44px, safe-area, densidad Ã³ptima
+    ââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
     @media (max-width: 480px) {
       /* Safe area iOS (notch / home indicator) */
       .portal-shell {
@@ -909,48 +909,48 @@
       .portal-hero-title { font-size: 22px; letter-spacing: -0.02em; }
       .portal-hero-desc { font-size: 13px; }
 
-      /* Module cards — más compactas en 1 columna */
+      /* Module cards â mÃ¡s compactas en 1 columna */
       .modules-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
       .mod-card { padding: 14px 8px; border-radius: 18px; }
       .mod-icon { width: 36px; height: 36px; }
 
-      /* Login en pantalla pequeña */
+      /* Login en pantalla pequeÃ±a */
       .login-pane-form { padding: 32px 20px; }
       .login-heading { font-size: 22px; }
       .login-sub { font-size: 13px; margin-bottom: 28px; }
 
-      /* Panel usuarios — tap targets y padding */
+      /* Panel usuarios â tap targets y padding */
       .usu-detail { padding: 16px; }
       .usu-detail-name { font-size: 16px; }
       .usu-detail-head { gap: 8px; }
 
-      /* Tabs — mínimo 44px de alto */
+      /* Tabs â mÃ­nimo 44px de alto */
       .usu-tab { padding: 12px 14px; font-size: 12.5px; }
 
-      /* Botones de acción (Activo/Reset pwd) — mínimo 44px */
+      /* Botones de acciÃ³n (Activo/Reset pwd) â mÃ­nimo 44px */
       .usu-btn { height: 40px; padding: 0 14px; font-size: 12.5px; border-radius: 8px; }
 
-      /* Opciones de rol — mínimo 44px */
+      /* Opciones de rol â mÃ­nimo 44px */
       .usu-role-opt { padding: 11px 16px; font-size: 13px; }
 
       /* Items de permisos */
       .usu-perm-item { padding: 11px 12px; }
       .usu-perm-label { font-size: 13px; }
 
-      /* Botón guardar permisos ya es width:100% — solo agrandar */
+      /* BotÃ³n guardar permisos ya es width:100% â solo agrandar */
       .usu-btn[onclick*="GuardarPerms"] { height: 48px; font-size: 14px; }
 
-      /* Inputs — prevenir auto-zoom iOS (font-size < 16px dispara zoom) */
+      /* Inputs â prevenir auto-zoom iOS (font-size < 16px dispara zoom) */
       input, select, textarea { font-size: 16px !important; }
 
-      /* Sección Usuarios — título */
+      /* SecciÃ³n Usuarios â tÃ­tulo */
       .usu-section-label .lbl { font-size: 17px; }
 
-      /* Header a pantalla muy pequeña */
+      /* Header a pantalla muy pequeÃ±a */
       .portal-header { margin-bottom: 24px; }
     }
 
-    /* ══════════ Modal de contraseña reseteada ══════════ */
+    /* ââââââââââ Modal de contraseÃ±a reseteada ââââââââââ */
     .reset-pwd-backdrop {
       position: fixed; inset: 0; background: rgba(0,0,0,.75);
       display: none; align-items: center; justify-content: center;
@@ -1007,7 +1007,7 @@
     }
     .reset-pwd-btn:hover { opacity: .9 }
 
-    /* ══════════ Polish iPhone SE / small (≤430px) — 2026.07.17.2 ══════════ */
+    /* ââââââââââ Polish iPhone SE / small (â¤430px) â 2026.07.17.2 ââââââââââ */
     @media (max-width: 430px) {
       .reset-pwd-backdrop { padding: 14px }
       .reset-pwd-card { padding: 22px 18px; border-radius: 14px }
@@ -1017,10 +1017,19 @@
       .reset-pwd-warn { font-size: 11.5px }
     }
   </style>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/SIF-Portal/sw.js', { scope: '/SIF-Portal/' })
+      .catch(err => console.warn('SW registro fallido:', err));
+  });
+}
+</script>
 </head>
 <body>
 
-  <!-- ═══════════ STATE : LOADING ═══════════ -->
+  <!-- âââââââââââ STATE : LOADING âââââââââââ -->
   <div id="stateLoading" class="state active">
     <div class="loader-box">
       <div class="loader-spinner"></div>
@@ -1028,7 +1037,7 @@
     </div>
   </div>
 
-  <!-- ═══════════ STATE : LOGIN ═══════════ -->
+  <!-- âââââââââââ STATE : LOGIN âââââââââââ -->
   <div id="stateLogin" class="state">
     <div class="login-shell">
 
@@ -1040,13 +1049,13 @@
         </div>
 
         <div class="brand-hero">
-          <div class="brand-hero-eyebrow">Sistema de Información Financiera</div>
+          <div class="brand-hero-eyebrow">Sistema de InformaciÃ³n Financiera</div>
           <h1 class="brand-hero-title">
-            Una plataforma. <em>Toda la operación financiera.</em>
+            Una plataforma. <em>Toda la operaciÃ³n financiera.</em>
           </h1>
           <p class="brand-hero-desc">
-            Flujo, contabilidad, nóminas y fiscal &#x2014; en un solo lugar,
-            con una sola sesión, para el equipo financiero de MI Global.
+            Flujo, contabilidad, nÃ³minas y fiscal &#x2014; en un solo lugar,
+            con una sola sesiÃ³n, para el equipo financiero de MI Global.
           </p>
         </div>
 
@@ -1059,8 +1068,8 @@
       <!-- Right: form pane -->
       <div class="login-pane-form">
         <div class="login-form-wrap">
-          <h2 class="login-heading">Iniciar sesión</h2>
-          <p class="login-sub">Ingresa tus credenciales corporativas para acceder a los módulos.</p>
+          <h2 class="login-heading">Iniciar sesiÃ³n</h2>
+          <p class="login-sub">Ingresa tus credenciales corporativas para acceder a los mÃ³dulos.</p>
 
           <div class="field">
             <label class="field-label" for="loginUser">Usuario</label>
@@ -1068,26 +1077,26 @@
           </div>
 
           <div class="field">
-            <label class="field-label" for="loginPwd">Contraseña</label>
+            <label class="field-label" for="loginPwd">ContraseÃ±a</label>
             <input type="password" id="loginPwd" class="field-input" autocomplete="current-password" placeholder="&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;">
           </div>
 
           <button id="btnLogin" class="btn-primary">
-            <span>Iniciar sesión</span>
+            <span>Iniciar sesiÃ³n</span>
             <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
 
           <div id="loginError" class="login-error"></div>
 
           <div class="login-footer-mobile">
-            MI GLOBAL · TIJUANA
+            MI GLOBAL Â· TIJUANA
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════ STATE : CHANGE PASSWORD ═══════════ -->
+  <!-- âââââââââââ STATE : CHANGE PASSWORD âââââââââââ -->
   <div id="stateChangePwd" class="state">
     <div class="login-shell">
 
@@ -1098,13 +1107,13 @@
         </div>
 
         <div class="brand-hero">
-          <div class="brand-hero-eyebrow">Seguridad · Primer acceso</div>
+          <div class="brand-hero-eyebrow">Seguridad Â· Primer acceso</div>
           <h1 class="brand-hero-title">
-            Actualiza tu contraseña <em>antes de continuar.</em>
+            Actualiza tu contraseÃ±a <em>antes de continuar.</em>
           </h1>
           <p class="brand-hero-desc">
-            Por política de seguridad, la contraseña temporal debe
-            reemplazarse en el primer inicio de sesión.
+            Por polÃ­tica de seguridad, la contraseÃ±a temporal debe
+            reemplazarse en el primer inicio de sesiÃ³n.
           </p>
         </div>
 
@@ -1116,17 +1125,17 @@
 
       <div class="login-pane-form">
         <div class="login-form-wrap">
-          <h2 class="login-heading">Nueva contraseña</h2>
-          <p class="login-sub">Mínimo 8 caracteres. Guarda tu nueva contraseña en un lugar seguro.</p>
+          <h2 class="login-heading">Nueva contraseÃ±a</h2>
+          <p class="login-sub">MÃ­nimo 8 caracteres. Guarda tu nueva contraseÃ±a en un lugar seguro.</p>
 
           <div class="field">
-            <label class="field-label" for="pwdNew1">Nueva contraseña</label>
-            <input type="password" id="pwdNew1" class="field-input" placeholder="Mínimo 8 caracteres">
+            <label class="field-label" for="pwdNew1">Nueva contraseÃ±a</label>
+            <input type="password" id="pwdNew1" class="field-input" placeholder="MÃ­nimo 8 caracteres">
           </div>
 
           <div class="field">
-            <label class="field-label" for="pwdNew2">Confirmar contraseña</label>
-            <input type="password" id="pwdNew2" class="field-input" placeholder="Repite la contraseña">
+            <label class="field-label" for="pwdNew2">Confirmar contraseÃ±a</label>
+            <input type="password" id="pwdNew2" class="field-input" placeholder="Repite la contraseÃ±a">
           </div>
 
           <button id="btnChangePwd" class="btn-primary">
@@ -1140,7 +1149,7 @@
     </div>
   </div>
 
-  <!-- ═══════════ STATE : PORTAL ═══════════ -->
+  <!-- âââââââââââ STATE : PORTAL âââââââââââ -->
   <div id="statePortal" class="state">
     <div class="portal-shell">
 
@@ -1148,8 +1157,8 @@
         <div class="brand-h">
           <div class="brand-h-logo">MI</div>
           <div class="brand-h-text">
-            <span class="brand-h-title">SIF · MI Technologies</span>
-            <span class="brand-h-sub">Sistema de Información Financiera</span>
+            <span class="brand-h-title">SIF Â· MI Technologies</span>
+            <span class="brand-h-sub">Sistema de InformaciÃ³n Financiera</span>
           </div>
         </div>
         <div class="user-cluster">
@@ -1167,7 +1176,7 @@
           </button>
           <button class="btn-ghost" onclick="toggleTheme()" title="Cambiar tema"><svg width="14" height="14" viewBox="0 0 24 24" style="vertical-align:middle" aria-hidden="true"><clipPath id="ttL"><rect x="0" y="0" width="12" height="24"/></clipPath><clipPath id="ttR"><rect x="12" y="0" width="12" height="24"/></clipPath><g clip-path="url(#ttL)"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="5.2"/><line x1="12" y1="18.8" x2="12" y2="21"/><line x1="3" y1="12" x2="5.2" y2="12"/><line x1="5.6" y1="5.6" x2="7.1" y2="7.1"/><line x1="5.6" y1="18.4" x2="7.1" y2="16.9"/></g></g><g clip-path="url(#ttR)"><path d="M17.5 8.2a5 5 0 1 0 4.3 7.9 6 6 0 0 1 -4.3 -7.9z" fill="currentColor"/></g></svg></button>
           <button class="btn-ghost btn-lang-toggle" id="btnLang" onclick="toggleLang()" style="font-weight:700;font-size:11px;letter-spacing:.06em">EN</button>
-          <button class="btn-logout" onclick="doLogout()" title="Cerrar sesión" aria-label="Cerrar sesión"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <button class="btn-logout" onclick="doLogout()" title="Cerrar sesiÃ³n" aria-label="Cerrar sesiÃ³n"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         </div>
       </header>
 
@@ -1179,14 +1188,14 @@
           <span id="heroSaludo">Bienvenido</span>, <em id="heroFirstName">&#x2014;</em>
         </h1>
         <p class="portal-hero-desc">
-          Selecciona un módulo para continuar. Los módulos en desarrollo
-          aparecerán habilitados conforme se liberen a producción.
+          Selecciona un mÃ³dulo para continuar. Los mÃ³dulos en desarrollo
+          aparecerÃ¡n habilitados conforme se liberen a producciÃ³n.
         </p>
       </section>
 
       <div class="modules-section-label">
-        <span class="lbl">Módulos</span>
-        <span class="count">06 · 02 activos</span>
+        <span class="lbl">MÃ³dulos</span>
+        <span class="count">06 Â· 02 activos</span>
       </div>
 
       <div class="modules-grid">
@@ -1212,16 +1221,16 @@
             </span>
           </header>
 
-          <p class="mod-desc">Calendario SAT, cálculo de ISR/IVA, control de CFDI, provisiones y deuda fiscal con multas, recargos y actualización.</p>
+          <p class="mod-desc">Calendario SAT, cÃ¡lculo de ISR/IVA, control de CFDI, provisiones y deuda fiscal con multas, recargos y actualizaciÃ³n.</p>
 
           <div class="mod-meta">
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-label">VersiÃ³n</span>
               <span class="mod-meta-value" id="fiscalVer">v2026.07.06.1</span>
             </div>
             <div class="mod-meta-item">
               <span class="mod-meta-label">Acceso</span>
-              <span class="mod-meta-value">Por módulo</span>
+              <span class="mod-meta-value">Por mÃ³dulo</span>
             </div>
           </div>
 
@@ -1233,7 +1242,7 @@
         </article>
             
 
-        <!-- MODULE 3 : CONTABILIDAD (CONSTRUCCIÓN) -->
+        <!-- MODULE 3 : CONTABILIDAD (CONSTRUCCIÃN) -->
         <article class="mod-card" data-status="construction" id="modCardContabilidad">
           <header class="mod-head">
             <div class="mod-icon">
@@ -1248,31 +1257,31 @@
             <h2 class="mod-title">Contabilidad</h2>
             <span class="mod-status" id="contabilidadStatus">
               <span class="mod-status-dot"></span>
-              En construcción
+              En construcciÃ³n
             </span>
           </header>
 
-          <p class="mod-desc">Catálogo de cuentas, balanzas, estados financieros, ratios y pólizas &#x2014; con consolidación multiempresa y agrupador SAT.</p>
+          <p class="mod-desc">CatÃ¡logo de cuentas, balanzas, estados financieros, ratios y pÃ³lizas &#x2014; con consolidaciÃ³n multiempresa y agrupador SAT.</p>
 
           <div class="mod-meta">
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-label">VersiÃ³n</span>
               <span class="mod-meta-value" id="contabilidadVer">v2026.07.20.2</span>
             </div>
             <div class="mod-meta-item">
               <span class="mod-meta-label">Acceso</span>
-              <span class="mod-meta-value">Por módulo</span>
+              <span class="mod-meta-value">Por mÃ³dulo</span>
             </div>
           </div>
 
           <div class="mod-actions" id="contabilidadActions">
             <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>En construcción</span>
+              <span>En construcciÃ³n</span>
             </button>
           </div>
         </article>
 
-        <!-- MODULE 4 : NÓMINAS (CONSTRUCCIÓN) -->
+        <!-- MODULE 4 : NÃMINAS (CONSTRUCCIÃN) -->
         <article class="mod-card" data-status="construction" id="modCardNominas">
           <header class="mod-head">
             <div class="mod-icon">
@@ -1284,34 +1293,34 @@
                 <path d="M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>
               </svg>
             </div>
-            <h2 class="mod-title">Nóminas</h2>
+            <h2 class="mod-title">NÃ³minas</h2>
             <span class="mod-status" id="nominasStatus">
               <span class="mod-status-dot"></span>
-              En construcción
+              En construcciÃ³n
             </span>
           </header>
 
-          <p class="mod-desc">Control de pago de nómina en efectivo: requisición, autorización, retiro y entrega.</p>
+          <p class="mod-desc">Control de pago de nÃ³mina en efectivo: requisiciÃ³n, autorizaciÃ³n, retiro y entrega.</p>
 
           <div class="mod-meta">
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-label">VersiÃ³n</span>
               <span class="mod-meta-value" id="nominasVer">v2026.08.03</span>
             </div>
             <div class="mod-meta-item">
               <span class="mod-meta-label">Acceso</span>
-              <span class="mod-meta-value">Por módulo</span>
+              <span class="mod-meta-value">Por mÃ³dulo</span>
             </div>
           </div>
 
           <div class="mod-actions" id="nominasActions">
             <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>En construcción</span>
+              <span>En construcciÃ³n</span>
             </button>
           </div>
         </article>
 
-        <!-- MODULE 5 : BREAKDOWN (CONSTRUCCIÓN) -->
+        <!-- MODULE 5 : BREAKDOWN (CONSTRUCCIÃN) -->
         <article class="mod-card" data-status="construction" id="modCardBreakdown">
           <header class="mod-head">
             <div class="mod-icon">
@@ -1322,30 +1331,30 @@
             <h2 class="mod-title">Breakdown</h2>
             <span class="mod-status" id="breakdownStatus">
               <span class="mod-status-dot"></span>
-              En construcción
+              En construcciÃ³n
             </span>
           </header>
 
-          <p class="mod-desc">Análisis de costos por giro: maquila (órdenes BOM), comercio (SKU y ventas) y transporte (viajes y costos).</p>
+          <p class="mod-desc">AnÃ¡lisis de costos por giro: maquila (Ã³rdenes BOM), comercio (SKU y ventas) y transporte (viajes y costos).</p>
 
           <div class="mod-meta">
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-label">VersiÃ³n</span>
               <span class="mod-meta-value" id="breakdownVer">v2026.08.25.1</span>
             </div>
             <div class="mod-meta-item">
               <span class="mod-meta-label">Acceso</span>
-              <span class="mod-meta-value">Por módulo</span>
+              <span class="mod-meta-value">Por mÃ³dulo</span>
             </div>
           </div>
 
           <div class="mod-actions" id="breakdownActions">
             <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>En construcción</span>
+              <span>En construcciÃ³n</span>
             </button>
           </div>
         </article>
-        <!-- MODULE 6 : TESORERÍA (CONSTRUCCIÓN) -->
+        <!-- MODULE 6 : TESORERÃA (CONSTRUCCIÃN) -->
         <article class="mod-card" data-status="construction" id="modCardTesoreria">
           <header class="mod-head">
             <div class="mod-icon">
@@ -1356,18 +1365,18 @@
                 <line x1="10" y1="14" x2="14" y2="14"/>
               </svg>
             </div>
-            <h2 class="mod-title">Tesorería</h2>
+            <h2 class="mod-title">TesorerÃ­a</h2>
             <span class="mod-status" id="tesoreriaStatus">
               <span class="mod-status-dot"></span>
-              En construcción
+              En construcciÃ³n
             </span>
           </header>
 
-          <p class="mod-desc">Control de efectivo por sucursal y matriz controladora: posición de caja, flujo por unidad y reportes consolidados.</p>
+          <p class="mod-desc">Control de efectivo por sucursal y matriz controladora: posiciÃ³n de caja, flujo por unidad y reportes consolidados.</p>
 
           <div class="mod-meta">
             <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-label">VersiÃ³n</span>
               <span class="mod-meta-value" id="tesoreriaVer">v2026.10.05.1</span>
             </div>
             <div class="mod-meta-item">
@@ -1378,7 +1387,7 @@
 
           <div class="mod-actions" id="tesoreriaActions">
             <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>En construcción</span>
+              <span>En construcciÃ³n</span>
             </button>
           </div>
         </article>
@@ -1387,7 +1396,7 @@
     </div>
   </div>
 
-  <!-- ═══════════ STATE : USUARIOS (admin_master) ═══════════ -->
+  <!-- âââââââââââ STATE : USUARIOS (admin_master) âââââââââââ -->
   <div id="stateUsuarios" class="state">
     <div class="portal-shell">
 
@@ -1395,8 +1404,8 @@
         <div class="brand-h">
           <div class="brand-h-logo">MI</div>
           <div class="brand-h-text">
-            <span class="brand-h-title">SIF · MI Technologies</span>
-            <span class="brand-h-sub">Gestión de usuarios</span>
+            <span class="brand-h-title">SIF Â· MI Technologies</span>
+            <span class="brand-h-sub">GestiÃ³n de usuarios</span>
           </div>
         </div>
         <div class="user-cluster">
@@ -1407,13 +1416,13 @@
             <svg viewBox="0 0 20 20" fill="none" width="14" height="14"><path d="M13 5L7 10l6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span>Volver al portal</span>
           </button>
-          <button class="btn-logout" onclick="doLogout()" title="Cerrar sesión" aria-label="Cerrar sesión"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <button class="btn-logout" onclick="doLogout()" title="Cerrar sesiÃ³n" aria-label="Cerrar sesiÃ³n"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
         </div>
       </header>
 
       <div class="usu-section-label">
-        <span class="lbl">👥 Gestión de usuarios</span>
-        <span class="sub">Cuentas, roles y permisos por módulo &#x2014; solo Admon Master</span>
+        <span class="lbl">ð¥ GestiÃ³n de usuarios</span>
+        <span class="sub">Cuentas, roles y permisos por mÃ³dulo &#x2014; solo Admon Master</span>
       </div>
 
       <div id="usuariosPanel"><div class="usu-empty">Cargando usuarios&#x2026;</div></div>
@@ -1427,7 +1436,7 @@
   </div>
 
   <script>
-    /* ═══════════════════════ CONFIG ═══════════════════════ */
+    /* âââââââââââââââââââââââ CONFIG âââââââââââââââââââââââ */
     const APP_VERSION = '2026.10.05.1';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
@@ -1446,7 +1455,7 @@
     let currentUser = null;
     let pendingAuthId = null;
 
-    /* ═══════════════════════ TEMA (claro/oscuro) ═══════════════════════ */
+    /* âââââââââââââââââââââââ TEMA (claro/oscuro) âââââââââââââââââââââââ */
     function initTheme(){
       var saved = localStorage.getItem('sif_theme');
       if (saved === 'dark') document.body.classList.add('theme-dark');
@@ -1456,177 +1465,177 @@
       localStorage.setItem('sif_theme', document.body.classList.contains('theme-dark') ? 'dark' : 'light');
     }
 
-    /* ═══════════════════════ I18N — traductor genérico ES ⇄ EN ═══════════════════════
+    /* âââââââââââââââââââââââ I18N â traductor genÃ©rico ES â EN âââââââââââââââââââââââ
        No usamos data-i18n manual: se recorre el DOM (texto + placeholder/title/aria-label)
        y se sustituye cualquier cadena EXACTA (tras normalizar espacios) que exista en el
-       diccionario ES2EN. Un MutationObserver reaplica la traducción automáticamente cuando
-       el contenido se regenera (tarjetas de módulos, panel de usuarios, toasts, etc).
-    ═══════════════════════════════════════════════════════════════════════════════════ */
+       diccionario ES2EN. Un MutationObserver reaplica la traducciÃ³n automÃ¡ticamente cuando
+       el contenido se regenera (tarjetas de mÃ³dulos, panel de usuarios, toasts, etc).
+    âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
     var ES2EN = {
-  "Selecciona un módulo para continuar. Los módulos en desarrollo aparecerán habilitados conforme se liberen a producción.": "Select a module to continue. Modules in development will appear enabled as they are released to production.",
-  "Control de pago de nómina en efectivo: requisición, autorización, retiro y entrega.": "Cash payroll control: requisition, authorization, withdrawal and delivery.",
-      'Sistema de Información Financiera': 'Financial Information System',
-      'Gestión de usuarios': 'User management',
+  "Selecciona un mÃ³dulo para continuar. Los mÃ³dulos en desarrollo aparecerÃ¡n habilitados conforme se liberen a producciÃ³n.": "Select a module to continue. Modules in development will appear enabled as they are released to production.",
+  "Control de pago de nÃ³mina en efectivo: requisiciÃ³n, autorizaciÃ³n, retiro y entrega.": "Cash payroll control: requisition, authorization, withdrawal and delivery.",
+      'Sistema de InformaciÃ³n Financiera': 'Financial Information System',
+      'GestiÃ³n de usuarios': 'User management',
       'Conectado a Supabase': 'Connected to Supabase',
-      'Sin conexión': 'Disconnected',
+      'Sin conexiÃ³n': 'Disconnected',
       'Usuarios': 'Users',
-      'Cerrar sesión': 'Log out',
+      'Cerrar sesiÃ³n': 'Log out',
       'Volver al portal': 'Back to portal',
       'Cambiar tema': 'Switch theme',
       'Iniciando': 'Starting',
       'Una plataforma.': 'One platform.',
-      'Toda la operación financiera.': 'The entire financial operation.',
-      'Flujo, contabilidad, nóminas y fiscal — en un solo lugar, con una sola sesión, para el equipo financiero de MI Global.': 'Cash flow, accounting, payroll and tax — all in one place, with a single session, for the MI Global finance team.',
-      'Iniciar sesión': 'Sign in',
-      'Ingresa tus credenciales corporativas para acceder a los módulos.': 'Enter your corporate credentials to access the modules.',
+      'Toda la operaciÃ³n financiera.': 'The entire financial operation.',
+      'Flujo, contabilidad, nÃ³minas y fiscal â en un solo lugar, con una sola sesiÃ³n, para el equipo financiero de MI Global.': 'Cash flow, accounting, payroll and tax â all in one place, with a single session, for the MI Global finance team.',
+      'Iniciar sesiÃ³n': 'Sign in',
+      'Ingresa tus credenciales corporativas para acceder a los mÃ³dulos.': 'Enter your corporate credentials to access the modules.',
       'Usuario': 'Username',
-      'Contraseña': 'Password',
-      'MI GLOBAL · TIJUANA': 'MI GLOBAL · TIJUANA',
+      'ContraseÃ±a': 'Password',
+      'MI GLOBAL Â· TIJUANA': 'MI GLOBAL Â· TIJUANA',
       'TIJUANA, B.C.': 'TIJUANA, B.C.',
-      'Seguridad · Primer acceso': 'Security · First access',
-      'Actualiza tu contraseña': 'Update your password',
+      'Seguridad Â· Primer acceso': 'Security Â· First access',
+      'Actualiza tu contraseÃ±a': 'Update your password',
       'antes de continuar.': 'before continuing.',
-      'Por política de seguridad, la contraseña temporal debe reemplazarse en el primer inicio de sesión.': 'For security policy reasons, the temporary password must be replaced on first login.',
+      'Por polÃ­tica de seguridad, la contraseÃ±a temporal debe reemplazarse en el primer inicio de sesiÃ³n.': 'For security policy reasons, the temporary password must be replaced on first login.',
       'SEGURIDAD': 'SECURITY',
-      'Nueva contraseña': 'New password',
-      'Mínimo 8 caracteres. Guarda tu nueva contraseña en un lugar seguro.': 'Minimum 8 characters. Keep your new password somewhere safe.',
-      'Confirmar contraseña': 'Confirm password',
+      'Nueva contraseÃ±a': 'New password',
+      'MÃ­nimo 8 caracteres. Guarda tu nueva contraseÃ±a en un lugar seguro.': 'Minimum 8 characters. Keep your new password somewhere safe.',
+      'Confirmar contraseÃ±a': 'Confirm password',
       'Actualizar y continuar': 'Update and continue',
       'Panel principal': 'Main panel',
       'Bienvenido': 'Welcome',
       'Bienvenida': 'Welcome',
-      'Selecciona un módulo para continuar. Los módulos en desarrollo aparecerán habilitados conforme se liberen a producción.': 'Select a module to continue. Modules under development will appear enabled as they are released to production.',
-      'Módulos': 'Modules',
-      '04 · 01 activo': '04 · 01 active',
+      'Selecciona un mÃ³dulo para continuar. Los mÃ³dulos en desarrollo aparecerÃ¡n habilitados conforme se liberen a producciÃ³n.': 'Select a module to continue. Modules under development will appear enabled as they are released to production.',
+      'MÃ³dulos': 'Modules',
+      '04 Â· 01 activo': '04 Â· 01 active',
       'Activo': 'Active',
-      'Próximamente': 'Coming soon',
+      'PrÃ³ximamente': 'Coming soon',
       'Flujo y Gastos': 'Cash Flow & Expenses',
       'Control de flujo de efectivo, cuentas por pagar, ingresos y presupuesto semanal.': 'Cash flow control, accounts payable, income and weekly budget.',
-      'Versión': 'Version',
+      'VersiÃ³n': 'Version',
       'Ambiente': 'Environment',
-      'Producción': 'Production',
-      'Entrar al módulo': 'Enter module',
+      'ProducciÃ³n': 'Production',
+      'Entrar al mÃ³dulo': 'Enter module',
       'Contabilidad': 'Accounting',
-      'Catálogo de cuentas, balanzas, estados financieros, ratios y pólizas — con consolidación multiempresa y agrupador SAT.': 'Chart of accounts, trial balances, financial statements, ratios and journal entries — with multi-company consolidation and SAT grouping.',
+      'CatÃ¡logo de cuentas, balanzas, estados financieros, ratios y pÃ³lizas â con consolidaciÃ³n multiempresa y agrupador SAT.': 'Chart of accounts, trial balances, financial statements, ratios and journal entries â with multi-company consolidation and SAT grouping.',
       'Acceso': 'Access',
-      'Por módulo': 'Per module',
-      'Sin acceso — contacta al administrador': 'No access — contact the administrator',
-      'Nóminas': 'Payroll',
-      'Cálculo de nómina, prestaciones, IMSS/INFONAVIT y timbrado CFDI.': 'Payroll calculation, benefits, IMSS/INFONAVIT and CFDI stamping.',
+      'Por mÃ³dulo': 'Per module',
+      'Sin acceso â contacta al administrador': 'No access â contact the administrator',
+      'NÃ³minas': 'Payroll',
+      'CÃ¡lculo de nÃ³mina, prestaciones, IMSS/INFONAVIT y timbrado CFDI.': 'Payroll calculation, benefits, IMSS/INFONAVIT and CFDI stamping.',
       'Fase': 'Phase',
-      'Planeación': 'Planning',
+      'PlaneaciÃ³n': 'Planning',
       'ETA': 'ETA',
-      'Avísame cuando esté listo': 'Notify me when ready',
+      'AvÃ­same cuando estÃ© listo': 'Notify me when ready',
       'Te avisaremos': 'We will notify you',
       'Fiscal': 'Tax',
-      'Calendario SAT, cálculo de ISR/IVA, control de CFDI, provisiones y deuda fiscal con multas, recargos y actualización.': 'SAT calendar, ISR/VAT calculation, CFDI control, tax provisions and tax debt with fines, surcharges and inflation adjustment.',
-      'Ingresa usuario y contraseña.': 'Enter username and password.',
-      'Autenticando…': 'Authenticating…',
-      'Usuario o contraseña incorrectos.': 'Incorrect username or password.',
-      'La contraseña debe tener al menos 8 caracteres.': 'Password must be at least 8 characters.',
-      'Las contraseñas no coinciden.': 'Passwords do not match.',
-      'Actualizando…': 'Updating…',
-      'Notificación cancelada': 'Notification cancelled',
+      'Calendario SAT, cÃ¡lculo de ISR/IVA, control de CFDI, provisiones y deuda fiscal con multas, recargos y actualizaciÃ³n.': 'SAT calendar, ISR/VAT calculation, CFDI control, tax provisions and tax debt with fines, surcharges and inflation adjustment.',
+      'Ingresa usuario y contraseÃ±a.': 'Enter username and password.',
+      'Autenticandoâ¦': 'Authenticatingâ¦',
+      'Usuario o contraseÃ±a incorrectos.': 'Incorrect username or password.',
+      'La contraseÃ±a debe tener al menos 8 caracteres.': 'Password must be at least 8 characters.',
+      'Las contraseÃ±as no coinciden.': 'Passwords do not match.',
+      'Actualizandoâ¦': 'Updatingâ¦',
+      'NotificaciÃ³n cancelada': 'Notification cancelled',
       'Solo el Admon Master puede gestionar usuarios': 'Only the Master Admin can manage users',
       'Error al cargar usuarios.': 'Error loading users.',
-      'Cargando usuarios…': 'Loading users…',
-      '🔒 Solo el Admon Master puede gestionar usuarios.': '🔒 Only the Master Admin can manage users.',
+      'Cargando usuariosâ¦': 'Loading usersâ¦',
+      'ð Solo el Admon Master puede gestionar usuarios.': 'ð Only the Master Admin can manage users.',
       'Selecciona un usuario': 'Select a user',
-      '＋ Nuevo usuario': '＋ New user',
-      '● Inactivo': '● Inactive',
-      '● Activo': '● Active',
-      '○ Inactivo': '○ Inactive',
-      '🔑 Reset pwd': '🔑 Reset pwd',
-      '🔒 Protegido': '🔒 Protected',
-      '(tú)': '(you)',
-      '🔐 Permisos': '🔐 Permissions',
-      '👤 Perfil': '👤 Profile',
-      '➕ Nuevo usuario': '➕ New user',
+      'ï¼ Nuevo usuario': 'ï¼ New user',
+      'â Inactivo': 'â Inactive',
+      'â Activo': 'â Active',
+      'â Inactivo': 'â Inactive',
+      'ð Reset pwd': 'ð Reset pwd',
+      'ð Protegido': 'ð Protected',
+      '(tÃº)': '(you)',
+      'ð Permisos': 'ð Permissions',
+      'ð¤ Perfil': 'ð¤ Profile',
+      'â Nuevo usuario': 'â New user',
       'Rol base': 'Base role',
-      'Acceso por módulo': 'Access per module',
-      '🏢 Módulos SIF — acceso a aplicaciones': '🏢 SIF Modules — application access',
-      '💾 Guardar permisos': '💾 Save permissions',
+      'Acceso por mÃ³dulo': 'Access per module',
+      'ð¢ MÃ³dulos SIF â acceso a aplicaciones': 'ð¢ SIF Modules â application access',
+      'ð¾ Guardar permisos': 'ð¾ Save permissions',
       'Nombre completo': 'Full name',
       'Usuario (login)': 'Username (login)',
       'Rol': 'Role',
-      'Edición de perfil disponible próximamente.': 'Profile editing available soon.',
-      'Contraseña inicial': 'Initial password',
-      'Mínimo 8 caracteres': 'Minimum 8 characters',
-      '➕ Crear usuario': '➕ Create user',
+      'EdiciÃ³n de perfil disponible prÃ³ximamente.': 'Profile editing available soon.',
+      'ContraseÃ±a inicial': 'Initial password',
+      'MÃ­nimo 8 caracteres': 'Minimum 8 characters',
+      'â Crear usuario': 'â Create user',
       'Con acceso': 'Has access',
       'Sin acceso': 'No access',
       "Se guarda en Supabase al hacer 'Guardar permisos'.": "Saved to Supabase when you click 'Save permissions'.",
-      '👑 Admon Master: acceso total a todos los módulos SIF.': '👑 Master Admin: full access to all SIF modules.',
-      '👑 Admon Master: acceso total permanente. Solo se puede modificar desde la base de datos.': '👑 Master Admin: permanent full access. Can only be modified from the database.',
-      '⚠️ El admin tiene acceso completo. No se puede restringir.': '⚠️ The admin has full access. It cannot be restricted.',
-      "↺ Restablecer permisos por defecto del rol": "↺ Reset to the role's default permissions",
-      'Repite la contraseña': 'Repeat the password',
+      'ð Admon Master: acceso total a todos los mÃ³dulos SIF.': 'ð Master Admin: full access to all SIF modules.',
+      'ð Admon Master: acceso total permanente. Solo se puede modificar desde la base de datos.': 'ð Master Admin: permanent full access. Can only be modified from the database.',
+      'â ï¸ El admin tiene acceso completo. No se puede restringir.': 'â ï¸ The admin has full access. It cannot be restricted.',
+      "âº Restablecer permisos por defecto del rol": "âº Reset to the role's default permissions",
+      'Repite la contraseÃ±a': 'Repeat the password',
       'Admon Master': 'Master Admin',
       'Admin': 'Admin',
       'Cohost': 'Cohost',
       'View': 'View',
       'Income': 'Income',
-      '📊 Dashboard': '📊 Dashboard',
+      'ð Dashboard': 'ð Dashboard',
       'KPIs y vista general': 'KPIs and overview',
-      '💵 Entradas': '💵 Income',
+      'ðµ Entradas': 'ðµ Income',
       'Registrar ingresos': 'Record income',
-      '📂 CxP': '📂 AP',
-      'Cuentas por pagar / catálogo': 'Accounts payable / catalog',
-      '📑 Plan de Pagos': '📑 Payment Plan',
+      'ð CxP': 'ð AP',
+      'Cuentas por pagar / catÃ¡logo': 'Accounts payable / catalog',
+      'ð Plan de Pagos': 'ð Payment Plan',
       'Ver y seleccionar plan activo': 'View and select active plan',
-      '💳 Registrar Pago': '💳 Record Payment',
+      'ð³ Registrar Pago': 'ð³ Record Payment',
       'Marcar conceptos como pagados': 'Mark items as paid',
-      '💸 Detalle Gastos': '💸 Expense Detail',
+      'ð¸ Detalle Gastos': 'ð¸ Expense Detail',
       'Ver historial de pagos': 'View payment history',
-      '📋 Reporte Semanal': '📋 Weekly Report',
+      'ð Reporte Semanal': 'ð Weekly Report',
       'Generar y ver reporte': 'Generate and view report',
-      '🔒 Cierre de Semana': '🔒 Week Closing',
+      'ð Cierre de Semana': 'ð Week Closing',
       'Cerrar semana y acumular arrastre': 'Close the week and carry forward the balance',
-      '♻️ Reset Total': '♻️ Full Reset',
+      'â»ï¸ Reset Total': 'â»ï¸ Full Reset',
       'Reiniciar todo a cero': 'Reset everything to zero',
-      '👥 Gestión Usuarios': '👥 User Management',
+      'ð¥ GestiÃ³n Usuarios': 'ð¥ User Management',
       'Crear/editar usuarios': 'Create/edit users',
-      '🗂️ Catálogo CxP': '🗂️ AP Catalog',
-      'Editar catálogo de conceptos': 'Edit item catalog',
-      '🧾 Fiscal': '🧾 Tax',
-      '💧 Flujo de Efectivo': '💧 Cash Flow',
-      '📚 Contabilidad': '📚 Accounting',
-      '👥 Nóminas': '👥 Payroll',
-      'Contraseña temporal generada': 'Temporary password generated',
-      '📋 Copiar': '📋 Copy',
-      'Ya la copié, cerrar': 'Copied it, close',
-      'Contraseña copiada al portapapeles ✓': 'Password copied to clipboard ✓',
-      'No se pudo copiar — cópiala manualmente': 'Could not copy — copy it manually',
-      'ID inválido': 'Invalid ID',
+      'ðï¸ CatÃ¡logo CxP': 'ðï¸ AP Catalog',
+      'Editar catÃ¡logo de conceptos': 'Edit item catalog',
+      'ð§¾ Fiscal': 'ð§¾ Tax',
+      'ð§ Flujo de Efectivo': 'ð§ Cash Flow',
+      'ð Contabilidad': 'ð Accounting',
+      'ð¥ NÃ³minas': 'ð¥ Payroll',
+      'ContraseÃ±a temporal generada': 'Temporary password generated',
+      'ð Copiar': 'ð Copy',
+      'Ya la copiÃ©, cerrar': 'Copied it, close',
+      'ContraseÃ±a copiada al portapapeles â': 'Password copied to clipboard â',
+      'No se pudo copiar â cÃ³piala manualmente': 'Could not copy â copy it manually',
+      'ID invÃ¡lido': 'Invalid ID',
       'Error al actualizar': 'Error updating',
       'Completa todos los campos': 'Fill in all fields',
-      'Contraseña mínimo 8 caracteres': 'Password minimum 8 characters',
+      'ContraseÃ±a mÃ­nimo 8 caracteres': 'Password minimum 8 characters',
       'Solo el Admon Master puede cambiar roles': 'Only the Master Admin can change roles',
-      'El Admon Master no se puede modificar desde aquí': 'The Master Admin cannot be modified from here',
+      'El Admon Master no se puede modificar desde aquÃ­': 'The Master Admin cannot be modified from here',
       'Solo el Admon Master puede reasignar a un admin': 'Only the Master Admin can reassign an admin',
       'El rol Admon Master solo se asigna desde la base de datos': 'The Master Admin role can only be assigned from the database',
       'Error al cambiar rol': 'Error changing role',
-      'Rol actualizado ✓': 'Role updated ✓',
+      'Rol actualizado â': 'Role updated â',
       'Solo el Admon Master puede cambiar permisos': 'Only the Master Admin can change permissions',
-      'Solo el Admon Master puede cambiar módulos SIF': 'Only the Master Admin can change SIF modules',
+      'Solo el Admon Master puede cambiar mÃ³dulos SIF': 'Only the Master Admin can change SIF modules',
       'Solo el Admon Master puede restablecer permisos': 'Only the Master Admin can reset permissions',
-      'Permisos restablecidos al default del rol ✓': 'Permissions reset to role default ✓',
+      'Permisos restablecidos al default del rol â': 'Permissions reset to role default â',
       'Solo el Admon Master puede guardar permisos': 'Only the Master Admin can save permissions',
-      'Permisos guardados ✓': 'Permissions saved ✓',
+      'Permisos guardados â': 'Permissions saved â',
       'Solo el Admon Master puede activar/desactivar usuarios': 'Only the Master Admin can activate/deactivate users',
-      'Solo el Admon Master puede resetear contraseñas': 'Only the Master Admin can reset passwords',
+      'Solo el Admon Master puede resetear contraseÃ±as': 'Only the Master Admin can reset passwords',
       'ej. jcgonzalez': 'e.g. jcgonzalez',
       'juan.perez': 'juan.perez',
-      'Juan Pérez': 'Juan Pérez'
+      'Juan PÃ©rez': 'Juan PÃ©rez'
     };
 
     var ES2EN_REGEX = [
-      [/^Abriendo (.+)…$/, function(m){ return 'Opening ' + m[1] + '…'; }],
-      [/^Te avisaremos cuando (.+) esté listo$/, function(m){ return "We'll notify you when " + m[1] + ' is ready'; }],
-      [/^Usuario (.+) creado ✓$/, function(m){ return 'User ' + m[1] + ' created ✓'; }],
-      [/^Usuario (desactivado|activado) ✓$/, function(m){ return 'User ' + (m[1]==='desactivado'?'deactivated':'activated') + ' ✓'; }],
+      [/^Abriendo (.+)â¦$/, function(m){ return 'Opening ' + m[1] + 'â¦'; }],
+      [/^Te avisaremos cuando (.+) estÃ© listo$/, function(m){ return "We'll notify you when " + m[1] + ' is ready'; }],
+      [/^Usuario (.+) creado â$/, function(m){ return 'User ' + m[1] + ' created â'; }],
+      [/^Usuario (desactivado|activado) â$/, function(m){ return 'User ' + (m[1]==='desactivado'?'deactivated':'activated') + ' â'; }],
       [/^Usuarios \\((\\d+)\\)$/, function(m){ return 'Users (' + m[1] + ')'; }],
-      [/^Error al guardar módulos SIF: (.+)$/, function(m){ return 'Error saving SIF modules: ' + m[1]; }],
+      [/^Error al guardar mÃ³dulos SIF: (.+)$/, function(m){ return 'Error saving SIF modules: ' + m[1]; }],
       [/^Error cargando usuario: (.+)$/, function(m){ return 'Error loading user: ' + m[1]; }],
       [/^Error inesperado: (.+)$/, function(m){ return 'Unexpected error: ' + m[1]; }],
       [/^Error de red: (.+)$/, function(m){ return 'Network error: ' + m[1]; }],
@@ -1634,10 +1643,10 @@
       [/^Para: (.+)$/, function(m){ return 'For: ' + m[1]; }],
       [/^Usuario no vinculado en la base de datos\\. Contacta al administrador\\.$/, function(){ return 'User not linked in the database. Contact the administrator.'; }],
       [/^Usuario inactivo\\. Contacta al administrador\\.$/, function(){ return 'Inactive user. Contact the administrator.'; }],
-      [/^Usuario inválido o sin permisos\\.?$/, function(){ return 'Invalid user or insufficient permissions.'; }],
-      [/^Sin acceso al módulo Fiscal\\. Contacta al administrador\\.$/, function(){ return 'No access to the Tax module. Contact the administrator.'; }],
-      [/^Sin acceso al módulo Contabilidad\\. Contacta al administrador\\.$/, function(){ return 'No access to the Accounting module. Contact the administrator.'; }],
-      [/^⚠️ Función admin_reset_password no existe\\. Corre el SQL de migración en Supabase\\.$/, function(){ return '⚠️ Function admin_reset_password does not exist. Run the migration SQL in Supabase.'; }]
+      [/^Usuario invÃ¡lido o sin permisos\\.?$/, function(){ return 'Invalid user or insufficient permissions.'; }],
+      [/^Sin acceso al mÃ³dulo Fiscal\\. Contacta al administrador\\.$/, function(){ return 'No access to the Tax module. Contact the administrator.'; }],
+      [/^Sin acceso al mÃ³dulo Contabilidad\\. Contacta al administrador\\.$/, function(){ return 'No access to the Accounting module. Contact the administrator.'; }],
+      [/^â ï¸ FunciÃ³n admin_reset_password no existe\\. Corre el SQL de migraciÃ³n en Supabase\\.$/, function(){ return 'â ï¸ Function admin_reset_password does not exist. Run the migration SQL in Supabase.'; }]
     ];
 
     var currentLang = localStorage.getItem('sif_lang') || 'es';
@@ -1727,8 +1736,8 @@ function toggleLang(){
     }
 
 
-    /* Escuchar cambios de sesión: si un logout ocurre en otra pestaña o
-       módulo (Deadpool, Fiscal, etc), llega SIGNED_OUT aquí y regresamos al login. */
+    /* Escuchar cambios de sesiÃ³n: si un logout ocurre en otra pestaÃ±a o
+       mÃ³dulo (Deadpool, Fiscal, etc), llega SIGNED_OUT aquÃ­ y regresamos al login. */
     sb.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_OUT' && currentUser) {
         currentUser = null;
@@ -1737,7 +1746,7 @@ function toggleLang(){
       }
     });
 
-    /* ═══════════════════════ STATE ROUTER ═══════════════════════ */
+    /* âââââââââââââââââââââââ STATE ROUTER âââââââââââââââââââââââ */
     function showState(name) {
       ['Loading', 'Login', 'ChangePwd', 'Portal', 'Usuarios'].forEach(s => {
         const el = document.getElementById('state' + s);
@@ -1745,7 +1754,7 @@ function toggleLang(){
       });
     }
 
-    /* ═══════════════════════ INIT ═══════════════════════ */
+    /* âââââââââââââââââââââââ INIT âââââââââââââââââââââââ */
     async function init() {
       try {
         const { data: { session }, error } = await sb.auth.getSession();
@@ -1779,7 +1788,7 @@ function toggleLang(){
       }
     }
 
-    /* ═══════════════════════ LOGIN ═══════════════════════ */
+    /* âââââââââââââââââââââââ LOGIN âââââââââââââââââââââââ */
     async function doLogin() {
       const usr = document.getElementById('loginUser').value.trim().toLowerCase();
       const pwd = document.getElementById('loginPwd').value;
@@ -1787,18 +1796,18 @@ function toggleLang(){
       const errEl = document.getElementById('loginError');
       errEl.classList.remove('show');
 
-      if (!usr || !pwd) { showLoginError('Ingresa usuario y contraseña.'); return; }
+      if (!usr || !pwd) { showLoginError('Ingresa usuario y contraseÃ±a.'); return; }
 
       btn.disabled = true;
       const btnLabel = btn.querySelector('span');
       const btnOriginalText = btnLabel.textContent;
-      btnLabel.textContent = 'Autenticando…';
+      btnLabel.textContent = 'Autenticandoâ¦';
       try {
         const email = usr + '@mitech.local';
         const { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
         if (error) {
           const msg = /invalid.*credentials/i.test(error.message)
-            ? 'Usuario o contraseña incorrectos.'
+            ? 'Usuario o contraseÃ±a incorrectos.'
             : error.message;
           showLoginError(msg);
           btn.disabled = false; btnLabel.textContent = btnOriginalText;
@@ -1819,7 +1828,7 @@ function toggleLang(){
       el.classList.add('show');
     }
 
-    /* ═══════════════════════ CHANGE PWD ═══════════════════════ */
+    /* âââââââââââââââââââââââ CHANGE PWD âââââââââââââââââââââââ */
     async function doChangePwd() {
       const p1 = document.getElementById('pwdNew1').value;
       const p2 = document.getElementById('pwdNew2').value;
@@ -1827,13 +1836,13 @@ function toggleLang(){
       const errEl = document.getElementById('changePwdError');
       errEl.classList.remove('show');
 
-      if (p1.length < 8) { showChangeErr('La contraseña debe tener al menos 8 caracteres.'); return; }
-      if (p1 !== p2)    { showChangeErr('Las contraseñas no coinciden.'); return; }
+      if (p1.length < 8) { showChangeErr('La contraseÃ±a debe tener al menos 8 caracteres.'); return; }
+      if (p1 !== p2)    { showChangeErr('Las contraseÃ±as no coinciden.'); return; }
 
       btn.disabled = true;
       const btnLabel = btn.querySelector('span');
       const btnOriginalText = btnLabel.textContent;
-      btnLabel.textContent = 'Actualizando…';
+      btnLabel.textContent = 'Actualizandoâ¦';
       try {
         const { error: upErr } = await sb.auth.updateUser({ password: p1 });
         if (upErr) { showChangeErr('Error: ' + upErr.message); btn.disabled = false; btnLabel.textContent = btnOriginalText; return; }
@@ -1854,7 +1863,7 @@ function toggleLang(){
       el.classList.add('show');
     }
 
-    /* ═══════════════════════ LOGOUT ═══════════════════════ */
+    /* âââââââââââââââââââââââ LOGOUT âââââââââââââââââââââââ */
     async function doLogout(reason) {
       stopInactivityWatcher();
       try {
@@ -1867,19 +1876,19 @@ function toggleLang(){
       if (reason === 'inactivity') {
         showLoginError(currentLang === 'en'
           ? 'Session closed due to inactivity (20 min).'
-          : 'Sesión cerrada por inactividad (20 min).');
+          : 'SesiÃ³n cerrada por inactividad (20 min).');
       }
     }
 
-    /* ═══════════════════ RELOJ DE INACTIVIDAD (20 MIN) ═══════════════════
-       Se activa para TODOS los usuarios en cuanto hay sesión iniciada (Portal
-       o ChangePwd). Cualquier interacción del usuario reinicia el contador.
+    /* âââââââââââââââââââ RELOJ DE INACTIVIDAD (20 MIN) âââââââââââââââââââ
+       Se activa para TODOS los usuarios en cuanto hay sesiÃ³n iniciada (Portal
+       o ChangePwd). Cualquier interacciÃ³n del usuario reinicia el contador.
        A los 18 min se muestra un modal de aviso con cuenta regresiva de 2 min
-       ("¿Sigues ahí?"). Si no hay respuesta, a los 20 min se cierra la sesión
-       automáticamente (doLogout) y se regresa a la pantalla de Login.
-    ══════════════════════════════════════════════════════════════════════ */
-    const INACTIVITY_WARNING_MS = 18 * 60 * 1000; // 18 minutos → mostrar aviso
-    const INACTIVITY_LIMIT_MS   = 20 * 60 * 1000; // 20 minutos → cerrar sesión
+       ("Â¿Sigues ahÃ­?"). Si no hay respuesta, a los 20 min se cierra la sesiÃ³n
+       automÃ¡ticamente (doLogout) y se regresa a la pantalla de Login.
+    ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
+    const INACTIVITY_WARNING_MS = 18 * 60 * 1000; // 18 minutos â mostrar aviso
+    const INACTIVITY_LIMIT_MS   = 20 * 60 * 1000; // 20 minutos â cerrar sesiÃ³n
     let _inactivityWarnTimer = null;
     let _inactivityLogoutTimer = null;
     let _inactivityCountdownInterval = null;
@@ -1893,8 +1902,8 @@ function toggleLang(){
       div.style.cssText = 'display:none;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);';
       div.innerHTML = `
         <div style="background:var(--bg-card,#fff);color:var(--text-main,#1a1a1a);border-radius:12px;padding:28px 26px;max-width:360px;width:90%;box-shadow:0 12px 40px rgba(0,0,0,0.25);text-align:center;font-family:inherit;">
-          <div style="font-size:17px;font-weight:600;margin-bottom:8px;" id="inactivityModalTitle">¿Sigues ahí?</div>
-          <div style="font-size:14px;opacity:0.8;margin-bottom:6px;" id="inactivityModalMsg">Tu sesión se cerrará por inactividad en</div>
+          <div style="font-size:17px;font-weight:600;margin-bottom:8px;" id="inactivityModalTitle">Â¿Sigues ahÃ­?</div>
+          <div style="font-size:14px;opacity:0.8;margin-bottom:6px;" id="inactivityModalMsg">Tu sesiÃ³n se cerrarÃ¡ por inactividad en</div>
           <div style="font-size:28px;font-weight:700;margin:10px 0 20px;color:var(--danger,#c0392b);" id="inactivityModalCountdown">02:00</div>
           <button id="inactivityModalBtn" style="background:var(--primary,#002855);color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;width:100%;">Seguir conectado</button>
         </div>`;
@@ -1908,8 +1917,8 @@ function toggleLang(){
     function showInactivityModal() {
       ensureInactivityModal();
       const isEn = currentLang === 'en';
-      document.getElementById('inactivityModalTitle').textContent = isEn ? 'Still there?' : '¿Sigues ahí?';
-      document.getElementById('inactivityModalMsg').textContent = isEn ? 'Your session will close due to inactivity in' : 'Tu sesión se cerrará por inactividad en';
+      document.getElementById('inactivityModalTitle').textContent = isEn ? 'Still there?' : 'Â¿Sigues ahÃ­?';
+      document.getElementById('inactivityModalMsg').textContent = isEn ? 'Your session will close due to inactivity in' : 'Tu sesiÃ³n se cerrarÃ¡ por inactividad en';
       document.getElementById('inactivityModalBtn').textContent = isEn ? 'Stay logged in' : 'Seguir conectado';
       const modal = document.getElementById('inactivityModal');
       modal.style.display = 'flex';
@@ -1947,7 +1956,7 @@ function toggleLang(){
       }, INACTIVITY_WARNING_MS);
 
       _inactivityLogoutTimer = setTimeout(() => {
-        console.warn('Sesión cerrada automáticamente por inactividad (20 min).');
+        console.warn('SesiÃ³n cerrada automÃ¡ticamente por inactividad (20 min).');
         doLogout('inactivity');
       }, INACTIVITY_LIMIT_MS);
     }
@@ -1955,8 +1964,8 @@ function toggleLang(){
     function startInactivityWatcher() {
       if (!_inactivityBound) {
         INACTIVITY_EVENTS.forEach(evt => document.addEventListener(evt, () => {
-          // Si el modal de aviso está visible, un clic dentro de él ya llama resetInactivityTimer vía su propio botón;
-          // el resto de eventos globales solo reinician el timer si el modal NO está abierto, para forzar decisión consciente.
+          // Si el modal de aviso estÃ¡ visible, un clic dentro de Ã©l ya llama resetInactivityTimer vÃ­a su propio botÃ³n;
+          // el resto de eventos globales solo reinician el timer si el modal NO estÃ¡ abierto, para forzar decisiÃ³n consciente.
           const modal = document.getElementById('inactivityModal');
           if (modal && modal.style.display === 'flex') return;
           resetInactivityTimer();
@@ -1978,19 +1987,19 @@ function toggleLang(){
       hideInactivityModal();
     }
 
-    /* ═══════════════════════ PORTAL RENDER ═══════════════════════ */
+    /* âââââââââââââââââââââââ PORTAL RENDER âââââââââââââââââââââââ */
     function renderPortal() {
       if (!currentUser || typeof currentUser !== 'object') return;
       const fullName = currentUser.nombre || currentUser.username || '';
       const firstName = String(fullName).trim().split(/\s+/)[0] || fullName;
-      document.getElementById('userName').textContent = fullName || '—';
-      document.getElementById('userRole').textContent = currentUser.rol || '—';
+      document.getElementById('userName').textContent = fullName || 'â';
+      document.getElementById('userRole').textContent = currentUser.rol || 'â';
       document.getElementById('userAvatar').textContent = getInitials(fullName);
       document.getElementById('heroFirstName').textContent = firstName;
       document.getElementById('heroSaludo').textContent = guessSaludo(firstName);
       restoreNotifyStates();
 
-      // Botón de administración de usuarios: solo visible para admin_master
+      // BotÃ³n de administraciÃ³n de usuarios: solo visible para admin_master
       const btnUsers = document.getElementById('btnUsersAdmin');
       if (btnUsers) btnUsers.style.display = (currentUser.rol === 'admin_master') ? 'inline-flex' : 'none';
 
@@ -2003,66 +2012,66 @@ function toggleLang(){
           fiscalCard.onclick = irAFiscal;
           fiscalCard.classList.remove('disabled');
         } else {
-          fiscalCard.onclick = () => showToast('Sin acceso al módulo Fiscal. Contacta al administrador.');
+          fiscalCard.onclick = () => showToast('Sin acceso al mÃ³dulo Fiscal. Contacta al administrador.');
           fiscalCard.classList.add('disabled');
         }
       }
 
-      // Contabilidad: en construcción — solo admin_master puede entrar (desarrollo)
+      // Contabilidad: en construcciÃ³n â solo admin_master puede entrar (desarrollo)
       const contabilidadCard = document.getElementById('modCardContabilidad');
       if (contabilidadCard) {
         if (currentUser.rol === 'admin_master') {
           contabilidadCard.onclick = irAContabilidad;
           contabilidadCard.classList.remove('disabled');
         } else {
-          contabilidadCard.onclick = () => showToast('Módulo Contabilidad en construcción.');
+          contabilidadCard.onclick = () => showToast('MÃ³dulo Contabilidad en construcciÃ³n.');
           contabilidadCard.classList.add('disabled');
         }
       }
 
-      // Nóminas: en construcción — solo admin_master puede entrar (desarrollo)
+      // NÃ³minas: en construcciÃ³n â solo admin_master puede entrar (desarrollo)
       const nominasCard = document.getElementById('modCardNominas');
       if (nominasCard) {
         if (currentUser.rol === 'admin_master') {
           nominasCard.onclick = irANominas;
           nominasCard.classList.remove('disabled');
         } else {
-          nominasCard.onclick = () => showToast('Módulo Nóminas en construcción.');
+          nominasCard.onclick = () => showToast('MÃ³dulo NÃ³minas en construcciÃ³n.');
           nominasCard.classList.add('disabled');
         }
       }
 
-      // Breakdown: en construcción — solo admin_master puede entrar (desarrollo)
+      // Breakdown: en construcciÃ³n â solo admin_master puede entrar (desarrollo)
       const breakdownCard = document.getElementById('modCardBreakdown');
       if (breakdownCard) {
         if (currentUser.rol === 'admin_master') {
           breakdownCard.onclick = irABreakdown;
           breakdownCard.classList.remove('disabled');
         } else {
-          breakdownCard.onclick = () => showToast('Módulo Breakdown en construcción.');
+          breakdownCard.onclick = () => showToast('MÃ³dulo Breakdown en construcciÃ³n.');
           breakdownCard.classList.add('disabled');
         }
       }
 
-      // Tesorería: en construcción — solo admin_master puede entrar (desarrollo)
+      // TesorerÃ­a: en construcciÃ³n â solo admin_master puede entrar (desarrollo)
       const tesoreriaCard = document.getElementById('modCardTesoreria');
       if (tesoreriaCard) {
         if (currentUser.rol === 'admin_master') {
           tesoreriaCard.onclick = irATesoreria;
           tesoreriaCard.classList.remove('disabled');
         } else {
-          tesoreriaCard.onclick = () => showToast('Módulo Tesorería en construcción.');
+          tesoreriaCard.onclick = () => showToast('MÃ³dulo TesorerÃ­a en construcciÃ³n.');
           tesoreriaCard.classList.add('disabled');
         }
       }
     }
 
-    /* ── fin gestión de accesos ── */
+    /* ââ fin gestiÃ³n de accesos ââ */
 
-    /* Heurística simple por terminación del nombre (es-MX): termina en 'a' =>
+    /* HeurÃ­stica simple por terminaciÃ³n del nombre (es-MX): termina en 'a' =>
        "Bienvenida", salvo excepciones comunes de nombres masculinos en 'a'.
-       No es infalible; si se prefiere, se puede reemplazar más adelante por
-       un campo explícito de género en la tabla 'usuarios'. */
+       No es infalible; si se prefiere, se puede reemplazar mÃ¡s adelante por
+       un campo explÃ­cito de gÃ©nero en la tabla 'usuarios'. */
     const NOMBRES_MASCULINOS_EN_A = ['LUCA','NOA','JOSUA','ELISHA'];
     function guessSaludo(nombre) {
       const n = String(nombre || '').trim().toUpperCase();
@@ -2078,12 +2087,12 @@ function toggleLang(){
       return (parts[0][0] + parts[1][0]).toUpperCase();
     }
 
-    /* ═══════════════════════ NAVIGATE ═══════════════════════
-       Cache-busting robusto para iOS Safari: los meta http-equiv del módulo son
-       ignorados por Safari para el HTML raíz. Antes de navegar, buscamos la
-       versión remota real del módulo y añadimos ?v=<version> a la URL. Así el
+    /* âââââââââââââââââââââââ NAVIGATE âââââââââââââââââââââââ
+       Cache-busting robusto para iOS Safari: los meta http-equiv del mÃ³dulo son
+       ignorados por Safari para el HTML raÃ­z. Antes de navegar, buscamos la
+       versiÃ³n remota real del mÃ³dulo y aÃ±adimos ?v=<version> a la URL. AsÃ­ el
        navegador no puede servir cache viejo (query string distinto por deploy).
-    ═══════════════════════════════════════════════════════════ */
+    âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
     async function _extraerVersionRemota(baseUrl) {
       try {
         const res = await fetch(baseUrl + 'index.html?_=' + Date.now(), {
@@ -2098,9 +2107,9 @@ function toggleLang(){
     }
 
     async function _launchModule(baseUrl, nombre) {
-      try { showToast('Abriendo ' + nombre + '…'); } catch(e){}
+      try { showToast('Abriendo ' + nombre + 'â¦'); } catch(e){}
       const version = await _extraerVersionRemota(baseUrl);
-      // Con o sin versión detectada, siempre añadimos algo que rompa cache
+      // Con o sin versiÃ³n detectada, siempre aÃ±adimos algo que rompa cache
       const bust = version ? ('v=' + encodeURIComponent(version)) : ('t=' + Date.now());
       window.location.href = baseUrl + '?' + bust;
     }
@@ -2112,7 +2121,7 @@ function toggleLang(){
       const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
       const tieneFiscal = currentUser && (currentUser.rol === 'admin_master' || mods.includes('fiscal'));
       if (!tieneFiscal) {
-        showToast('Sin acceso al módulo Fiscal. Contacta al administrador.');
+        showToast('Sin acceso al mÃ³dulo Fiscal. Contacta al administrador.');
         return;
       }
       _launchModule(FISCAL_URL, 'Fiscal');
@@ -2120,7 +2129,7 @@ function toggleLang(){
 
     function irAContabilidad() {
       if (!currentUser || currentUser.rol !== 'admin_master') {
-        showToast('Módulo Contabilidad en construcción.');
+        showToast('MÃ³dulo Contabilidad en construcciÃ³n.');
         return;
       }
       _launchModule(CONTABILIDAD_URL, 'Contabilidad');
@@ -2128,15 +2137,15 @@ function toggleLang(){
 
     function irANominas() {
       if (!currentUser || currentUser.rol !== 'admin_master') {
-        showToast('Módulo Nóminas en construcción.');
+        showToast('MÃ³dulo NÃ³minas en construcciÃ³n.');
         return;
       }
-      _launchModule(NOMINAS_URL, 'Nóminas');
+      _launchModule(NOMINAS_URL, 'NÃ³minas');
     }
 
     function irABreakdown() {
       if (!currentUser || currentUser.rol !== 'admin_master') {
-        showToast('Módulo Breakdown en construcción.');
+        showToast('MÃ³dulo Breakdown en construcciÃ³n.');
         return;
       }
       _launchModule(BREAKDOWN_URL, 'Breakdown');
@@ -2144,13 +2153,13 @@ function toggleLang(){
 
     function irATesoreria() {
       if (!currentUser || currentUser.rol !== 'admin_master') {
-        showToast('Módulo Tesorería en construcción.');
+        showToast('MÃ³dulo TesorerÃ­a en construcciÃ³n.');
         return;
       }
-      _launchModule(TESORERIA_URL, 'Tesoría');
+      _launchModule(TESORERIA_URL, 'TesorÃ­a');
     }
 
-    /* ═══════════════════════ NOTIFY (Próximamente) ═══════════════════════ */
+    /* âââââââââââââââââââââââ NOTIFY (PrÃ³ximamente) âââââââââââââââââââââââ */
     function notify(btn, mod) {
       const key = 'sif_notify_' + mod;
       const isNotified = localStorage.getItem(key) === '1';
@@ -2158,13 +2167,13 @@ function toggleLang(){
       if (isNotified) {
         localStorage.removeItem(key);
         btn.classList.remove('notified');
-        if (label) label.textContent = 'Avísame cuando esté listo';
-        showToast('Notificación cancelada');
+        if (label) label.textContent = 'AvÃ­same cuando estÃ© listo';
+        showToast('NotificaciÃ³n cancelada');
       } else {
         localStorage.setItem(key, '1');
         btn.classList.add('notified');
         if (label) label.textContent = 'Te avisaremos';
-        showToast('Te avisaremos cuando ' + mod + ' esté listo');
+        showToast('Te avisaremos cuando ' + mod + ' estÃ© listo');
       }
     }
 
@@ -2187,27 +2196,27 @@ function toggleLang(){
       showToast._t = setTimeout(() => t.classList.remove('show'), 2600);
     }
 
-    /* ═══════════════════════════════════════════════════════════════
-       GESTIÓN DE USUARIOS (admin_master)
-       Se centraliza aquí porque /SIF-Portal/ y /Deadpool/ comparten
+    /* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+       GESTIÃN DE USUARIOS (admin_master)
+       Se centraliza aquÃ­ porque /SIF-Portal/ y /Deadpool/ comparten
        origen (jcgt1976.github.io) y la misma tabla 'usuarios' en
        Supabase. Deadpool solo LEE permisosGet/canAccess para gatear su
-       propia UI; la escritura de cuentas y permisos vive únicamente
-       en este módulo.
-       ═══════════════════════════════════════════════════════════════ */
+       propia UI; la escritura de cuentas y permisos vive Ãºnicamente
+       en este mÃ³dulo.
+       âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 
     const PERMS_MODULOS = [
-      { id:'dashboard',  label:'📊 Dashboard',        desc:'KPIs y vista general' },
-      { id:'entradas',   label:'💵 Entradas',          desc:'Registrar ingresos' },
-      { id:'cxp',        label:'📂 CxP',              desc:'Cuentas por pagar / catálogo' },
-      { id:'plan_pagos', label:'📑 Plan de Pagos',     desc:'Ver y seleccionar plan activo' },
-      { id:'reg_pago',   label:'💳 Registrar Pago',    desc:'Marcar conceptos como pagados' },
-      { id:'gastos_det', label:'💸 Detalle Gastos',    desc:'Ver historial de pagos' },
-      { id:'reporte',    label:'📋 Reporte Semanal',   desc:'Generar y ver reporte' },
-      { id:'cierre',     label:'🔒 Cierre de Semana',  desc:'Cerrar semana y acumular arrastre' },
-      { id:'reset',      label:'♻️ Reset Total',       desc:'Reiniciar todo a cero' },
-      { id:'usuarios',   label:'👥 Gestión Usuarios',  desc:'Crear/editar usuarios' },
-      { id:'catalogo',   label:'🗂️ Catálogo CxP',     desc:'Editar catálogo de conceptos' },
+      { id:'dashboard',  label:'ð Dashboard',        desc:'KPIs y vista general' },
+      { id:'entradas',   label:'ðµ Entradas',          desc:'Registrar ingresos' },
+      { id:'cxp',        label:'ð CxP',              desc:'Cuentas por pagar / catÃ¡logo' },
+      { id:'plan_pagos', label:'ð Plan de Pagos',     desc:'Ver y seleccionar plan activo' },
+      { id:'reg_pago',   label:'ð³ Registrar Pago',    desc:'Marcar conceptos como pagados' },
+      { id:'gastos_det', label:'ð¸ Detalle Gastos',    desc:'Ver historial de pagos' },
+      { id:'reporte',    label:'ð Reporte Semanal',   desc:'Generar y ver reporte' },
+      { id:'cierre',     label:'ð Cierre de Semana',  desc:'Cerrar semana y acumular arrastre' },
+      { id:'reset',      label:'â»ï¸ Reset Total',       desc:'Reiniciar todo a cero' },
+      { id:'usuarios',   label:'ð¥ GestiÃ³n Usuarios',  desc:'Crear/editar usuarios' },
+      { id:'catalogo',   label:'ðï¸ CatÃ¡logo CxP',     desc:'Editar catÃ¡logo de conceptos' },
     ];
 
     const PERMS_DEFAULT = {
@@ -2260,7 +2269,7 @@ function toggleLang(){
 
     async function fetchUsuariosYRender() {
       const cont = document.getElementById('usuariosPanel');
-      if (cont) cont.innerHTML = '<div class="usu-empty">Cargando usuarios…</div>';
+      if (cont) cont.innerHTML = '<div class="usu-empty">Cargando usuariosâ¦</div>';
       const { data, error } = await sb.from('usuarios').select('id,username,nombre,rol,activo,debe_cambiar,modulos');
       if (error) { if (cont) cont.innerHTML = '<div class="usu-empty">Error al cargar usuarios.</div>'; console.error(error); return; }
       usuariosList = data || [];
@@ -2270,7 +2279,7 @@ function toggleLang(){
     function renderUsuarios() {
       const c = document.getElementById('usuariosPanel');
       if (!c) return;
-      if (!currentUser || currentUser.rol !== 'admin_master') { c.innerHTML = '<div class="usu-empty">🔒 Solo el Admon Master puede gestionar usuarios.</div>'; return; }
+      if (!currentUser || currentUser.rol !== 'admin_master') { c.innerHTML = '<div class="usu-empty">ð Solo el Admon Master puede gestionar usuarios.</div>'; return; }
 
       const users = usuariosList;
       if (!window._usuPanelState) window._usuPanelState = { selId: users[0]?.id || null, tab: 'permisos' };
@@ -2293,7 +2302,7 @@ function toggleLang(){
             </div>
             ${roleBadge(u.rol)}
           </div>
-          ${!u.activo ? '<div class="usu-card-inactive-tag">● Inactivo</div>' : ''}
+          ${!u.activo ? '<div class="usu-card-inactive-tag">â Inactivo</div>' : ''}
         </div>`;
       }
 
@@ -2315,13 +2324,13 @@ function toggleLang(){
 
       function sifModulosGrid(u) {
         if (u.rol === 'admin_master') {
-          return '<div style="font-size:11px;color:#92700C;padding:8px 10px;background:#FEF9E7;border-radius:8px;border:1px solid #F0D584;">👑 Admon Master: acceso total a todos los módulos SIF.</div>';
+          return '<div style="font-size:11px;color:#92700C;padding:8px 10px;background:#FEF9E7;border-radius:8px;border:1px solid #F0D584;">ð Admon Master: acceso total a todos los mÃ³dulos SIF.</div>';
         }
         const SIF_MODS = [
-          {id:'fiscal',       icon:'🧾', label:'Fiscal'},
-          {id:'flujo',        icon:'💧', label:'Flujo de Efectivo'},
-          {id:'contabilidad', icon:'📚', label:'Contabilidad'},
-          {id:'nominas',      icon:'👥', label:'Nóminas'},
+          {id:'fiscal',       icon:'ð§¾', label:'Fiscal'},
+          {id:'flujo',        icon:'ð§', label:'Flujo de Efectivo'},
+          {id:'contabilidad', icon:'ð', label:'Contabilidad'},
+          {id:'nominas',      icon:'ð¥', label:'NÃ³minas'},
         ];
         const mods = Array.isArray(u.modulos) ? u.modulos : [];
         const items = SIF_MODS.map(function(m) {
@@ -2354,7 +2363,7 @@ function toggleLang(){
         <div>
           <div class="usu-list-label">Usuarios (${users.length})</div>
           ${users.map(userCard).join('')}
-          <div class="usu-add" onclick="usuShowCrearForm()">＋ Nuevo usuario</div>
+          <div class="usu-add" onclick="usuShowCrearForm()">ï¼ Nuevo usuario</div>
         </div>
 
         <div>
@@ -2367,15 +2376,15 @@ function toggleLang(){
               </div>
               <div style="display:flex;gap:8px;align-items:center;">
                 ${selUser.id !== currentUser.id && !(selUser.rol === 'admin_master' && currentUser.rol !== 'admin_master') ? `
-                <button class="usu-btn ${selUser.activo?'usu-btn-toggle-on':'usu-btn-toggle-off'}" onclick="toggleUser('${selUser.id}',${selUser.activo})">${selUser.activo ? '● Activo' : '○ Inactivo'}</button>
-                <button class="usu-btn" onclick="resetPwd('${selUser.id}', '${(selUser.nombre||selUser.username||'').replace(/'/g,"\\'")}')">🔑 Reset pwd</button>
-                ` : selUser.id === currentUser.id ? '<span style="font-size:11px;color:var(--ink-400);">(tú)</span>' : '<span style="font-size:11px;color:var(--ink-400);">🔒 Protegido</span>'}
+                <button class="usu-btn ${selUser.activo?'usu-btn-toggle-on':'usu-btn-toggle-off'}" onclick="toggleUser('${selUser.id}',${selUser.activo})">${selUser.activo ? 'â Activo' : 'â Inactivo'}</button>
+                <button class="usu-btn" onclick="resetPwd('${selUser.id}', '${(selUser.nombre||selUser.username||'').replace(/'/g,"\\'")}')">ð Reset pwd</button>
+                ` : selUser.id === currentUser.id ? '<span style="font-size:11px;color:var(--ink-400);">(tÃº)</span>' : '<span style="font-size:11px;color:var(--ink-400);">ð Protegido</span>'}
               </div>
             </div>
 
             <div class="usu-tabs">
               ${['permisos','perfil','nuevo'].map(t => {
-                const labels = { permisos:'🔐 Permisos', perfil:'👤 Perfil', nuevo:'➕ Nuevo usuario' };
+                const labels = { permisos:'ð Permisos', perfil:'ð¤ Perfil', nuevo:'â Nuevo usuario' };
                 return `<div class="usu-tab ${st.tab===t?'active':''}" onclick="usuSetTab('${t}')">${labels[t]}</div>`;
               }).join('')}
             </div>
@@ -2384,18 +2393,18 @@ function toggleLang(){
               <div style="margin-bottom:16px;">
                 <div class="usu-field-label">Rol base</div>
                 <div class="usu-role-row">${rolSelector(selUser)}</div>
-                ${selUser.rol === 'admin_master' ? '<div style="font-size:10px;color:#92700C;margin-top:6px;">👑 Admon Master: acceso total permanente. Solo se puede modificar desde la base de datos.</div>' : selUser.rol === 'admin' ? '<div style="font-size:10px;color:var(--ink-400);margin-top:6px;">⚠️ El admin tiene acceso completo. No se puede restringir.</div>' : '<div style="margin-top:8px;font-size:11px;color:var(--brand-800);cursor:pointer;" onclick="usuResetPerms(\'' + selUser.id + '\')">↺ Restablecer permisos por defecto del rol</div>'}
+                ${selUser.rol === 'admin_master' ? '<div style="font-size:10px;color:#92700C;margin-top:6px;">ð Admon Master: acceso total permanente. Solo se puede modificar desde la base de datos.</div>' : selUser.rol === 'admin' ? '<div style="font-size:10px;color:var(--ink-400);margin-top:6px;">â ï¸ El admin tiene acceso completo. No se puede restringir.</div>' : '<div style="margin-top:8px;font-size:11px;color:var(--brand-800);cursor:pointer;" onclick="usuResetPerms(\'' + selUser.id + '\')">âº Restablecer permisos por defecto del rol</div>'}
               </div>
-              <div class="usu-field-label">Acceso por módulo</div>
+              <div class="usu-field-label">Acceso por mÃ³dulo</div>
               <div class="usu-perms-grid">${permsGrid(selUser)}</div>
 
               <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--ink-100)">
-                <div class="usu-field-label" style="margin-bottom:10px">🏢 Módulos SIF — acceso a aplicaciones</div>
+                <div class="usu-field-label" style="margin-bottom:10px">ð¢ MÃ³dulos SIF â acceso a aplicaciones</div>
                 ${sifModulosGrid(selUser)}
               </div>
 
               <div style="margin-top:16px;">
-                <button class="usu-btn" style="width:100%;background:var(--brand-800);color:var(--paper);border-color:var(--brand-800);" onclick="usuGuardarPerms('${selUser.id}')">💾 Guardar permisos</button>
+                <button class="usu-btn" style="width:100%;background:var(--brand-800);color:var(--paper);border-color:var(--brand-800);" onclick="usuGuardarPerms('${selUser.id}')">ð¾ Guardar permisos</button>
               </div>
             ` : st.tab === 'perfil' ? `
               <div style="display:flex;flex-direction:column;gap:12px;">
@@ -2404,18 +2413,18 @@ function toggleLang(){
                   <div class="usu-field-label">${l}</div>
                   <div style="background:var(--ink-25);border:1px solid var(--ink-100);border-radius:8px;padding:8px 12px;font-size:13px;">${v}</div>
                 </div>`).join('')}
-                <div style="font-size:11px;color:var(--ink-400);font-style:italic;">Edición de perfil disponible próximamente.</div>
+                <div style="font-size:11px;color:var(--ink-400);font-style:italic;">EdiciÃ³n de perfil disponible prÃ³ximamente.</div>
               </div>
             ` : `
               <div class="usu-form-grid">
                 <div><div class="usu-field-label">Usuario (login)</div><input id="nuUsuario" class="field-input" type="text" placeholder="juan.perez"></div>
-                <div><div class="usu-field-label">Nombre completo</div><input id="nuNombre" class="field-input" type="text" placeholder="Juan Pérez"></div>
+                <div><div class="usu-field-label">Nombre completo</div><input id="nuNombre" class="field-input" type="text" placeholder="Juan PÃ©rez"></div>
                 <div><div class="usu-field-label">Rol</div>
                   <select id="nuRol" class="field-input"><option value="view">view</option><option value="income">income</option><option value="cohost">cohost</option><option value="admin">admin</option></select>
                 </div>
-                <div><div class="usu-field-label">Contraseña inicial</div><input id="nuPwd" class="field-input" type="password" placeholder="Mínimo 8 caracteres"></div>
+                <div><div class="usu-field-label">ContraseÃ±a inicial</div><input id="nuPwd" class="field-input" type="password" placeholder="MÃ­nimo 8 caracteres"></div>
               </div>
-              <button class="usu-btn" style="background:var(--brand-800);color:var(--paper);border-color:var(--brand-800);" onclick="createUser()">➕ Crear usuario</button>
+              <button class="usu-btn" style="background:var(--brand-800);color:var(--paper);border-color:var(--brand-800);" onclick="createUser()">â Crear usuario</button>
             `}
           </div>
         ` : '<div class="usu-empty">Selecciona un usuario</div>'}
@@ -2431,14 +2440,14 @@ function toggleLang(){
       if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede cambiar roles'); return; }
       const u = usuariosList.find(x => String(x.id) === String(userId));
       if (!u) return;
-      if (u.rol === 'admin_master') { showToast('El Admon Master no se puede modificar desde aquí'); return; }
+      if (u.rol === 'admin_master') { showToast('El Admon Master no se puede modificar desde aquÃ­'); return; }
       if (u.rol === 'admin' && currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede reasignar a un admin'); return; }
       if (newRol === 'admin_master') { showToast('El rol Admon Master solo se asigna desde la base de datos'); return; }
       const { error } = await sb.from('usuarios').update({ rol: newRol }).eq('id', userId);
       if (error) { showToast('Error al cambiar rol'); return; }
       permisosSet(userId, { ...PERMS_DEFAULT[newRol] });
       u.rol = newRol;
-      showToast('Rol actualizado ✓');
+      showToast('Rol actualizado â');
       renderUsuarios();
     }
 
@@ -2454,7 +2463,7 @@ function toggleLang(){
     }
 
     function usuToggleModulo(userId, modId) {
-      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede cambiar módulos SIF'); return; }
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede cambiar mÃ³dulos SIF'); return; }
       const u = usuariosList.find(x => String(x.id) === String(userId));
       if (!u || u.rol === 'admin_master') return;
       const mods = Array.isArray(u.modulos) ? [...u.modulos] : [];
@@ -2470,7 +2479,7 @@ function toggleLang(){
       if (!u) return;
       permisosSet(userId, { ...PERMS_DEFAULT[u.rol] });
       if (currentUser && String(currentUser.id) === String(userId)) currentUser.permisos = { ...PERMS_DEFAULT[u.rol] };
-      showToast('Permisos restablecidos al default del rol ✓');
+      showToast('Permisos restablecidos al default del rol â');
       renderUsuarios();
     }
 
@@ -2483,44 +2492,44 @@ function toggleLang(){
         const perms = permisosGet(userId, u.rol);
         const { error } = await sb.from('usuarios').update({ modulos: mods, permisos: perms }).eq('id', userId);
         if (error) { showToast('Error al guardar: ' + error.message); return; }
-        // Actualizar currentUser si es el mismo que está editando
+        // Actualizar currentUser si es el mismo que estÃ¡ editando
         if (currentUser && String(currentUser.id) === String(userId)) currentUser.permisos = perms;
       }
-      showToast('Permisos guardados ✓');
+      showToast('Permisos guardados â');
     }
 
     async function toggleUser(id, activo) {
       if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede activar/desactivar usuarios'); return; }
       const { error } = await sb.from('usuarios').update({ activo: !activo }).eq('id', id);
       if (error) { showToast('Error al actualizar'); return; }
-      showToast(`Usuario ${activo?'desactivado':'activado'} ✓`);
+      showToast(`Usuario ${activo?'desactivado':'activado'} â`);
       await fetchUsuariosYRender();
     }
 
     async function resetPwd(id, nombreUsuario) {
-      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede resetear contraseñas'); return; }
-      if (!confirm('¿Generar una contraseña temporal nueva para este usuario?\n\nSe te mostrará una sola vez para que se la comuniques.')) return;
+      if (currentUser.rol !== 'admin_master') { showToast('Solo el Admon Master puede resetear contraseÃ±as'); return; }
+      if (!confirm('Â¿Generar una contraseÃ±a temporal nueva para este usuario?\n\nSe te mostrarÃ¡ una sola vez para que se la comuniques.')) return;
 
-      // Convertir id a número (viene como string desde el onclick)
+      // Convertir id a nÃºmero (viene como string desde el onclick)
       const idNum = parseInt(id, 10);
-      if (isNaN(idNum)) { showToast('ID inválido'); return; }
+      if (isNaN(idNum)) { showToast('ID invÃ¡lido'); return; }
 
       const { data, error } = await sb.rpc('admin_reset_password', { target_user_id: idNum });
       if (error) {
         console.error('admin_reset_password error:', error);
         if (String(error.message||'').includes('does not exist')) {
-          showToast('⚠️ Función admin_reset_password no existe. Corre el SQL de migración en Supabase.');
+          showToast('â ï¸ FunciÃ³n admin_reset_password no existe. Corre el SQL de migraciÃ³n en Supabase.');
         } else {
           showToast('Error: ' + (error.message||'desconocido'));
         }
         return;
       }
-      // data es la contraseña nueva en claro
+      // data es la contraseÃ±a nueva en claro
       mostrarPwdReseteada(nombreUsuario || 'usuario', data);
       await fetchUsuariosYRender();
     }
 
-    /* Modal de contraseña reseteada — se muestra UNA VEZ al admin */
+    /* Modal de contraseÃ±a reseteada â se muestra UNA VEZ al admin */
     function mostrarPwdReseteada(nombre, pwd) {
       let modal = document.getElementById('resetPwdModal');
       if (!modal) {
@@ -2529,19 +2538,19 @@ function toggleLang(){
         modal.className = 'reset-pwd-backdrop';
         modal.innerHTML = `
           <div class="reset-pwd-card">
-            <div class="reset-pwd-icon">🔑</div>
-            <div class="reset-pwd-title">Contraseña temporal generada</div>
+            <div class="reset-pwd-icon">ð</div>
+            <div class="reset-pwd-title">ContraseÃ±a temporal generada</div>
             <div class="reset-pwd-sub" id="resetPwdSub"></div>
             <div class="reset-pwd-box">
-              <code id="resetPwdCode">—</code>
-              <button class="reset-pwd-copy" onclick="copiarPwdReseteada()">📋 Copiar</button>
+              <code id="resetPwdCode">â</code>
+              <button class="reset-pwd-copy" onclick="copiarPwdReseteada()">ð Copiar</button>
             </div>
             <div class="reset-pwd-warn">
-              ⚠️ Esta contraseña solo se muestra <b>una vez</b>. Cópiala y compártesela al usuario por un canal seguro.
-              Al ingresar, el sistema le pedirá crear una nueva.
+              â ï¸ Esta contraseÃ±a solo se muestra <b>una vez</b>. CÃ³piala y compÃ¡rtesela al usuario por un canal seguro.
+              Al ingresar, el sistema le pedirÃ¡ crear una nueva.
             </div>
             <div class="reset-pwd-actions">
-              <button class="reset-pwd-btn" onclick="cerrarPwdReseteada()">Ya la copié, cerrar</button>
+              <button class="reset-pwd-btn" onclick="cerrarPwdReseteada()">Ya la copiÃ©, cerrar</button>
             </div>
           </div>`;
         document.body.appendChild(modal);
@@ -2553,8 +2562,8 @@ function toggleLang(){
     function copiarPwdReseteada() {
       const pwd = document.getElementById('resetPwdCode').textContent;
       navigator.clipboard.writeText(pwd).then(
-        () => showToast('Contraseña copiada al portapapeles ✓'),
-        () => showToast('No se pudo copiar — cópiala manualmente')
+        () => showToast('ContraseÃ±a copiada al portapapeles â'),
+        () => showToast('No se pudo copiar â cÃ³piala manualmente')
       );
     }
     function cerrarPwdReseteada() {
@@ -2570,27 +2579,27 @@ function toggleLang(){
       const pwd     = document.getElementById('nuPwd').value;
 
       if (!usuario||!nombre||!pwd) { showToast('Completa todos los campos'); return; }
-      if (pwd.length < 8) { showToast('Contraseña mínimo 8 caracteres'); return; }
+      if (pwd.length < 8) { showToast('ContraseÃ±a mÃ­nimo 8 caracteres'); return; }
 
       const hash = await sha256(pwd);
       const { error } = await sb.from('usuarios').insert([{
         username: usuario, nombre, rol, pwd_hash: hash, activo: true, debe_cambiar: false
       }]);
       if (error) { showToast(`Error: ${error.message}`); return; }
-      showToast(`Usuario ${usuario} creado ✓`);
+      showToast(`Usuario ${usuario} creado â`);
       await fetchUsuariosYRender();
     }
 
-    /* ═══════════════════════ AUTO-UPDATER (self) ═══════════════════════
-       El portal verifica su propia versión remota y recarga si detecta que
+    /* âââââââââââââââââââââââ AUTO-UPDATER (self) âââââââââââââââââââââââ
+       El portal verifica su propia versiÃ³n remota y recarga si detecta que
        hay una nueva. Necesario porque iOS Safari ignora los meta Cache-Control
-       para el HTML raíz, y el ícono en el home queda pegado a caché vieja.
+       para el HTML raÃ­z, y el Ã­cono en el home queda pegado a cachÃ© vieja.
 
        Se dispara:
-         - Al cargar la página (retardado 1.5s para no bloquear el login)
+         - Al cargar la pÃ¡gina (retardado 1.5s para no bloquear el login)
          - Cuando el documento vuelve a ser visible (usuario regresa a la app)
          - Cada 10 minutos como respaldo
-    ═══════════════════════════════════════════════════════════════════════ */
+    âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
     let _updaterCheckingSelf = false;
     let _updaterAlreadyReloading = false;
 
@@ -2609,14 +2618,14 @@ function toggleLang(){
         const remote = m[1];
         if (remote && remote !== APP_VERSION) {
           _updaterAlreadyReloading = true;
-          try { showToast('Nueva versión ' + remote + ' — recargando…'); } catch(e){}
+          try { showToast('Nueva versiÃ³n ' + remote + ' â recargandoâ¦'); } catch(e){}
           setTimeout(() => {
-            // Añadimos query bust para reventar caché de iOS Safari
+            // AÃ±adimos query bust para reventar cachÃ© de iOS Safari
             const sep = location.href.includes('?') ? '&' : '?';
             location.replace(location.href.split('#')[0] + sep + 'v=' + encodeURIComponent(remote));
           }, 800);
         }
-      } catch(e) { /* red caída u offline: silencioso */ }
+      } catch(e) { /* red caÃ­da u offline: silencioso */ }
       finally { _updaterCheckingSelf = false; }
     }
 
@@ -2627,11 +2636,11 @@ function toggleLang(){
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') _checkPortalUpdate();
       });
-      // Chequeo periódico cada 10 min como respaldo
+      // Chequeo periÃ³dico cada 10 min como respaldo
       setInterval(_checkPortalUpdate, 10 * 60 * 1000);
     }
 
-    /* ═══════════════════════ EVENT WIRING ═══════════════════════ */
+    /* âââââââââââââââââââââââ EVENT WIRING âââââââââââââââââââââââ */
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('portalVersion').textContent = APP_VERSION;
       document.getElementById('btnLogin').addEventListener('click', doLogin);
