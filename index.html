@@ -2141,7 +2141,11 @@ function toggleLang(){
 
     function irANominas() {
       const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
-      const tieneNominas = currentUser && (currentUser.rol === 'admin_master' || mods.includes('nominas'));
+      const tieneNominas = currentUser && (
+        currentUser.rol === 'admin_master' ||
+        currentUser.rol === 'admin' ||
+        mods.includes('nominas')
+      );
       if (!tieneNominas) {
         showToast('Sin acceso al módulo Nóminas. Contacta al administrador.');
         return;
