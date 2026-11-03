@@ -2033,14 +2033,16 @@ function toggleLang(){
         }
       }
 
-      // Nóminas: en construcción — solo admin_master puede entrar (desarrollo)
+      // Nominas BETA: acceso para admin_master, admin, view, cohost o modulo 'nominas'
       const nominasCard = document.getElementById('modCardNominas');
       if (nominasCard) {
-        if (currentUser.rol === 'admin_master') {
+        const _modsN = Array.isArray(currentUser.modulos) ? currentUser.modulos : [];
+        const _okN = ['admin_master','admin','view','cohost'].includes(currentUser.rol) || _modsN.includes('nominas');
+        if (_okN) {
           nominasCard.onclick = irANominas;
           nominasCard.classList.remove('disabled');
         } else {
-          nominasCard.onclick = () => showToast('Módulo Nóminas en construcción.');
+          nominasCard.onclick = () => showToast('Sin acceso al módulo Nóminas. Contacta al administrador.');
           nominasCard.classList.add('disabled');
         }
       }
