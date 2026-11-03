@@ -2140,8 +2140,10 @@ function toggleLang(){
     }
 
     function irANominas() {
-      if (!currentUser || currentUser.rol !== 'admin_master') {
-        showToast('Módulo Nóminas en construcción.');
+      const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
+      const tieneNominas = currentUser && (currentUser.rol === 'admin_master' || mods.includes('nominas'));
+      if (!tieneNominas) {
+        showToast('Sin acceso al módulo Nóminas. Contacta al administrador.');
         return;
       }
       _launchModule(NOMINAS_URL, 'Nóminas');
@@ -2160,8 +2162,6 @@ function toggleLang(){
         showToast('Módulo Tesorería en construcción.');
         return;
       }
-      function irANominas() { window.location.href = 'https://jcgt1976.github.io/N-minas/'; }
-
       _launchModule(TESORERIA_URL, 'Tesoría');
     }
 
