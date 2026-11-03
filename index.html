@@ -659,6 +659,20 @@
       background: linear-gradient(180deg, var(--brand-800) 0%, var(--brand-900) 100%);
       box-shadow: 0 8px 18px rgba(0,40,85,.4), inset 0 1px 0 rgba(255,255,255,.3);
     }
+    .mod-card[data-status="beta"] {
+      background: linear-gradient(180deg, #d97706 0%, #92400e 100%);
+      color: #fff;
+      box-shadow: 0 3px 8px rgba(146,64,14,.35), inset 0 1px 0 rgba(255,255,255,.2);
+      cursor: pointer;
+    }
+    .mod-card[data-status="beta"]:hover {
+      background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
+      box-shadow: 0 8px 18px rgba(146,64,14,.45), inset 0 1px 0 rgba(255,255,255,.25);
+      transform: translateY(-2px);
+    }
+    .mod-card[data-status="beta"] .mod-status-dot { background: #fde68a; }
+    .mod-card[data-status="beta"] .mod-title { color: #fff; }
+    .mod-card[data-status="beta"] .mod-icon svg { stroke: rgba(255,255,255,.9); }
     .mod-card.disabled {
       cursor: not-allowed;
       opacity: .6;
@@ -1233,6 +1247,44 @@
         </article>
             
 
+        <!-- MODULE 4 : NÓMINAS (BETA) -->
+        <article class="mod-card" data-status="beta" id="modCardNominas" onclick="irANominas()" title="Calculo de nomina semanal disponible. Historico, comparativo y dashboard en desarrollo continuo.">
+          <header class="mod-head">
+            <div class="mod-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="8" r="3.5"/>
+                <path d="M2.5 20a6.5 6.5 0 0 1 13 0"/>
+                <path d="M16 4.5a3.5 3.5 0 0 1 0 7"/>
+                <path d="M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>
+              </svg>
+            </div>
+            <h2 class="mod-title">Nóminas</h2>
+            <span class="mod-status" id="nominasStatus">
+              <span class="mod-status-dot"></span>
+              BETA
+            </span>
+          </header>
+
+          <p class="mod-desc">Calculo semanal de nomina, historico, comparativo y dashboard. En desarrollo continuo.</p>
+
+          <div class="mod-meta">
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Versión</span>
+              <span class="mod-meta-value" id="nominasVer">v2026.11.03</span>
+            </div>
+            <div class="mod-meta-item">
+              <span class="mod-meta-label">Acceso</span>
+              <span class="mod-meta-value">Por módulo</span>
+            </div>
+          </div>
+
+          <div class="mod-actions" id="nominasActions">
+            <button class="btn-mod btn-mod-primary" onclick="irANominas()">
+              <span>Abrir Nominas</span>
+            </button>
+          </div>
+        </article>
+
         <!-- MODULE 3 : CONTABILIDAD (CONSTRUCCIÓN) -->
         <article class="mod-card" data-status="construction" id="modCardContabilidad">
           <header class="mod-head">
@@ -1266,45 +1318,6 @@
           </div>
 
           <div class="mod-actions" id="contabilidadActions">
-            <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
-              <span>En construcción</span>
-            </button>
-          </div>
-        </article>
-
-        <!-- MODULE 4 : NÓMINAS (CONSTRUCCIÓN) -->
-        <article class="mod-card" data-status="construction" id="modCardNominas">
-          <header class="mod-head">
-            <div class="mod-icon">
-              <!-- monoline: people group -->
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="9" cy="8" r="3.5"/>
-                <path d="M2.5 20a6.5 6.5 0 0 1 13 0"/>
-                <path d="M16 4.5a3.5 3.5 0 0 1 0 7"/>
-                <path d="M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>
-              </svg>
-            </div>
-            <h2 class="mod-title">Nóminas</h2>
-            <span class="mod-status" id="nominasStatus">
-              <span class="mod-status-dot"></span>
-              En construcción
-            </span>
-          </header>
-
-          <p class="mod-desc">Control de pago de nómina en efectivo: requisición, autorización, retiro y entrega.</p>
-
-          <div class="mod-meta">
-            <div class="mod-meta-item">
-              <span class="mod-meta-label">Versión</span>
-              <span class="mod-meta-value" id="nominasVer">v2026.08.03</span>
-            </div>
-            <div class="mod-meta-item">
-              <span class="mod-meta-label">Acceso</span>
-              <span class="mod-meta-value">Por módulo</span>
-            </div>
-          </div>
-
-          <div class="mod-actions" id="nominasActions">
             <button class="btn-mod btn-mod-ghost" disabled style="opacity:.55;cursor:not-allowed;">
               <span>En construcción</span>
             </button>
@@ -2147,6 +2160,8 @@ function toggleLang(){
         showToast('Módulo Tesorería en construcción.');
         return;
       }
+      function irANominas() { window.location.href = 'https://jcgt1976.github.io/N-minas/'; }
+
       _launchModule(TESORERIA_URL, 'Tesoría');
     }
 
