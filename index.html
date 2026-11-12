@@ -1034,39 +1034,39 @@
     /* ─── POPUP PULSO POST-LOGIN ─── */
     #ppOverlay{position:fixed;inset:0;background:rgba(0,24,61,.70);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
     #ppOverlay.pp-show{display:flex}
-    .pp-wrap{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;justify-content:center;max-width:680px;width:100%}
-    .pp-card{background:var(--paper);border-radius:var(--r-xl);overflow:hidden;width:310px;border:1px solid var(--ink-100);box-shadow:var(--shadow-lg)}
-    .pp-head{padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
-    .pp-head-title{color:var(--paper);font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px;font-family:var(--font-sans)}
-    .pp-head-title svg{width:14px;height:14px;stroke:rgba(255,255,255,.7);fill:none;stroke-width:2;flex-shrink:0}
+    .pp-wrap{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;justify-content:center;max-width:960px;width:100%}
+    .pp-card{background:var(--paper);border-radius:var(--r-xl);overflow:hidden;width:430px;border:1px solid var(--ink-100);box-shadow:var(--shadow-lg)}
+    .pp-head{padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+    .pp-head-title{color:var(--paper);font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px;font-family:var(--font-sans)}
+    .pp-head-title svg{width:16px;height:16px;stroke:rgba(255,255,255,.7);fill:none;stroke-width:2;flex-shrink:0}
     .pp-close{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.18);border:none;color:var(--paper);font-size:12px;cursor:pointer;line-height:1;font-family:var(--font-sans)}
     .pp-close:hover{background:rgba(255,255,255,.32)}
-    .pp-body{padding:10px 8px;display:flex;flex-direction:column;gap:1px}
-    .pp-row{display:flex;align-items:flex-start;gap:9px;padding:8px 10px;border-radius:var(--r-md);text-decoration:none;border:1px solid transparent;transition:background var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease)}
+    .pp-body{padding:14px 12px;display:flex;flex-direction:column;gap:2px}
+    .pp-row{display:flex;align-items:flex-start;gap:9px;padding:11px 13px;border-radius:var(--r-md);text-decoration:none;border:1px solid transparent;transition:background var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease)}
     .pp-row:hover{background:var(--brand-50);border-color:var(--brand-100)}
-    .pp-ico{min-width:28px;height:28px;border-radius:var(--r-sm);background:var(--brand-100);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .pp-ico svg{width:14px;height:14px;stroke:var(--brand-800);fill:none;stroke-width:1.8}
-    .pp-lbl{font-size:10px;color:var(--ink-300);margin:0 0 2px;text-transform:uppercase;letter-spacing:.4px;font-family:var(--font-sans)}
-    .pp-txt{font-size:12px;color:var(--ink-800);margin:0;line-height:1.4;font-family:var(--font-sans)}
+    .pp-ico{min-width:36px;height:36px;border-radius:var(--r-sm);background:var(--brand-100);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .pp-ico svg{width:17px;height:17px;stroke:var(--brand-800);fill:none;stroke-width:1.8}
+    .pp-lbl{font-size:11px;color:var(--ink-300);margin:0 0 3px;text-transform:uppercase;letter-spacing:.4px;font-family:var(--font-sans)}
+    .pp-txt{font-size:13px;color:var(--ink-800);margin:0;line-height:1.45;font-family:var(--font-sans)}
     .pp-ext svg{width:11px;height:11px;stroke:var(--ink-200);fill:none;stroke-width:2;display:block;transition:stroke var(--dur-fast)}
     .pp-row:hover .pp-ext svg{stroke:var(--brand-700)}
-    .pp-badge{background:var(--warning-soft);border:1px solid var(--warning-line);border-radius:var(--r-md);padding:8px 10px;display:flex;align-items:center;gap:8px;margin:6px 2px 2px}
+    .pp-badge{background:var(--warning-soft);border:1px solid var(--warning-line);border-radius:var(--r-md);padding:10px 13px;display:flex;align-items:center;gap:10px;margin:8px 2px 2px}
     .pp-badge svg{width:14px;height:14px;stroke:var(--warning);fill:none;stroke-width:2;flex-shrink:0}
     .pp-badge-lbl{font-size:10px;color:var(--warning);margin:0;font-family:var(--font-sans)}
-    .pp-badge-val{font-size:12px;color:var(--warning);font-weight:600;margin:0;font-family:var(--font-sans)}
-    .pp-kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:0 2px}
-    .pp-kpi{background:var(--brand-50);border:1px solid var(--brand-100);border-radius:var(--r-md);padding:9px 11px;text-decoration:none;display:block;transition:border-color var(--dur-fast)}
+    .pp-badge-val{font-size:13px;color:var(--warning);font-weight:600;margin:0;font-family:var(--font-sans)}
+    .pp-kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:0 2px}
+    .pp-kpi{background:var(--brand-50);border:1px solid var(--brand-100);border-radius:var(--r-md);padding:12px 14px;text-decoration:none;display:block;transition:border-color var(--dur-fast)}
     .pp-kpi:hover{border-color:var(--brand-700)}
-    .pp-kpi-lbl{font-size:10px;color:var(--ink-300);margin:0 0 3px;text-transform:uppercase;letter-spacing:.4px;font-family:var(--font-sans)}
-    .pp-kpi-num{font-size:19px;font-weight:700;margin:0;line-height:1;font-family:var(--font-sans)}
-    .pp-kpi-sub{font-size:10px;margin:3px 0 0;display:flex;align-items:center;gap:3px;font-family:var(--font-sans)}
+    .pp-kpi-lbl{font-size:11px;color:var(--ink-300);margin:0 0 4px;text-transform:uppercase;letter-spacing:.4px;font-family:var(--font-sans)}
+    .pp-kpi-num{font-size:26px;font-weight:700;margin:0;line-height:1;font-family:var(--font-sans)}
+    .pp-kpi-sub{font-size:12px;margin:4px 0 0;display:flex;align-items:center;gap:3px;font-family:var(--font-sans)}
     .pp-kpi-sub svg{width:10px;height:10px;fill:none;stroke-width:2;flex-shrink:0}
-    .pp-kpi-full{background:var(--brand-50);border:1px solid var(--brand-100);border-radius:var(--r-md);padding:10px 12px;text-decoration:none;display:block;transition:border-color var(--dur-fast);margin:0 2px}
+    .pp-kpi-full{background:var(--brand-50);border:1px solid var(--brand-100);border-radius:var(--r-md);padding:13px 15px;text-decoration:none;display:block;transition:border-color var(--dur-fast);margin:0 2px}
     .pp-kpi-full:hover{border-color:var(--brand-700)}
-    .pp-alerta{background:var(--warning-soft);border:1px solid var(--warning-line);border-radius:var(--r-md);padding:9px 11px;display:flex;gap:8px;align-items:flex-start;text-decoration:none;transition:border-color var(--dur-fast);margin:0 2px}
+    .pp-alerta{background:var(--warning-soft);border:1px solid var(--warning-line);border-radius:var(--r-md);padding:12px 14px;display:flex;gap:10px;align-items:flex-start;text-decoration:none;transition:border-color var(--dur-fast);margin:0 2px}
     .pp-alerta:hover{border-color:var(--warning)}
     .pp-alerta svg{width:14px;height:14px;stroke:var(--warning);fill:none;stroke-width:2;flex-shrink:0;margin-top:1px}
-    .pp-ts{text-align:center;font-size:10px;color:var(--ink-300);padding:8px 4px 4px;font-family:var(--font-sans)}
+    .pp-ts{text-align:center;font-size:11px;color:var(--ink-300);padding:10px 4px 6px;font-family:var(--font-sans)}
   </style>
 </head>
 <body>
@@ -1478,7 +1478,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.11.12.2';
+    const APP_VERSION = '2026.11.12.3';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -2798,7 +2798,7 @@ function toggleLang(){
   <div style="display:flex;align-items:center;justify-content:space-between">
   <div>
   <p class="pp-kpi-lbl">Inflacion Anual &middot; INEGI oct 2026</p>
-  <p class="pp-kpi-num" style="color:var(--warning)">3.75%</p>
+  <p class="pp-kpi-num" style="color:var(--warning);font-size:30px">3.75%</p>
   <p class="pp-kpi-sub" style="color:var(--warning)"><svg viewBox="0 0 12 8" stroke="var(--warning)"><path d="M1 1l4 4 2-2 4 5M8 8h3V5"/></svg>3er mes consecutivo al alza</p>
   </div>
   <div style="display:flex;align-items:flex-end;gap:3px;height:30px;padding-right:4px">
@@ -2813,12 +2813,12 @@ function toggleLang(){
   <div style="display:flex;align-items:center;justify-content:space-between">
   <div>
   <p class="pp-kpi-lbl">Diesel Mexico &middot; oct 2026</p>
-  <p class="pp-kpi-num" style="color:var(--ink-700);font-size:17px">$26.85 / L</p>
+  <p class="pp-kpi-num" style="color:var(--ink-700);font-size:22px">$26.85 / L</p>
   <p style="font-size:10px;color:var(--ink-300);margin:3px 0 0;font-family:var(--font-sans)">Baja gradual; costos flete altos</p>
   </div>
   <div style="text-align:right">
   <p class="pp-kpi-lbl" style="text-align:right">Cruce Otay express</p>
-  <p style="font-size:16px;font-weight:700;color:var(--danger);margin:0;line-height:1;font-family:var(--font-sans)">-20%</p>
+  <p style="font-size:22px;font-weight:700;color:var(--danger);margin:0;line-height:1;font-family:var(--font-sans)">-20%</p>
   <p style="font-size:10px;color:var(--ink-300);margin:3px 0 0;font-family:var(--font-sans)">pases agiles</p>
   </div>
   </div>
@@ -2827,7 +2827,7 @@ function toggleLang(){
   <svg viewBox="0 0 16 16"><path d="M9 1L4 9h5l-2 6 7-8H9z"/></svg>
   <div style="flex:1">
   <p class="pp-kpi-lbl" style="color:var(--warning)">Alerta rapida &middot; flujo efectivo</p>
-  <p style="font-size:11px;color:var(--ink-800);margin:0;line-height:1.45;font-family:var(--font-sans)">Banxico recorta a 6.25% pero inflacion sube; presion en costos operativos frontera</p>
+  <p style="font-size:13px;color:var(--ink-800);margin:0;line-height:1.5;font-family:var(--font-sans)">Banxico recorta a 6.25% pero inflacion sube; presion en costos operativos frontera</p>
   </div>
   <svg viewBox="0 0 12 12" style="stroke:var(--warning);fill:none;stroke-width:2;flex-shrink:0"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M8 1h3v3M6 6L11 1"/></svg>
   </a>
