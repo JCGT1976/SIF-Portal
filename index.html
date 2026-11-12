@@ -1478,7 +1478,7 @@
 
   <script>
     /* ═══════════════════════ CONFIG ═══════════════════════ */
-    const APP_VERSION = '2026.11.12.1';
+    const APP_VERSION = '2026.11.12.2';
     const SUPABASE_URL  = 'https://nzrzrbatcmzcmrmyrama.supabase.co';
     const SUPABASE_ANON = 'sb_publishable_JMa-_sAXxw3LQrlqR7p7ww_RqLhY89X';
     const DEADPOOL_URL  = 'https://jcgt1976.github.io/Deadpool/';
@@ -2728,15 +2728,13 @@ function toggleLang(){
     window.createUser = createUser;
 
     function mostrarPopupPulso(){
-      const hoy=new Date().toDateString();
       const el=document.getElementById('ppOverlay');
       if(!el)return;
-      if(sessionStorage.getItem('ppVisto')===hoy)return;
       el.classList.add('pp-show');
     }
     function cerrarPopup(){
       const el=document.getElementById('ppOverlay');
-      if(el){el.classList.remove('pp-show');sessionStorage.setItem('ppVisto',new Date().toDateString());}
+      if(el)el.classList.remove('pp-show');
     }
     window.cerrarPopup=cerrarPopup;
   </script>
