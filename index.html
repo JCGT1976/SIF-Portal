@@ -2728,48 +2728,29 @@ function toggleLang(){
     window.cerrarPwdReseteada = cerrarPwdReseteada;
     window.createUser = createUser;
 
-    var PP_TOK='a023b84d4615776c35b9d2cd118566c2cc08c26468722a972e30a7ea34f0865b';
+        var PP_RAW='https://raw.githubusercontent.com/JCGT1976/SIF-Portal/main/indicadores.json';
     var PP_CACHE=null,PP_TS=0,PP_TTL=3600000;
-    function ppDate(d){var m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');return d.getFullYear()+'-'+m+'-'+dd;}
     async function ppFetchData(){
       var now=Date.now();
       if(PP_CACHE&&(now-PP_TS)<PP_TTL)return PP_CACHE;
-      var today=ppDate(new Date());
-      var d10=new Date();d10.setDate(d10.getDate()-10);var from10=ppDate(d10);
-      var d400=new Date();d400.setDate(d400.getDate()-400);var from400=ppDate(d400);
-      var r={fix:null,tasa:null,inflacion:null};
       try{
-        var fx=await fetch('https://open.er-api.com/v6/latest/USD').then(function(x){return x.json();});
-        r.fix=fx.rates.MXN.toFixed(4);
-      }catch(e){console.warn('FX:',e);}
-      try{
-        var bxUrl='https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF61745,SP1/datos/'+from400+'/'+today+'?token='+PP_TOK;
-        var bx=await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(bxUrl)).then(function(x){return x.json();});
-        var bxd=JSON.parse(bx.contents);
-        var tArr=bxd.bmx.series[0].datos;
-        r.tasa=parseFloat(tArr[tArr.length-1].dato).toFixed(2)+'%';
-        var iArr=bxd.bmx.series[1].datos;
-        var iNow=parseFloat(iArr[iArr.length-1].dato);
-        var iPrev=parseFloat(iArr[Math.max(0,iArr.length-13)].dato);
-        r.inflacion=((iNow/iPrev-1)*100).toFixed(2)+'%';
-      }catch(e){console.warn('Banxico:',e);}
-      PP_CACHE=r; PP_TS=now;
-      return r;
+        var r=await fetch(PP_RAW+'?t='+now);
+        var d=await r.json();
+        PP_CACHE=d; PP_TS=now;
+        return d;
+      }catch(e){console.warn('indicadores.json:',e);}
+      return null;
     }
-    function ppUpdateDOM(d){
+        function ppUpdateDOM(d){
       if(!d)return;
-      if(d.fix){
-        var el=document.getElementById('ppFixVal');if(el)el.textContent=d.fix;
-      }
-      if(d.tasa){
-        var et=document.getElementById('ppTasaVal');if(et)et.textContent=d.tasa;
-      }
-      if(d.inflacion){
-        var ei=document.getElementById('ppInflVal');if(ei)ei.textContent=d.inflacion;
-      }
-      var ts=document.getElementById('ppTs');
-      if(ts)ts.textContent='Banxico · INEGI · actualizado '+new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'});
+      var g=function(id){return document.getElementById(id);};
+      if(d.usdmxn&&g('ppFixVal'))g('ppFixVal').textContent=d.usdmxn;
+      if(d.usdmxn_sub&&g('ppFixTxt'))g('ppFixTxt').textContent=d.usdmxn_sub;
+      if(d.tasa&&g('ppTasaVal'))g('ppTasaVal').textContent=d.tasa;
+      if(d.inflacion&&g('ppInflVal'))g('ppInflVal').textContent=d.inflacion;
+      if(g('ppTs'))g('ppTs').textContent=(d.fuente||'Banxico')+' · '+( d.ts||'');
     }
+    
     function mostrarPopupPulso(){
       const el=document.getElementById('ppOverlay');
       if(!el)return;
