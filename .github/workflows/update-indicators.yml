@@ -1,0 +1,121 @@
+name: Actualizar indicadores
+
+on:
+  schedule:
+    - cron: '30 14 * * 1-5'  # 8:30am México (UTC-6) lunes-viernes
+  workflow_dispatch:          # también ejecutable manualmente
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch indicadores y actualizar HTML
+        env:
+          BANXICO_TOKEN: a023b84d4615776c35b9d2cd118566c2cc08c26468722a972e30a7ea34f0865b
+        run: |
+          python3 << 'PYEOF'
+          import urllib.request, json, re, subprocess
+          from datetime import datetime, timedelta, timezone
+
+          BANXICO = "https://www.banxico.org.mx/SieAPIRest/service/v1/series"
+          TOKEN   = "a023b84d4615776c35b9d2cd118566c2cc08c26468722a972e30a7ea34f0865b"
+          hoy     = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+          hace10  = (datetime.now(timezone.utc) - timedelta(days=10)).strftime('%Y-%m-%d')
+          hace400 = (datetime.now(timezone.utc) - timedelta(days=400)).strftime('%Y-%m-%d')
+          fecha_mx = datetime.now(timezone(timedelta(hours=-7))).strftime('%d %b %Y').lower()
+
+          def fetch(url):
+              req = urllib.request.Request(url, headers={'Bmx-Token': TOKEN})
+              with urllib.request.urlopen(req, timeout=15) as r:
+                  return json.loads(r.read())
+
+          fix_val  = None
+          tasa_val = None
+          infl_val = None
+
+          # 1. USD/MXN FIX (SF43718)
+          try:
+              d = fetch(f"{BANXICO}/SF43718/datos/{hace10}/{hoy}?token={TOKEN}")
+              datos = d['bmx']['series'][0]['datos']
+              fix_now  = float(datos[-1]['dato'])
+              fix_prev = float(datos[-2]['dato']) if len(datos) > 1 else fix_now
+              chg = round((fix_now - fix_prev) / fix_prev * 100, 2)
+              sign = '+' if chg >= 0 else ''
+              fix_val = str(round(fix_now, 4))
+              fix_sub = f"{sign}{chg}% vs anterior"
+              print(f"USD/MXN FIX: {fix_val}  ({fix_sub})")
+          except Exception as e:
+              print(f"USD/MXN error: {e}")
+
+          # 2. Tasa objetivo (SF61745)
+          try:
+              d = fetch(f"{BANXICO}/SF61745/datos/{hace400}/{hoy}?token={TOKEN}")
+              datos = d['bmx']['series'][0]['datos']
+              tasa_val = str(round(float(datos[-1]['dato']), 2)) + '%'
+              print(f"Tasa Banxico: {tasa_val}")
+          except Exception as e:
+              print(f"Tasa error: {e}")
+
+          # 3. INPC variacion anual (SP1)
+          try:
+              d = fetch(f"{BANXICO}/SP1/datos/{hace400}/{hoy}?token={TOKEN}")
+              datos = d['bmx']['series'][0]['datos']
+              now_v  = float(datos[-1]['dato'])
+              prev_v = float(datos[max(0, len(datos)-13)]['dato'])
+              infl   = round((now_v / prev_v - 1) * 100, 2)
+              infl_val = str(infl) + '%'
+              print(f"Inflacion INPC: {infl_val}")
+          except Exception as e:
+              print(f"INPC error: {e}")
+
+          if not any([fix_val, tasa_val, infl_val]):
+              print("Sin datos — no se actualiza el HTML")
+              exit(0)
+
+          with open('index.html', 'r', encoding='utf-8') as f:
+              html = f.read()
+
+          original = html
+
+          if fix_val:
+              html = re.sub(
+                  r'(<p[^>]*id="ppFixVal"[^>]*>)[^<]*(</p>)',
+                  lambda m: m.group(1) + fix_val + m.group(2), html)
+
+          if tasa_val:
+              html = re.sub(
+                  r'(<p[^>]*id="ppTasaVal"[^>]*>)[^<]*(</p>)',
+                  lambda m: m.group(1) + tasa_val + m.group(2), html)
+
+          if infl_val:
+              html = re.sub(
+                  r'(<p[^>]*id="ppInflVal"[^>]*>)[^<]*(</p>)',
+                  lambda m: m.group(1) + infl_val + m.group(2), html)
+
+          html = re.sub(
+              r'(<p[^>]*id="ppTs"[^>]*>)[^<]*(</p>)',
+              lambda m: m.group(1) + f'Banxico \u00b7 INEGI \u00b7 actualizado {fecha_mx}' + m.group(2),
+              html)
+
+          if html == original:
+              print("HTML sin cambios — IDs no encontrados")
+              exit(0)
+
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(html)
+          print("index.html actualizado OK")
+          PYEOF
+
+      - name: Commit si hubo cambios
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --staged --quiet; then
+            echo "Sin cambios — nada que commitear"
+          else
+            git commit -m "data: indicadores Banxico $(date +'%Y-%m-%d')"
+            git push
+          fi
