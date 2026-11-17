@@ -2040,6 +2040,7 @@ function toggleLang(){
       document.getElementById('heroFirstName').textContent = firstName;
       document.getElementById('heroSaludo').textContent = guessSaludo(firstName);
       restoreNotifyStates();
+      var ppBtn=document.getElementById('ppNewsBtn');if(ppBtn)ppBtn.style.display='flex';
 
       // Botón de administración de usuarios: solo visible para admin_master
       const btnUsers = document.getElementById('btnUsersAdmin');
@@ -2727,16 +2728,69 @@ function toggleLang(){
     window.cerrarPwdReseteada = cerrarPwdReseteada;
     window.createUser = createUser;
 
+    var PP_TOK='a023b84d4615776c35b9d2cd118566c2cc08c26468722a972e30a7ea34f0865b';
+    var PP_CACHE=null,PP_TS=0,PP_TTL=3600000;
+    function ppDate(d){var m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');return d.getFullYear()+'-'+m+'-'+dd;}
+    async function ppFetchData(){
+      var now=Date.now();
+      if(PP_CACHE&&(now-PP_TS)<PP_TTL)return PP_CACHE;
+      var today=ppDate(new Date());
+      var d10=new Date();d10.setDate(d10.getDate()-10);var from10=ppDate(d10);
+      var d400=new Date();d400.setDate(d400.getDate()-400);var from400=ppDate(d400);
+      var r={fix:null,tasa:null,inflacion:null};
+      try{
+        var fx=await fetch('https://open.er-api.com/v6/latest/USD').then(function(x){return x.json();});
+        r.fix=fx.rates.MXN.toFixed(4);
+      }catch(e){console.warn('FX:',e);}
+      try{
+        var bxUrl='https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF61745,SP1/datos/'+from400+'/'+today+'?token='+PP_TOK;
+        var bx=await fetch('https://api.allorigins.win/get?url='+encodeURIComponent(bxUrl)).then(function(x){return x.json();});
+        var bxd=JSON.parse(bx.contents);
+        var tArr=bxd.bmx.series[0].datos;
+        r.tasa=parseFloat(tArr[tArr.length-1].dato).toFixed(2)+'%';
+        var iArr=bxd.bmx.series[1].datos;
+        var iNow=parseFloat(iArr[iArr.length-1].dato);
+        var iPrev=parseFloat(iArr[Math.max(0,iArr.length-13)].dato);
+        r.inflacion=((iNow/iPrev-1)*100).toFixed(2)+'%';
+      }catch(e){console.warn('Banxico:',e);}
+      PP_CACHE=r; PP_TS=now;
+      return r;
+    }
+    function ppUpdateDOM(d){
+      if(!d)return;
+      if(d.fix){
+        var el=document.getElementById('ppFixVal');if(el)el.textContent=d.fix;
+      }
+      if(d.tasa){
+        var et=document.getElementById('ppTasaVal');if(et)et.textContent=d.tasa;
+      }
+      if(d.inflacion){
+        var ei=document.getElementById('ppInflVal');if(ei)ei.textContent=d.inflacion;
+      }
+      var ts=document.getElementById('ppTs');
+      if(ts)ts.textContent='Banxico · INEGI · actualizado '+new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'});
+    }
     function mostrarPopupPulso(){
       const el=document.getElementById('ppOverlay');
       if(!el)return;
-      el.classList.add('pp-show');
+      var username=(currentUser&&currentUser.username)||'x';
+      var seen=false;
+      try{seen=!!localStorage.getItem('sif_news_seen_'+username);}catch(e){}
+      if(!seen){el.classList.add('pp-show');}
+      ppFetchData().then(ppUpdateDOM);
     }
+    window.mostrarPopupPulso=mostrarPopupPulso;
     function cerrarPopup(){
       const el=document.getElementById('ppOverlay');
       if(el)el.classList.remove('pp-show');
+      var username=(currentUser&&currentUser.username)||'x';
+      try{localStorage.setItem('sif_news_seen_'+username,'1');}catch(e){}
     }
     window.cerrarPopup=cerrarPopup;
+    window.abrirNoticias=function(){
+      var el=document.getElementById('ppOverlay');
+      if(el){el.classList.add('pp-show');ppFetchData().then(ppUpdateDOM);}
+    };
   </script>
 
   <!-- POPUP PULSO POST-LOGIN -->
@@ -2785,12 +2839,12 @@ function toggleLang(){
   <div class="pp-kpi-grid">
   <a href="https://elcomercio.pe/mag/respuestas/mx/precio-del-dolar-en-mexico-hoy-jueves-12-de-noviembre-de-2026-tipo-de-cambio-usd-a-mxn-cuanto-vale-y-cotizacion-de-banxico-fix-nnda-nnrt-noticia/" target="_blank" rel="noopener" class="pp-kpi">
   <p class="pp-kpi-lbl">USD / MXN FIX</p>
-  <p class="pp-kpi-num" style="color:var(--brand-800)">18.5983</p>
-  <p class="pp-kpi-sub" style="color:var(--success)"><svg viewBox="0 0 12 8" stroke="var(--success)"><path d="M1 7l4-4 2 2 4-5M8 0h3v3"/></svg>-0.16% vs anterior</p>
+  <p class="pp-kpi-num" style="color:var(--brand-800)" id="ppFixVal">18.5983</p>
+  <p class="pp-kpi-sub" style="color:var(--success)" id="ppFixSub"><svg viewBox="0 0 12 8" stroke="var(--success)" id="ppFixArrow"><path d="M1 7l4-4 2 2 4-5M8 0h3v3"/></svg><span id="ppFixTxt">-0.16% vs anterior</span></p>
   </a>
   <a href="https://www.unotv.com/negocios/banxico-recorta-tasa-6-25-votos-divididos-inflacion/" target="_blank" rel="noopener" class="pp-kpi">
   <p class="pp-kpi-lbl">Tasa Banxico</p>
-  <p class="pp-kpi-num" style="color:var(--success)">6.25%</p>
+  <p class="pp-kpi-num" style="color:var(--success)" id="ppTasaVal">6.25%</p>
   <p class="pp-kpi-sub" style="color:var(--success)"><svg viewBox="0 0 12 8" stroke="var(--success)"><path d="M1 7l4-4 2 2 4-5M8 0h3v3"/></svg>-25pb desde nov 6</p>
   </a>
   </div>
@@ -2798,7 +2852,7 @@ function toggleLang(){
   <div style="display:flex;align-items:center;justify-content:space-between">
   <div>
   <p class="pp-kpi-lbl">Inflacion Anual &middot; INEGI oct 2026</p>
-  <p class="pp-kpi-num" style="color:var(--warning);font-size:30px">3.75%</p>
+  <p class="pp-kpi-num" style="color:var(--warning);font-size:30px" id="ppInflVal">3.75%</p>
   <p class="pp-kpi-sub" style="color:var(--warning)"><svg viewBox="0 0 12 8" stroke="var(--warning)"><path d="M1 1l4 4 2-2 4 5M8 8h3V5"/></svg>3er mes consecutivo al alza</p>
   </div>
   <div style="display:flex;align-items:flex-end;gap:3px;height:30px;padding-right:4px">
@@ -2831,12 +2885,14 @@ function toggleLang(){
   </div>
   <svg viewBox="0 0 12 12" style="stroke:var(--warning);fill:none;stroke-width:2;flex-shrink:0"><path d="M5 2H2a1 1 0 00-1 1v7a1 1 0 001 1h7a1 1 0 001-1V7M8 1h3v3M6 6L11 1"/></svg>
   </a>
-  <p class="pp-ts">Banxico &middot; INEGI &middot; CH Robinson &middot; MBN &middot; TijuanaEDC &middot; 12 nov 2026</p>
+  <p class="pp-ts" id="ppTs">Banxico &middot; INEGI &middot; CH Robinson &middot; MBN &middot; TijuanaEDC &middot; 12 nov 2026</p>
   </div>
   </div>
 
   </div>
   </div>
   <!-- /POPUP PULSO -->
+
+<button id="ppNewsBtn" onclick="window.abrirNoticias()" style="display:none;position:fixed;bottom:22px;right:22px;z-index:8900;background:#0f2645;color:#fff;border:none;border-radius:11px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;align-items:center;gap:8px;box-shadow:0 2px 14px rgba(15,38,69,.4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>Noticias y datos relevantes</button>
 </body>
 </html>
