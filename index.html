@@ -1787,6 +1787,9 @@ function toggleLang(){
       if (event === 'SIGNED_OUT' && currentUser) {
         currentUser = null;
         pendingAuthId = null;
+        var pn=document.getElementById('ppNewsBtn'); if(pn) pn.style.display='none';
+        var ba=document.getElementById('btnActivityAdmin'); if(ba) ba.style.display='none';
+        var bu=document.getElementById('btnUsersAdmin'); if(bu) bu.style.display='none';
         showState('Login');
       }
     });
@@ -2025,6 +2028,9 @@ function toggleLang(){
       currentUser = null; pendingAuthId = null;
       document.getElementById('loginUser').value = '';
       document.getElementById('loginPwd').value = '';
+      var pn=document.getElementById('ppNewsBtn'); if(pn) pn.style.display='none';
+      var ba=document.getElementById('btnActivityAdmin'); if(ba) ba.style.display='none';
+      var bu=document.getElementById('btnUsersAdmin'); if(bu) bu.style.display='none';
       showState('Login');
       if (reason === 'inactivity') {
         showLoginError(currentLang === 'en'
