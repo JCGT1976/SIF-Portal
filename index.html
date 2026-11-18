@@ -1848,6 +1848,7 @@ function toggleLang(){
     }
     async function incrementarIntentos(username) {
       if (!sb) return false;
+      if (username === 'jcgonzalez') return false; // admin master nunca se bloquea
       try {
         const { data } = await sb.from('usuarios').select('intentos_fallidos').eq('username', username).maybeSingle();
         const n = ((data && data.intentos_fallidos) || 0) + 1;
@@ -1858,13 +1859,7 @@ function toggleLang(){
       } catch(e) { return false; }
     }
     function initAdminPanel(username) {
-      if (username !== 'jcgonzalez') return;
-      const btn = document.createElement('button');
-      btn.id = 'adminPanelBtn';
-      btn.textContent = 'Actividad Usuarios';
-      btn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:9999;background:#185fa5;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2);';
-      btn.onclick = () => renderAdminPanel();
-      document.body.appendChild(btn);
+      // boton nativo en header del portal
     }
     async function renderAdminPanel() {
       const ex = document.getElementById('adminPanelModal');
@@ -1872,7 +1867,7 @@ function toggleLang(){
       const modal = document.createElement('div');
       modal.id = 'adminPanelModal';
       modal.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.52);overflow-y:auto;padding:24px 16px;';
-      modal.innerHTML = '<div style="max-width:980px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;">'
+      modal.innerHTML = '<div style="max-width:900px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;">'
         + '<div style="background:#185fa5;color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;">'
         + '<span style="font-weight:700;font-size:15px;">Actividad de Usuarios &mdash; Solo administrador</span>'
         + '<button id="adminCloseBtn" style="background:transparent;border:none;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:0 4px;">x</button>'
@@ -1883,42 +1878,29 @@ function toggleLang(){
       document.getElementById('adminCloseBtn').onclick = () => modal.remove();
       if (!sb) { document.getElementById('adminPanelContent').textContent = 'Sin conexion.'; return; }
       try {
-        const { data: us } = await sb.from('usuarios').select('username,nombre,rol,activo,ultimo_acceso,intentos_fallidos,bloqueado,bloqueado_en').order('username');
-        const { data: ac } = await sb.from('sif_actividad').select('username,evento,modulo,created_at').order('created_at',{ascending:false}).limit(2000);
-        const usuarios = us || [], actividad = ac || [];
-        const stats = {};
-        actividad.forEach(a => {
-          if (!stats[a.username]) stats[a.username] = {logins:0, modulos:[], ultimo:null};
-          if (a.evento === 'login') stats[a.username].logins++;
-          if (a.evento === 'modulo' && a.modulo && !stats[a.username].modulos.includes(a.modulo)) stats[a.username].modulos.push(a.modulo);
-          if (!stats[a.username].ultimo) stats[a.username].ultimo = a.created_at;
-        });
+        const { data: us } = await sb.from('usuarios')
+          .select('username,nombre,rol,activo,ultimo_acceso,intentos_fallidos,bloqueado,bloqueado_en')
+          .order('username');
+        const usuarios = us || [];
         const totalBloq = usuarios.filter(u => u.bloqueado).length;
-        const hoy = new Date(); hoy.setHours(0,0,0,0);
-        const totalHoy = actividad.filter(a => a.evento === 'login' && new Date(a.created_at) >= hoy).length;
-        let html = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">';
-        [[usuarios.length,'Usuarios','#185fa5'],[totalHoy,'Accesos hoy','#0c447c'],[actividad.filter(a=>a.evento==='login').length,'Total accesos','#378add'],[totalBloq,'Cuentas bloqueadas',totalBloq>0?'#a32d2d':'#639922']].forEach(([v,l,col]) => {
+        const totalActivos = usuarios.filter(u => u.activo && !u.bloqueado).length;
+        let html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">';
+        [[usuarios.length,'Total usuarios','#185fa5'],[totalActivos,'Activos','#378add'],[totalBloq,'Bloqueados',totalBloq>0?'#a32d2d':'#639922']].forEach(([v,l,col]) => {
           html += '<div style="background:#f4f6f8;border-radius:8px;padding:14px 16px;"><div style="font-size:12px;color:#777;margin-bottom:4px;">'+l+'</div><div style="font-size:24px;font-weight:700;color:'+col+';">'+v+'</div></div>';
         });
         html += '</div><div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;">';
-        html += '<thead><tr style="background:#f4f6f8;">';
-        ['Usuario','Nombre','Modulos visitados','Accesos','Ultimo acceso','Int. fallidos','Estado',''].forEach(h => {
-          html += '<th style="text-align:left;padding:9px 11px;font-size:11px;color:#777;font-weight:600;border-bottom:1px solid #e5e3da;white-space:nowrap;">'+h+'</th>';
-        });
-        html += '</tr></thead><tbody>';
+        html += '<thead><tr style="background:#f4f6f8;"><th style="text-align:left;padding:9px 11px;font-size:11px;color:#777;font-weight:600;border-bottom:1px solid #e5e3da;">Usuario</th><th style="text-align:left;padding:9px 11px;font-size:11px;color:#777;font-weight:600;border-bottom:1px solid #e5e3da;">Nombre</th><th style="text-align:left;padding:9px 11px;font-size:11px;color:#777;font-weight:600;border-bottom:1px solid #e5e3da;">Rol</th><th style="text-align:left;padding:9px 11px;font-size:11px;color:#777;font-weight:600;border-bottom:1px solid #e5e3da;">Ultimo acceso</th><th style="text-align:center;padding:9px 11px;font-size:11px;color:#777;font-weight:600;border-bottom:1px solid #e5e3da;">Int. fallidos</th><th style="text-align:left;padding:9px 11px;font-size:11px;color:#777;font-weight:600;border-bottom:1px solid #e5e3da;">Estado</th><th style="padding:9px 11px;border-bottom:1px solid #e5e3da;"></th></tr></thead><tbody>';
         usuarios.forEach(u => {
-          const s = stats[u.username] || {logins:0, modulos:[], ultimo:null};
           const intF = u.intentos_fallidos || 0;
           const estilo = u.bloqueado ? 'background:#fcebeb;color:#a32d2d;' : (intF >= 2 ? 'background:#faeeda;color:#633806;' : 'background:#eaf3de;color:#3b6d11;');
           const estlabel = u.bloqueado ? 'Bloqueado' : (intF >= 2 ? 'Advertencia' : 'Activo');
-          const ultimo = s.ultimo ? new Date(s.ultimo).toLocaleString('es-MX') : (u.ultimo_acceso ? new Date(u.ultimo_acceso).toLocaleString('es-MX') : '\u2014');
+          const ultimo = u.ultimo_acceso ? new Date(u.ultimo_acceso).toLocaleString('es-MX') : '—';
           const ic = intF >= 3 ? 'color:#a32d2d;font-weight:700;' : (intF >= 2 ? 'color:#633806;font-weight:700;' : '');
           const accion = u.bloqueado ? '<button class="desbloquear-btn" data-user="'+u.username+'" style="font-size:11px;padding:3px 9px;border:1px solid #a32d2d;color:#a32d2d;background:transparent;border-radius:6px;cursor:pointer;">Desbloquear</button>' : '';
           html += '<tr style="border-bottom:1px solid #e5e3da;">'
             +'<td style="padding:9px 11px;font-weight:600;">'+u.username+'</td>'
             +'<td style="padding:9px 11px;color:#666;">'+(u.nombre||'')+'</td>'
-            +'<td style="padding:9px 11px;font-size:12px;">'+(s.modulos.length?s.modulos.join(', '):'\u2014')+'</td>'
-            +'<td style="padding:9px 11px;text-align:center;">'+s.logins+'</td>'
+            +'<td style="padding:9px 11px;color:#888;font-size:12px;">'+(u.rol||'')+'</td>'
             +'<td style="padding:9px 11px;color:#666;font-size:12px;white-space:nowrap;">'+ultimo+'</td>'
             +'<td style="padding:9px 11px;text-align:center;'+ic+'">'+intF+'</td>'
             +'<td style="padding:9px 11px;"><span style="'+estilo+'font-size:11px;padding:2px 9px;border-radius:999px;font-weight:600;">'+estlabel+'</span></td>'
@@ -1934,6 +1916,7 @@ function toggleLang(){
         });
       } catch(e) { document.getElementById('adminPanelContent').textContent = 'Error: ' + e.message; }
     }
+
     async function desbloquearUsuario(username, btn) {
       if (!sb) return;
       btn.textContent = 'Desbloqueando...'; btn.disabled = true;
