@@ -2263,7 +2263,23 @@ function toggleLang(){
     }
 
     function irADeadpool() {
+      var bd = document.getElementById('citySelectBackdrop');
+      if (bd) { bd.style.display = 'flex'; return; }
       _launchModule(DEADPOOL_URL, 'Deadpool');
+    }
+    function cerrarCityModal() {
+      var bd = document.getElementById('citySelectBackdrop');
+      if (bd) bd.style.display = 'none';
+    }
+    async function irADeadpoolCiudad(ciudad) {
+      cerrarCityModal();
+      try { localStorage.setItem('sif_dp_ciudad', ciudad); } catch(e) {}
+      var label = ciudad === 'tijuana' ? 'Tijuana' : 'Monterrey';
+      if (currentUser) logActividad(currentUser.username, 'modulo', 'Deadpool-' + label);
+      try { showToast('Abriendo Flujo y Gastos · ' + label + '…'); } catch(e) {}
+      var version = await _extraerVersionRemota(DEADPOOL_URL);
+      var bust = version ? ('v=' + encodeURIComponent(version)) : ('t=' + Date.now());
+      window.location.href = DEADPOOL_URL + '?' + bust;
     }
     function irAFiscal() {
       const mods = Array.isArray(currentUser && currentUser.modulos) ? currentUser.modulos : [];
@@ -2811,6 +2827,8 @@ function toggleLang(){
     /* Expose to window for onclick handlers */
     window.doLogout = doLogout;
     window.irADeadpool = irADeadpool;
+    window.cerrarCityModal = cerrarCityModal;
+    window.irADeadpoolCiudad = irADeadpoolCiudad;
     window.irABreakdown = irABreakdown;
     window.irATesoreria  = irATesoreria;
     window.irAFiscal = irAFiscal;
@@ -2978,5 +2996,27 @@ function toggleLang(){
   <!-- /POPUP PULSO -->
 
 <button id="ppNewsBtn" onclick="window.abrirNoticias()" style="display:none;position:fixed;bottom:22px;right:22px;z-index:8900;background:#0f2645;color:#fff;border:none;border-radius:11px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;align-items:center;gap:8px;box-shadow:0 2px 14px rgba(15,38,69,.4)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>Noticias y datos relevantes</button>
+
+<!-- MODAL SELECTOR CIUDAD DEADPOOL -->
+<div id="citySelectBackdrop" onclick="if(event.target===this)cerrarCityModal()" style="position:fixed;inset:0;z-index:9998;background:rgba(0,24,61,.65);display:none;align-items:center;justify-content:center;">
+  <div style="background:#102649;border-radius:16px;padding:22px 20px 12px;min-width:280px;max-width:340px;width:calc(100% - 32px);box-shadow:0 8px 32px rgba(0,0,0,.45);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <span style="color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Flujo y Gastos</span>
+      <button onclick="cerrarCityModal()" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;padding:0 2px;line-height:1;">&times;</button>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.12);margin:0 0 6px;"></div>
+    <div onclick="irADeadpoolCiudad('tijuana')" style="display:flex;align-items:center;gap:12px;padding:14px 10px;cursor:pointer;border-radius:10px;transition:background .15s;" onmouseover="this.style.background='rgba(255,255,255,.07)'" onmouseout="this.style.background='transparent'">
+      <span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;flex-shrink:0;"></span>
+      <span style="color:#fff;font-size:15px;font-weight:500;flex:1;">Tijuana</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+    <div onclick="irADeadpoolCiudad('monterrey')" style="display:flex;align-items:center;gap:12px;padding:14px 10px;cursor:pointer;border-radius:10px;transition:background .15s;" onmouseover="this.style.background='rgba(255,255,255,.07)'" onmouseout="this.style.background='transparent'">
+      <span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;flex-shrink:0;"></span>
+      <span style="color:#fff;font-size:15px;font-weight:500;flex:1;">Monterrey</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </div>
+  </div>
+</div>
+<!-- /MODAL SELECTOR CIUDAD DEADPOOL -->
 </body>
 </html>
