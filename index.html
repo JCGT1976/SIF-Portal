@@ -2263,9 +2263,9 @@ function toggleLang(){
     }
 
     function irADeadpool() {
-      var bd = document.getElementById('citySelectBackdrop');
-      if (bd) { bd.style.display = 'flex'; return; }
-      _launchModule(DEADPOOL_URL, 'Deadpool');
+      var ciudad = 'tijuana';
+      try { ciudad = localStorage.getItem('sif_dp_ciudad') || 'tijuana'; } catch(e) {}
+      irADeadpoolCiudad(ciudad);
     }
     function cerrarCityModal() {
       var bd = document.getElementById('citySelectBackdrop');
