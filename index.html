@@ -1832,15 +1832,17 @@ function toggleLang(){
         await sb.from('usuarios').update({intentos_fallidos: 0}).eq('auth_id', authId);
         logActividad(user.username, 'login', null);
         startInactivityWatcher();
-        initAdminPanel(user.username);
         var _ciudadActual = '';
         try { _ciudadActual = localStorage.getItem('sif_dp_ciudad') || ''; } catch(e) {}
         if (_ciudadActual) {
           renderPortal();
           showState('Portal');
           mostrarPopupPulso();
+          initAdminPanel(user.username);
           renderCityBadge(_ciudadActual);
         } else {
+          renderPortal();
+          initAdminPanel(user.username);
           showState('CitySelect');
           renderCitySelect();
         }
