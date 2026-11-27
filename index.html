@@ -1192,7 +1192,8 @@
   </div>
 
   <!-- ═══════════ STATE : PORTAL ═══════════ -->
-  <div id="statePortal" class="state">
+  <div id="stateCitySelect" class="state"><div id="citySelectScreen"></div></div>
+    <div id="statePortal" class="state">
     <div class="portal-shell">
 
       <header class="portal-header">
@@ -1204,6 +1205,7 @@
           </div>
         </div>
         <div class="user-cluster">
+          <span id="cityBadgePortal" style="display:none;align-items:center;padding:4px 12px;border-radius:6px;font-size:12px;font-weight:500;color:#fff;margin-right:8px;cursor:pointer" onclick="showState('CitySelect');renderCitySelect();" title="Cambiar plaza"></span>
           <span class="sync-badge" id="syncBadge"><span class="sync-dot" id="syncDot"></span><span id="syncTxt">Conectado a Supabase</span></span>
           <div class="user-chip">
             <div class="user-avatar" id="userAvatar">&#x2014;</div>
@@ -1796,7 +1798,7 @@ function toggleLang(){
 
     /* ═══════════════════════ STATE ROUTER ═══════════════════════ */
     function showState(name) {
-      ['Loading', 'Login', 'ChangePwd', 'Portal', 'Usuarios'].forEach(s => {
+      ['Loading', 'Login', 'ChangePwd', 'CitySelect', 'Portal', 'Usuarios'].forEach(s => {
         const el = document.getElementById('state' + s);
         if (el) el.classList.toggle('active', s === name);
       });
@@ -1829,9 +1831,8 @@ function toggleLang(){
         currentUser = user;
         await sb.from('usuarios').update({intentos_fallidos: 0}).eq('auth_id', authId);
         logActividad(user.username, 'login', null);
-        renderPortal();
-        showState('Portal');
-        mostrarPopupPulso();
+        showState('CitySelect');
+        renderCitySelect();
         startInactivityWatcher();
         initAdminPanel(user.username);
       } catch (e) {
@@ -2260,6 +2261,53 @@ function toggleLang(){
       // Con o sin versión detectada, siempre añadimos algo que rompa cache
       const bust = version ? ('v=' + encodeURIComponent(version)) : ('t=' + Date.now());
       window.location.href = baseUrl + '?' + bust;
+    }
+
+    function renderCitySelect() {
+      var c = document.getElementById('citySelectScreen');
+      if (!c) return;
+      var nombre = currentUser ? currentUser.nombre || currentUser.username : '';
+      c.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0f1923;padding:24px">'
+        + '<div style="width:100%;max-width:400px;background:#1a2535;border-radius:16px;padding:32px 28px;border:1px solid rgba(255,255,255,.08)">'
+        + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">'
+        + '<div style="width:40px;height:40px;border-radius:50%;background:#185fa5;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;font-size:14px">MI</div>'
+        + '<div><div style="font-size:15px;font-weight:600;color:#fff">SIF · MI Technologies</div>'
+        + '<div style="font-size:12px;color:#8899aa">Bienvenido, ' + nombre + '</div></div></div>'
+        + '<div style="font-size:17px;font-weight:600;color:#fff;margin-bottom:6px">Selecciona tu plaza</div>'
+        + '<div style="font-size:13px;color:#8899aa;margin-bottom:24px">Los datos de cada plaza son independientes</div>'
+        + '<div style="display:flex;flex-direction:column;gap:12px">'
+        + '<button onclick="selectCiudad('tijuana')" style="border:1.5px solid #185fa5;border-radius:10px;padding:16px;cursor:pointer;display:flex;align-items:center;gap:14px;background:rgba(24,95,165,.12);text-align:left;width:100%">'
+        + '<div style="width:10px;height:10px;border-radius:50%;background:#185fa5;flex-shrink:0"></div>'
+        + '<div><div style="font-size:15px;font-weight:600;color:#fff">Tijuana B.C.</div>'
+        + '<div style="font-size:12px;color:#8899aa">Planta principal · MTX</div></div>'
+        + '<div style="margin-left:auto;font-size:11px;background:#185fa5;color:#fff;padding:3px 10px;border-radius:5px;white-space:nowrap">Seleccionar →</div>'
+        + '</button>'
+        + '<button onclick="selectCiudad('monterrey')" style="border:1.5px solid #0057A8;border-radius:10px;padding:16px;cursor:pointer;display:flex;align-items:center;gap:14px;background:rgba(0,87,168,.12);text-align:left;width:100%">'
+        + '<div style="width:10px;height:10px;border-radius:50%;background:#0057A8;flex-shrink:0"></div>'
+        + '<div><div style="font-size:15px;font-weight:600;color:#fff">Monterrey N.L.</div>'
+        + '<div style="font-size:12px;color:#8899aa">Planta norte · MNT</div></div>'
+        + '<div style="margin-left:auto;font-size:11px;background:#0057A8;color:#fff;padding:3px 10px;border-radius:5px;white-space:nowrap">Seleccionar →</div>'
+        + '</button>'
+        + '</div></div></div>';
+    }
+
+    function selectCiudad(ciudad) {
+      try { localStorage.setItem('sif_dp_ciudad', ciudad); } catch(e) {}
+      if (currentUser) logActividad(currentUser.username, 'login', 'plaza:' + ciudad);
+      renderPortal();
+      showState('Portal');
+      mostrarPopupPulso();
+      renderCityBadge(ciudad);
+    }
+
+    function renderCityBadge(ciudad) {
+      var badge = document.getElementById('cityBadgePortal');
+      if (!badge) return;
+      var isTJ = ciudad === 'tijuana';
+      badge.style.display = 'flex';
+      badge.style.background = isTJ ? '#185fa5' : '#0057A8';
+      badge.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:' + (isTJ ? '#85B7EB' : '#7ab4e0') + ';display:inline-block;margin-right:6px"></span>'
+        + (isTJ ? 'Tijuana B.C.' : 'Monterrey N.L.');
     }
 
     function irADeadpool() {
