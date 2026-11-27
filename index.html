@@ -1834,7 +1834,9 @@ function toggleLang(){
         startInactivityWatcher();
         var _ciudadActual = '';
         try { _ciudadActual = localStorage.getItem('sif_dp_ciudad') || ''; } catch(e) {}
-        if (_ciudadActual) {
+        var _esFresco = window._freshLogin === true;
+        window._freshLogin = false;
+        if (_ciudadActual && !_esFresco) {
           renderPortal();
           showState('Portal');
           mostrarPopupPulso();
@@ -1964,6 +1966,7 @@ function toggleLang(){
           btn.disabled = false; btnLabel.textContent = btnOriginalText;
           return;
         }
+        window._freshLogin = true;
         await loadUserAndRoute(data.user.id);
       } catch (e) {
         console.error('doLogin error:', e);
