@@ -2277,31 +2277,39 @@ function toggleLang(){
     function renderCitySelect() {
       var c = document.getElementById('citySelectScreen');
       if (!c) return;
-      var nombre = currentUser ? currentUser.nombre || currentUser.username : '';
-      c.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0f1923;padding:24px">'
-        + '<div style="width:100%;max-width:400px;background:#1a2535;border-radius:16px;padding:32px 28px;border:1px solid rgba(255,255,255,.08)">'
-        + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">'
+      var nombre = currentUser ? (currentUser.nombre || currentUser.username) : '';
+      c.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0f1923;padding:24px';
+
+      var box = document.createElement('div');
+      box.style.cssText = 'width:100%;max-width:400px;background:#1a2535;border-radius:16px;padding:32px 28px;border:1px solid rgba(255,255,255,.08)';
+
+      box.innerHTML = '<div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">'
         + '<div style="width:40px;height:40px;border-radius:50%;background:#185fa5;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff;font-size:14px">MI</div>'
-        + '<div><div style="font-size:15px;font-weight:600;color:#fff">SIF · MI Technologies</div>'
+        + '<div><div style="font-size:15px;font-weight:600;color:#fff">SIF &middot; MI Technologies</div>'
         + '<div style="font-size:12px;color:#8899aa">Bienvenido, ' + nombre + '</div></div></div>'
         + '<div style="font-size:17px;font-weight:600;color:#fff;margin-bottom:6px">Selecciona tu plaza</div>'
         + '<div style="font-size:13px;color:#8899aa;margin-bottom:24px">Los datos de cada plaza son independientes</div>'
-        + '<div style="display:flex;flex-direction:column;gap:12px">'
-        + '<button onclick="selectCiudad('tijuana')" style="border:1.5px solid #185fa5;border-radius:10px;padding:16px;cursor:pointer;display:flex;align-items:center;gap:14px;background:rgba(24,95,165,.12);text-align:left;width:100%">'
-        + '<div style="width:10px;height:10px;border-radius:50%;background:#185fa5;flex-shrink:0"></div>'
-        + '<div><div style="font-size:15px;font-weight:600;color:#fff">Tijuana B.C.</div>'
-        + '<div style="font-size:12px;color:#8899aa">Planta principal · MTX</div></div>'
-        + '<div style="margin-left:auto;font-size:11px;background:#185fa5;color:#fff;padding:3px 10px;border-radius:5px;white-space:nowrap">Seleccionar →</div>'
-        + '</button>'
-        + '<button onclick="selectCiudad('monterrey')" style="border:1.5px solid #0057A8;border-radius:10px;padding:16px;cursor:pointer;display:flex;align-items:center;gap:14px;background:rgba(0,87,168,.12);text-align:left;width:100%">'
-        + '<div style="width:10px;height:10px;border-radius:50%;background:#0057A8;flex-shrink:0"></div>'
-        + '<div><div style="font-size:15px;font-weight:600;color:#fff">Monterrey N.L.</div>'
-        + '<div style="font-size:12px;color:#8899aa">Planta norte · MNT</div></div>'
-        + '<div style="margin-left:auto;font-size:11px;background:#0057A8;color:#fff;padding:3px 10px;border-radius:5px;white-space:nowrap">Seleccionar →</div>'
-        + '</button>'
-        + '</div></div></div>';
-    }
+        + '<div id="cityBtns" style="display:flex;flex-direction:column;gap:12px"></div>';
 
+      c.innerHTML = '';
+      c.appendChild(box);
+
+      var btns = [
+        { id:'tijuana', label:'Tijuana B.C.', sub:'Planta principal &middot; MTX', color:'#185fa5', dot:'#85B7EB' },
+        { id:'monterrey', label:'Monterrey N.L.', sub:'Planta norte &middot; MNT', color:'#0057A8', dot:'#7ab4e0' }
+      ];
+      var container = document.getElementById('cityBtns');
+      btns.forEach(function(b) {
+        var btn = document.createElement('button');
+        btn.style.cssText = 'border:1.5px solid ' + b.color + ';border-radius:10px;padding:16px;cursor:pointer;display:flex;align-items:center;gap:14px;background:rgba(0,0,0,0.2);text-align:left;width:100%;color:#fff';
+        btn.innerHTML = '<div style="width:10px;height:10px;border-radius:50%;background:' + b.color + ';flex-shrink:0"></div>'
+          + '<div><div style="font-size:15px;font-weight:600">' + b.label + '</div>'
+          + '<div style="font-size:12px;color:#8899aa">' + b.sub + '</div></div>'
+          + '<div style="margin-left:auto;font-size:11px;background:' + b.color + ';color:#fff;padding:3px 10px;border-radius:5px">Seleccionar &rarr;</div>';
+        btn.addEventListener('click', function() { selectCiudad(b.id); });
+        container.appendChild(btn);
+      });
+    }
     function selectCiudad(ciudad) {
       try { localStorage.setItem('sif_dp_ciudad', ciudad); } catch(e) {}
       if (currentUser) logActividad(currentUser.username, 'login', 'plaza:' + ciudad);
