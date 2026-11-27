@@ -2326,10 +2326,53 @@ function toggleLang(){
       var badge = document.getElementById('cityBadgePortal');
       if (!badge) return;
       var isTJ = ciudad === 'tijuana';
+      var bg = isTJ ? '#185fa5' : '#0057A8';
+      var dot = isTJ ? '#85B7EB' : '#7ab4e0';
+      var label = isTJ ? 'Tijuana B.C.' : 'Monterrey N.L.';
       badge.style.display = 'flex';
-      badge.style.background = isTJ ? '#185fa5' : '#0057A8';
-      badge.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:' + (isTJ ? '#85B7EB' : '#7ab4e0') + ';display:inline-block;margin-right:6px"></span>'
-        + (isTJ ? 'Tijuana B.C.' : 'Monterrey N.L.');
+      badge.style.background = bg;
+      badge.style.border = '1px solid rgba(255,255,255,.2)';
+      badge.style.borderRadius = '6px';
+      badge.style.padding = '5px 12px';
+      badge.style.alignItems = 'center';
+      badge.style.gap = '7px';
+      badge.style.cursor = 'pointer';
+      badge.style.position = 'relative';
+      badge.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:' + dot + ';display:inline-block;flex-shrink:0"></span>'
+        + '<span style="font-size:12px;color:#fff;font-weight:500">' + label + '</span>'
+        + '<span style="font-size:10px;color:rgba(255,255,255,.6)">&#x2195;</span>';
+      badge.onclick = function(e) { e.stopPropagation(); toggleCityDropdown(ciudad); };
+    }
+
+    function toggleCityDropdown(ciudadActual) {
+      var existing = document.getElementById('cityDropdown');
+      if (existing) { existing.remove(); return; }
+      var badge = document.getElementById('cityBadgePortal');
+      if (!badge) return;
+      var isTJ = ciudadActual === 'tijuana';
+      var otras = isTJ ? [{id:'monterrey',label:'Monterrey N.L.',dot:'#0057A8'}] : [{id:'tijuana',label:'Tijuana B.C.',dot:'#85B7EB'}];
+      var curLabel = isTJ ? 'Tijuana B.C.' : 'Monterrey N.L.';
+      var curDot = isTJ ? '#85B7EB' : '#7ab4e0';
+      var drop = document.createElement('div');
+      drop.id = 'cityDropdown';
+      drop.style.cssText = 'position:absolute;top:calc(100% + 8px);right:0;background:#1a2d45;border:1px solid rgba(255,255,255,.12);border-radius:8px;overflow:hidden;min-width:200px;z-index:9999;';
+      drop.innerHTML = '<div style="padding:10px 14px;display:flex;align-items:center;gap:10px;background:rgba(24,95,165,.3);border-bottom:1px solid rgba(255,255,255,.08);cursor:default">'
+        + '<div style="width:7px;height:7px;border-radius:50%;background:' + curDot + ';flex-shrink:0"></div>'
+        + '<div><div style="font-size:13px;font-weight:500;color:#fff">' + curLabel + '</div>'
+        + '<div style="font-size:11px;color:#9bb8d4">Plaza activa</div></div>'
+        + '<div style="margin-left:auto;font-size:12px;color:#85B7EB">&#10003;</div></div>'
+        + otras.map(function(o){
+            return '<div onclick="selectCiudad('' + o.id + '')" style="padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.06)'" onmouseout="this.style.background='none'">'
+              + '<div style="width:7px;height:7px;border-radius:50%;background:' + o.dot + ';flex-shrink:0"></div>'
+              + '<div><div style="font-size:13px;font-weight:500;color:#fff">' + o.label + '</div>'
+              + '<div style="font-size:11px;color:#9bb8d4">Cambiar a esta plaza</div></div></div>';
+          }).join('');
+      badge.style.position = 'relative';
+      badge.appendChild(drop);
+      var closeHandler = function(e) {
+        if (!badge.contains(e.target)) { drop.remove(); document.removeEventListener('click', closeHandler); }
+      };
+      setTimeout(function(){ document.addEventListener('click', closeHandler); }, 10);
     }
 
     function irADeadpool() {
